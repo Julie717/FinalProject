@@ -1,0 +1,200 @@
+#promo {
+    text-align: center;
+    padding: 40px;
+    background: url(../img/background.jpg) no-repeat;
+    background-size: cover;
+}
+
+@media (min-width: 900px) {
+    #promo {
+        padding: 20px;
+        margin-top: 50px;
+    }
+}
+
+#promo .jumbotron {
+    border-radius: 20px;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.75);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+@media (min-width: 300px) {
+    #promo .jumbotron {
+        padding: 20px;
+        margin-top: 50px;
+    }
+}
+
+.site-section {
+    text-align: center;
+    padding: 50px 0;
+}
+
+body {
+    font-family: Arial Helvetica, sans-serif;
+}
+
+.site-section h1 {
+    font-weight: normal;
+    margin-bottom: 30px;
+}
+
+#welcome p {
+    max-width: 800px;
+    font-size: 20px;
+    margin: 0 auto;
+}
+
+#workouts .item h2 {
+    font-weight: bold;
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 30px;
+}
+
+.col-4.item1 {
+    background: url(../img/low_level.jpg) no-repeat;
+}
+
+.col-4.item2 {
+    background: url(../img/middle_level.jpg) no-repeat;
+}
+
+.col-4.item3 {
+    background: url(../img/high_level.jpg) no-repeat;
+}
+
+#workouts {
+    min-height: 500px;
+    text-align: center;
+    justify-content: center;
+    margin-top: 0px;
+}
+
+#why .item1 h2 {
+    font-weight: normal;
+    margin-top: 40px;
+}
+
+#why .item2 h2 {
+    font-weight: normal;
+    margin-top: 40px;
+}
+
+#why .item3 h2 {
+    font-weight: normal;
+    margin-top: 40px;
+}
+
+#workouts .item1 h1 {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#item3 {
+    background: url(../img/high_level.jpg) no-repeat;
+    min-width: 300px;
+    margin-top: 50px;
+    background-position: center;
+    min-height: 500px;
+}
+
+#item2 {
+    background: url(../img/middle_level.jpg) no-repeat;
+    min-width: 300px;
+    margin-top: 50px;
+    background-position: center;
+    min-height: 500px;
+}
+
+#item1 {
+    background: url(../img/low_level.jpg) no-repeat;
+    background-position: center;
+    margin-top: 50px;
+    min-width: 300px;
+    min-height: 500px;
+}
+
+.jumbotron.item {
+    margin: 0 auto;
+    padding: 50px;
+    height: 350px;
+    margin-top: 50px;
+    border-radius: 20px;
+    padding-top: 20px;
+    background-color: rgba(255, 255, 255, 0.75);
+    min-width: 250px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.btn.btn-primary.text-uppercase {
+    font-weight: bold;
+}
+
+.list-group-item {
+    background-color: transparent;
+    border: 0;
+    font-size: large;
+    column-width: 200px;
+}
+
+.navbar.navbar-light.navbar-expand-md.fixed-top.text-left {
+    height: 50px;
+}
+
+#logo {
+    max-height: 50px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+ol, ul, dl {
+    align-items: end;
+}
+
+#registration {
+    background: url(../img/background_reg.jpg);
+    background-size: 800px;
+}
+
+#registrationForm .warnMessage {
+    color: darkred;
+}
+
+#registrationForm .field-description {
+    font-size: 10px;
+    color: #4b4c4d;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.col-3.membership {
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.client_membership {
+    text-align: center;
+    font-size: 20px;
+    font-family: serif;
+}
+
+.text-center.client_membership {
+    font-family: arial;
+    font-family: Monotype Corsiva;
+    font-size: 25px;
+}
+
+.col.client_membership {
+    border-style: solid;
+    border-color: green;
+    border-width: thin;
+    height: 60px;
+}
+
+.row.cl {
+    margin-left: 10%;
+}
