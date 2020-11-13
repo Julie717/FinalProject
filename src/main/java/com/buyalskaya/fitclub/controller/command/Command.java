@@ -1,7 +1,9 @@
 package com.buyalskaya.fitclub.controller.command;
 
+import com.buyalskaya.fitclub.controller.Router;
+
 import javax.servlet.http.HttpServletRequest;
 
 public interface Command {
-    String execute(HttpServletRequest request);
+    Router execute(HttpServletRequest request);
 }

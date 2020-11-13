@@ -10,4 +10,8 @@ public class Encryptor {
         String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         return encryptedPassword;
     }
+
+    public static boolean isEqualPasswords(String password, String encryptPassword) {
+        return BCrypt.checkpw(password, encryptPassword);
+    }
 }

@@ -59,14 +59,18 @@ public class ProxyConnection implements Connection {
 
     @Override
     public void close() throws SQLException {
-        ConnectionPool.getINSTANCE().releaseConnection(this);
+        ConnectionPool.INSTANCE.releaseConnection(this);
     }
 
     void reallyClose() {
-        try {
-            connection.close();
-        } catch (SQLException ex) {
-            logger.log(Level.ERROR, "Connection isn't closed", ex);
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                logger.log(Level.ERROR, "Connection isn't closed", ex);
+            }
+        } else {
+            logger.log(Level.ERROR, "Error during close connection");
         }
     }
 

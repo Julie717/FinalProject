@@ -1,0 +1,35 @@
+#appearance-error{
+    text-align: center;
+    background: url(../img/emblem.jpg);
+    background-size: cover;
+    width: 800px;
+    height: 800px;
+    margin-left: 20%;
+}
+
+#appearance-error .jumbotron {
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0);
+}
+
+#error-name {
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: black;
+}
+
+#error-title {
+    font-size: 90px;
+    padding: 0;
+    color: darkred;
+    font-weight: 800;
+    text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(33,1,1,0.48);
+}
+
+#error-text {
+    font-size: 50px;
+    height: 100px;
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,105 @@
+.features-boxed {
+  color: #313437;
+  background-color: #eef4f7;
+}
+
+.features-boxed h2 {
+  font-weight: bold;
+  margin-bottom: 40px;
+  padding-top: 40px;
+  color: inherit;
+}
+
+@media (max-width:767px) {
+  .features-boxed h2 {
+    padding-top: 25px;
+    font-size: 24px;
+  }
+}
+
+.features-boxed .intro {
+  font-size: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.features-boxed .intro p {
+  margin-bottom: 50px;
+}
+
+.features-boxed .features {
+  padding: 0px 0;
+}
+
+.features-boxed .item {
+  text-align: center;
+}
+
+.box time {
+  text-align: center;
+  padding: 0px;
+  margin-bottom: 0px;
+}
+
+.features-boxed .item .icon {
+  font-size: 60px;
+  color: #1485ee;
+  margin-top: 20px;
+  margin-bottom: 35px;
+}
+
+.features-boxed .item .name {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0px;
+  color: inherit;
+  padding: 0px;
+}
+
+.features-boxed .item .description {
+  font-size: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.col-sm-6.col-md-5.col-lg-4.name {
+}
+
+#header_day h3 {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0px;
+  color: inherit;
+  padding: 0px;
+}
+
+#header_day {
+  text-align: center;
+}
+
+#header_schedule {
+  border: groove;
+}
+
+.container.features-boxed {
+}
+
+.date {
+  background-color: rgb(143,216,52);
+  font-size: 18px;
+  font-family: sans-serif;
+  color: rgb(29,70,29);
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  width: 65%;
+  display: grid;
+  float: left;
+  text-align: left;
+  padding-left: 5px;
+}
+
+.free_workout {
+  color: red;
+}
+

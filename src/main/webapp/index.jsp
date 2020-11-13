@@ -3,6 +3,6 @@
 <html>
 <head><title>Index</title></head>
 <body>
-<jsp:forward page="/jsp/homepage.jsp"/>
+<jsp:forward page="controller?commandName=home_page"/>
 </body>
 </html>

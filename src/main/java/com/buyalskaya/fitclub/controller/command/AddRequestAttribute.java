@@ -1,0 +1,122 @@
+package com.buyalskaya.fitclub.controller.command;
+
+import com.buyalskaya.fitclub.controller.AttributeName;
+import com.buyalskaya.fitclub.controller.ParameterName;
+import com.buyalskaya.fitclub.exception.ServiceException;
+import com.buyalskaya.fitclub.model.entity.*;
+import com.buyalskaya.fitclub.model.service.*;
+import com.buyalskaya.fitclub.util.CommonUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class AddRequestAttribute {
+    public static final int START_PAGE = 1;
+    private static final int AMOUNT_OF_SHOWED_RECORDS = 10;
+
+    public static void forInstructorPage(HttpServletRequest request, String login) throws ServiceException {
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        Staff staff = userService.findStaffByLogin(login).get();
+        HttpSession session = request.getSession();
+        session.setAttribute(AttributeName.SESSION_USER, staff);
+        ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
+        List<Schedule> instructorSchedule = scheduleService.findInstructorSchedule(staff.getIdUser());
+        request.setAttribute(AttributeName.SCHEDULE, instructorSchedule);
+        hallsNames(request, instructorSchedule);
+    }
+
+    public static void forClientPage(HttpServletRequest request, int idUser) throws ServiceException {
+        ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
+        List<Schedule> clientSchedule = scheduleService.findClientSchedule(idUser);
+        request.setAttribute(AttributeName.SCHEDULE, clientSchedule);
+        hallsNames(request, clientSchedule);
+        MembershipService membershipService = ServiceFactory.getInstance().getMembershipService();
+        List<ClientMembership> memberships = membershipService.findActiveClientMemberships(idUser);
+        request.setAttribute(AttributeName.CLIENT_MEMBERSHIPS, memberships);
+    }
+
+    public static void forAdministratorPage(HttpServletRequest request, String login) throws ServiceException {
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        Staff staff = userService.findStaffByLogin(login).get();
+        HttpSession session = request.getSession();
+        session.setAttribute(AttributeName.SESSION_USER, staff);
+    }
+
+    public static void forWorkout(HttpServletRequest request) throws ServiceException {
+        WorkoutService workoutService = ServiceFactory.getInstance().getWorkoutService();
+        List<Workout> workoutsLow = workoutService.findByLevel(Workout.Level.LOW);
+        List<Workout> workoutsMiddle = workoutService.findByLevel(Workout.Level.MIDDLE);
+        List<Workout> workoutsHigh = workoutService.findByLevel(Workout.Level.HIGH);
+        request.setAttribute(AttributeName.WORKOUTS_LOW, workoutsLow);
+        request.setAttribute(AttributeName.WORKOUTS_MIDDLE, workoutsMiddle);
+        request.setAttribute(AttributeName.WORKOUTS_HIGH, workoutsHigh);
+    }
+
+    public static void forCheckPresence(HttpServletRequest request, String idClient) throws ServiceException {
+        MembershipService membershipService = ServiceFactory.getInstance().getMembershipService();
+        List<ClientMembership> memberships = membershipService.findActiveClientMemberships(idClient);
+        request.setAttribute(AttributeName.CLIENT_MEMBERSHIPS, memberships);
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        String clientName = userService.findClientName(idClient);
+        request.setAttribute(AttributeName.CLIENT_NAME, clientName);
+    }
+
+    private static void hallsNames(HttpServletRequest request, List<Schedule> schedules) {
+        if (!schedules.isEmpty()) {
+            Set<String> nameHalls = CommonUtil.findNameHalls(schedules);
+            request.setAttribute(AttributeName.HALLS_NAME, nameHalls);
+        }
+    }
+
+    public static void forSchedulePage(HttpServletRequest request) throws ServiceException {
+        String numberWeek = request.getParameter(ParameterName.SCHEDULE_NUMBER_WEEK);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(AttributeName.SESSION_USER);
+        ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
+        List<Schedule> schedules = scheduleService.findScheduleWeek(numberWeek, user);
+        boolean hasNextWeekSchedule = scheduleService.hasScheduleNextWeek(numberWeek);
+        request.setAttribute(AttributeName.HAS_NEXT_WEEK_SCHEDULE, hasNextWeekSchedule);
+        request.setAttribute(AttributeName.SCHEDULES, schedules);
+        request.setAttribute(AttributeName.HALLS_TIME, CommonUtil.findTimesInEachHall(schedules));
+        request.setAttribute(AttributeName.HALLS_DATE, CommonUtil.findDatesInEachHall(schedules));
+        request.setAttribute(AttributeName.SCHEDULE_NUMBER_WEEK, (numberWeek == null) ? 0 : numberWeek);
+    }
+
+    public static void forChangeSchedulePage(HttpServletRequest request) throws ServiceException {
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        Map<Integer, String> instructorsName = userService.findNameInstructors();
+        request.setAttribute(AttributeName.INSTRUCTORS, instructorsName);
+        HallService hallService = ServiceFactory.getInstance().getHallService();
+        Map<Integer, String> hallsName = hallService.findNameHalls();
+        request.setAttribute(AttributeName.HALLS_NAME, hallsName);
+        WorkoutService workoutService = ServiceFactory.getInstance().getWorkoutService();
+        Map<Integer, String> workoutsName = workoutService.findNameWorkouts();
+        request.setAttribute(AttributeName.WORKOUTS_NAME, workoutsName);
+    }
+
+    public static void forAllUsersPage(HttpServletRequest request,
+                                       String surnameSearch, String numberPage) throws ServiceException {
+        List<Staff> users;
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        if (surnameSearch == null || surnameSearch.isEmpty()) {
+            int pagesAmount = userService.countPagesAmount(AMOUNT_OF_SHOWED_RECORDS);
+            request.setAttribute(AttributeName.PAGE_AMOUNT, pagesAmount);
+            users = userService.findUsersInRange(numberPage, AMOUNT_OF_SHOWED_RECORDS);
+        } else {
+            users = userService.findUserBySurname(surnameSearch);
+            request.setAttribute(AttributeName.PAGE_AMOUNT, START_PAGE);
+        }
+        request.setAttribute(AttributeName.USERS, users);
+        Map<Integer, String> userRoles = userService.findUserRoles();
+        Map<Integer, String> userStatuses = userService.findUserStatuses();
+        request.setAttribute(AttributeName.USER_ROLES, userRoles);
+        request.setAttribute(AttributeName.USER_STATUSES, userStatuses);
+        request.setAttribute(AttributeName.USERS_NUMBER_PAGE, (numberPage == null) ? START_PAGE : numberPage);
+    }
+
+    private AddRequestAttribute() {
+    }
+}
