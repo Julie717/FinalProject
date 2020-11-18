@@ -10,8 +10,8 @@ import com.buyalskaya.fitclub.model.entity.Staff;
 import com.buyalskaya.fitclub.model.entity.User;
 import com.buyalskaya.fitclub.model.entity.UserRole;
 import com.buyalskaya.fitclub.model.service.ServiceFactory;
-import com.buyalskaya.fitclub.pageconfiguration.ConfigurationManager;
-import com.buyalskaya.fitclub.pageconfiguration.PageConfigName;
+import com.buyalskaya.fitclub.util.ConfigurationManager;
+import com.buyalskaya.fitclub.util.PageConfigName;
 import com.buyalskaya.fitclub.util.CommonUtil;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -34,7 +34,7 @@ public class UpdateClientInfoCommand implements Command {
         boolean isUpdate = false;
         try {
             if (user.getRole() == UserRole.CLIENT) {
-                Map<String, String> userParameters = receiveClientParametersFromRequest(request, user);
+                Map<String, String> userParameters = receiveClientParametersFromRequest(request);
                 if (!userParameters.isEmpty()) {
                     isUpdate = ServiceFactory.getInstance().getUserService()
                             .updateClientInfo(userParameters, user, locale);
@@ -42,7 +42,7 @@ public class UpdateClientInfoCommand implements Command {
                 AddRequestAttribute.forClientPage(request, user.getIdUser());
             } else {
                 Staff staff = (Staff) user;
-                Map<String, String> staffParameters = receiveStaffParametersFromRequest(request, staff);
+                Map<String, String> staffParameters = receiveStaffParametersFromRequest(request);
                 if (!staffParameters.isEmpty()) {
                     isUpdate = ServiceFactory.getInstance().getUserService()
                             .updateStaffInfo(staffParameters, staff, locale);
@@ -62,46 +62,22 @@ public class UpdateClientInfoCommand implements Command {
         return new Router(page);
     }
 
-    private Map<String, String> receiveClientParametersFromRequest(HttpServletRequest request, User user) {
+    private Map<String, String> receiveClientParametersFromRequest(HttpServletRequest request) {
         Map<String, String> userParameters = new HashMap();
-        String newValue = request.getParameter(ParameterName.USER_LOGIN);
-        if (newValue != null && !newValue.isEmpty() && !user.getLogin().equals(newValue)) {
-            userParameters.put(ParameterName.USER_LOGIN, newValue);
-        }
-        newValue = request.getParameter(ParameterName.USER_NAME);
-        if (newValue != null && !newValue.isEmpty() && !user.getName().equals(newValue)) {
-            userParameters.put(ParameterName.USER_NAME, newValue);
-        }
-        newValue = request.getParameter(ParameterName.USER_SURNAME);
-        if (newValue != null && !newValue.isEmpty() && !user.getSurname().equals(newValue)) {
-            userParameters.put(ParameterName.USER_SURNAME, newValue);
-        }
-        newValue = CommonUtil.transformPhone(request.getParameter(ParameterName.USER_PHONE));
-        if (newValue != null && !newValue.isEmpty() && !user.getPhoneNumber().equals(newValue)) {
-            userParameters.put(ParameterName.USER_PHONE, newValue);
-        }
-        newValue = request.getParameter(ParameterName.USER_EMAIL);
-        if (newValue != null && !newValue.isEmpty() && !user.getEmail().equals(newValue)) {
-            userParameters.put(ParameterName.USER_EMAIL, newValue);
-        }
-        newValue = request.getParameter(ParameterName.USER_BIRTHDAY);
-        if (newValue != null && !newValue.isEmpty() && !user.getBirthday().equals(newValue)) {
-            userParameters.put(ParameterName.USER_BIRTHDAY, request.getParameter(ParameterName.USER_BIRTHDAY));
-        }
+        userParameters.put(ParameterName.USER_LOGIN, request.getParameter(ParameterName.USER_LOGIN));
+        userParameters.put(ParameterName.USER_NAME, request.getParameter(ParameterName.USER_NAME));
+        userParameters.put(ParameterName.USER_SURNAME, request.getParameter(ParameterName.USER_SURNAME));
+        String phone = CommonUtil.transformPhone(request.getParameter(ParameterName.USER_PHONE));
+        userParameters.put(ParameterName.USER_PHONE, phone);
+        userParameters.put(ParameterName.USER_EMAIL, request.getParameter(ParameterName.USER_EMAIL));
+        userParameters.put(ParameterName.USER_BIRTHDAY, request.getParameter(ParameterName.USER_BIRTHDAY));
         return userParameters;
     }
 
-    private Map<String, String> receiveStaffParametersFromRequest(HttpServletRequest request, Staff staff) {
-        Map<String, String> userParameters = receiveClientParametersFromRequest(request, staff);
-        String newValue = request.getParameter(ParameterName.WORK_EXPERIENCE);
-        if (newValue != null && !newValue.isEmpty() &&
-                !newValue.equals(String.valueOf(staff.getWorkExperience()))) {
-            userParameters.put(ParameterName.WORK_EXPERIENCE, newValue);
-        }
-        newValue = request.getParameter(ParameterName.STAFF_DESCRIPTION).trim();
-        if (newValue != null && !newValue.isEmpty() && !staff.getDescription().equals(newValue)) {
-            userParameters.put(ParameterName.STAFF_DESCRIPTION, newValue);
-        }
+    private Map<String, String> receiveStaffParametersFromRequest(HttpServletRequest request) {
+        Map<String, String> userParameters = receiveClientParametersFromRequest(request);
+        userParameters.put(ParameterName.WORK_EXPERIENCE, request.getParameter(ParameterName.WORK_EXPERIENCE));
+        userParameters.put(ParameterName.STAFF_DESCRIPTION, request.getParameter(ParameterName.STAFF_DESCRIPTION));
         return userParameters;
     }
 }

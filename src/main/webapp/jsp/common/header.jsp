@@ -38,7 +38,7 @@
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" href="#" id="ggg">
+                    <a class="nav-link active" href="${pageContext.request.contextPath}controller?commandName=about_us_page">
                         <fmt:message key="header.about_us"/>
                     </a>
                 </li>
@@ -56,7 +56,7 @@
                             key="header.instructors"/></a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" href="#"><fmt:message key="header.contacts"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}controller?commandName=contacts_page"><fmt:message key="header.contacts"/></a>
                 </li>
                 <li class="nav-item" role="presentation" id="language">
                     <c:choose>

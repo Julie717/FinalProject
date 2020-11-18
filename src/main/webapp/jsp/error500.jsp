@@ -23,7 +23,7 @@
         </p>
         <p>
             <a class="btn btn-primary text-uppercase" role="button"
-               href="${pageContext.request.contextPath}controller?commandName=home_page">
+               href="${pageContext.request.contextPath}/controller?commandName=home_page">
                 <fmt:message key="error.back"/>
             </a>
         </p>

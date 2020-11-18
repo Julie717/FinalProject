@@ -2,8 +2,8 @@ package com.buyalskaya.fitclub.controller.command.impl;
 
 import com.buyalskaya.fitclub.controller.Router;
 import com.buyalskaya.fitclub.controller.command.Command;
-import com.buyalskaya.fitclub.pageconfiguration.ConfigurationManager;
-import com.buyalskaya.fitclub.pageconfiguration.PageConfigName;
+import com.buyalskaya.fitclub.util.ConfigurationManager;
+import com.buyalskaya.fitclub.util.PageConfigName;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

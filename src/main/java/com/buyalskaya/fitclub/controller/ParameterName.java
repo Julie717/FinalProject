@@ -1,5 +1,12 @@
 package com.buyalskaya.fitclub.controller;
 
+/**
+ * The type Parameter name.
+ * It is used to store the parameter's names in request.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class ParameterName {
     public static final String COMMAND_NAME = "commandName";
     public static final String USER_ID = "idUser";
@@ -41,6 +48,10 @@ public class ParameterName {
     public static final String USER_STATUS = "userStatus";
     public static final String STAFF_START_WORKING_DATE = "startWorkingDate";
     public static final String STAFF_END_WORKING_DATE = "endWorkingDate";
+    public static final String CONTACT_US_NAME = "name";
+    public static final String CONTACT_US_PHONE = "phone";
+    public static final String CONTACT_US_EMAIL = "email";
+    public static final String CONTACT_US_MESSAGE = "message";
 
     private ParameterName() {
     }

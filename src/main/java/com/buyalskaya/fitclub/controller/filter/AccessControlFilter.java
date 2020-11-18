@@ -5,8 +5,11 @@ import com.buyalskaya.fitclub.controller.ParameterName;
 import com.buyalskaya.fitclub.controller.command.CommandAccessControl;
 import com.buyalskaya.fitclub.controller.command.CommandType;
 import com.buyalskaya.fitclub.model.entity.User;
-import com.buyalskaya.fitclub.pageconfiguration.ConfigurationManager;
-import com.buyalskaya.fitclub.pageconfiguration.PageConfigName;
+import com.buyalskaya.fitclub.util.ConfigurationManager;
+import com.buyalskaya.fitclub.util.PageConfigName;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -18,8 +21,17 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The type Access control filter.
+ * This filter denies the access to commands than don't
+ * available by user's role and returns a mistake 403 (forbidden access)
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = {"/*"})
 public class AccessControlFilter implements Filter {
+    private static final Logger logger = LogManager.getLogger();
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
@@ -43,6 +55,7 @@ public class AccessControlFilter implements Filter {
             }
             if (!availableCommands.contains(commandType.get())) {
                 String page = ConfigurationManager.getProperty(PageConfigName.ERROR_403);
+                logger.log(Level.WARN, "An attempt to receive access to commands that doesn't allow for this user's role");
                 request.getRequestDispatcher(page).forward(request, response);
                 return;
             }

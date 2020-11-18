@@ -1,6 +1,7 @@
 package com.buyalskaya.fitclub.model.service;
 
 import com.buyalskaya.fitclub.exception.ServiceException;
+import com.buyalskaya.fitclub.model.entity.ClientSchedule;
 import com.buyalskaya.fitclub.model.entity.Schedule;
 import com.buyalskaya.fitclub.model.entity.User;
 
@@ -13,9 +14,9 @@ public interface ScheduleService {
 
     boolean hasScheduleNextWeek(String numberWeek) throws ServiceException;
 
-    List<Schedule> findClientSchedule(int idClient) throws ServiceException;
+    List<ClientSchedule> findClientSchedule(int idClient) throws ServiceException;
 
-    List<Schedule> findInstructorSchedule(int idInstructor) throws ServiceException;
+    List<ClientSchedule> findInstructorSchedule(int idInstructor) throws ServiceException;
 
     boolean subscribeClient(int idUser, String idSchedule, String subscribe) throws ServiceException;
 

@@ -37,7 +37,8 @@ public class SqlQuery {
 
     public static final String SELECT_SCHEDULE = "SELECT schedules.id_schedule, start_date, start_time, " +
             "capacity, duration, workouts.id_workout, IFNULL(capacity-occupied_places, capacity) AS free_capacity, " +
-            "name_workout, id_workout_level, description, users.id_user, users.surname, users.name, halls.name_hall " +
+            "name_workout, id_workout_level, description, users.id_user, users.surname, users.name, halls.id_hall, " +
+            "halls.name_hall " +
             "FROM schedules JOIN workouts " +
             "ON (schedules.id_workout = workouts.id_workout) " +
             "JOIN users ON (schedules.id_instructor = users.id_user) " +
@@ -50,7 +51,8 @@ public class SqlQuery {
 
     public static final String SELECT_ALL_SCHEDULE_FOR_CLIENT = "SELECT schedules.id_schedule, start_date, start_time, " +
             "capacity, duration, workouts.id_workout, IFNULL(capacity-occupied_places, capacity) AS free_capacity, " +
-            "name_workout, id_workout_level, description, users.id_user, users.surname, users.name, halls.name_hall, " +
+            "name_workout, id_workout_level, description, users.id_user, users.surname, users.name, " +
+            "halls.id_hall, halls.name_hall, " +
             "IFNULL(client_subscribed.subscribed, 0) AS subscribed " +
             "FROM schedules JOIN workouts " +
             "ON (schedules.id_workout = workouts.id_workout) " +
@@ -69,7 +71,8 @@ public class SqlQuery {
 
     public static final String SELECT_CLIENT_SCHEDULE = "SELECT schedules.id_schedule, start_date, start_time, " +
             "capacity, duration, workouts.id_workout, IFNULL(capacity-occupied_places, capacity) AS free_capacity, " +
-            "name_workout, id_workout_level, workouts.description, users.id_user, users.surname, users.name, halls.name_hall " +
+            "name_workout, id_workout_level, workouts.description, users.id_user, users.surname, users.name, " +
+            "halls.id_hall, halls.name_hall " +
             "FROM schedules JOIN workouts " +
             "ON (schedules.id_workout = workouts.id_workout) " +
             "JOIN users ON (schedules.id_instructor = users.id_user) " +
@@ -92,7 +95,8 @@ public class SqlQuery {
 
     public static final String SELECT_INSTRUCTOR_SCHEDULE = "SELECT schedules.id_schedule, start_date, start_time, " +
             "capacity, duration, workouts.id_workout, IFNULL(capacity-occupied_places, capacity) AS free_capacity, " +
-            "name_workout, id_workout_level, workouts.description, users.id_user, users.surname, users.name, halls.name_hall " +
+            "name_workout, id_workout_level, workouts.description, users.id_user, users.surname, users.name, " +
+            "halls.id_hall, halls.name_hall " +
             "FROM schedules JOIN workouts " +
             "ON (schedules.id_workout = workouts.id_workout) " +
             "JOIN users ON (schedules.id_instructor = users.id_user) " +
@@ -152,7 +156,8 @@ public class SqlQuery {
 
     public static final String SELECT_ONE_SCHEDULE = "SELECT schedules.id_schedule, start_date, start_time, " +
             "capacity, duration, workouts.id_workout, IFNULL(capacity-occupied_places, capacity) AS free_capacity, " +
-            "name_workout, id_workout_level, description, users.id_user, users.surname, users.name, halls.name_hall " +
+            "name_workout, id_workout_level, description, users.id_user, users.surname, users.name, " +
+            "halls.id_hall, halls.name_hall " +
             "FROM schedules JOIN workouts " +
             "ON (schedules.id_workout = workouts.id_workout) " +
             "JOIN users ON (schedules.id_instructor = users.id_user) " +
@@ -164,7 +169,7 @@ public class SqlQuery {
             "WHERE (schedules.id_schedule = ?)";
 
     public static final String SELECT_SUBSCRIBED_CLIENTS = "SELECT id_user, login, " +
-            "surname, name, email, id_client_membership " +
+            "surname, name, phone_number, email, id_client_membership " +
             "FROM users " +
             "JOIN client_schedules " +
             "ON(users.id_user = client_schedules.id_client) " +
@@ -249,7 +254,8 @@ public class SqlQuery {
 
     public static final String IS_FREE_TIME = "SELECT count(id_schedule) AS exist_schedule " +
             "FROM schedules " +
-            "WHERE id_hall = ? AND start_date = ? AND start_time = ? AND id_schedule != ?";
+            "WHERE id_hall = ? AND start_date = ? AND (start_time <= ? AND start_time+duration >= ? OR " +
+            "            start_time <= ? AND start_time+duration >= ?) AND id_schedule != ?";
 
     public static final String INSERT_SCHEDULE = "INSERT INTO schedules (start_date, start_time, " +
             "duration, capacity, id_workout, id_hall, id_instructor) VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -301,6 +307,14 @@ public class SqlQuery {
     public static final String UPDATE_USER_STATUS = "UPDATE users " +
             "SET id_status = ? " +
             "WHERE (users.id_user = ?)";
+
+    public static final String SELECT_SCHEDULE_BY_ID = "SELECT id_schedule, start_date, start_time, duration, " +
+            "capacity, id_workout, id_hall, id_instructor AS id_user FROM schedules WHERE id_schedule = ?";
+
+    public static final String SELECT_AMOUNT_OF_OCCUPIED_PLACES = "SELECT COUNT(id_client) AS occupied_places " +
+            "FROM client_schedules " +
+            "GROUP BY(id_schedule) " +
+            "HAVING (id_schedule = ?)";
 
     private SqlQuery() {
     }

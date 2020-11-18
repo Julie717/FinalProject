@@ -1,4 +1,4 @@
-package com.buyalskaya.fitclub.pageconfiguration;
+package com.buyalskaya.fitclub.util;
 
 public final class PageConfigName {
     public static final String INDEX = "index";
@@ -20,6 +20,13 @@ public final class PageConfigName {
     public static final String ADD_SCHEDULE="add_schedule";
     public static final String ALL_USERS="all_users";
     public static final String MEMBERSHIP="membership";
+    public static final String ABOUT_US="about_us";
+    public static final String CONTACTS="contacts";
+    public static final String CONTACT_US="contact_us";
+    public static final String TELEGRAM="telegram";
+    public static final String INSTAGRAM="instagram";
+    public static final String VKONTAKTE="vkontakte";
+
 
     private PageConfigName() {
     }

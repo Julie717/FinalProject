@@ -1,5 +1,12 @@
 package com.buyalskaya.fitclub.controller;
 
+/**
+ * The type Attribute name.
+ * It is used to store the attribute's names in session or request.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class AttributeName {
     public static final String SESSION_USER = "user";
     public static final String SESSION_CURRENT_PAGE = "page";
@@ -44,6 +51,8 @@ public class AttributeName {
     public static final String PAGE_AMOUNT = "pageAmount";
     public static final String USERS = "users";
     public static final String USERS_NUMBER_PAGE = "numberPage";
+    public static final String SHOW_MODAL_CONTACT_US = "showModalContactUs";
+    public static final String SEND_MESSAGE_TO_ADMIN = "isSend";
 
     private AttributeName() {
     }

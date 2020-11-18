@@ -13,6 +13,7 @@ import com.buyalskaya.fitclub.validator.CommonValidator;
 import com.buyalskaya.fitclub.validator.ScheduleValidator;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -66,8 +67,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<Schedule> findClientSchedule(int idClient) throws ServiceException {
-        List<Schedule> schedules;
+    public List<ClientSchedule> findClientSchedule(int idClient) throws ServiceException {
+        List<ClientSchedule> schedules;
         try {
             ScheduleDao scheduleDao = DaoFactory.getInstance().getScheduleDao();
             schedules = scheduleDao.findClientSchedule(idClient);
@@ -81,8 +82,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<Schedule> findInstructorSchedule(int idInstructor) throws ServiceException {
-        List<Schedule> schedules;
+    public List<ClientSchedule> findInstructorSchedule(int idInstructor) throws ServiceException {
+        List<ClientSchedule> schedules;
         try {
             ScheduleDao scheduleDao = DaoFactory.getInstance().getScheduleDao();
             schedules = scheduleDao.findInstructorSchedule(idInstructor);
@@ -102,7 +103,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             try {
                 int correctIdSchedule = Integer.parseInt(idSchedule);
                 ScheduleDao scheduleDao = DaoFactory.getInstance().getScheduleDao();
-                if (subscribe.equals(TRUE)) {
+                if (subscribe.equalsIgnoreCase(TRUE)) {
                     isChanged = scheduleDao.unsubscribeClient(idUser, correctIdSchedule);
                 } else {
                     isChanged = scheduleDao.subscribeClient(idUser, correctIdSchedule);
@@ -160,25 +161,50 @@ public class ScheduleServiceImpl implements ScheduleService {
                 CommonValidator.isIdValid(scheduleParameters.get(ParameterName.SCHEDULE_ID))) {
             Schedule schedule = ScheduleCreator.createSchedule(scheduleParameters, locale);
             try {
-                WorkoutDao workoutDao = DaoFactory.getInstance().getWorkoutDao();
-                boolean isWorkoutExist = workoutDao.isWorkoutExist(schedule.getWorkout().getIdWorkout());
-                HallDao hallDao = DaoFactory.getInstance().getHallDao();
-                boolean isHallExist = hallDao.isHallExist(schedule.getIdHall());
-                UserDao userDao = DaoFactory.getInstance().getUserDao();
-                boolean isInstructorExist = userDao.isInstructorExist(schedule.getIdInstructor());
                 ScheduleDao scheduleDao = DaoFactory.getInstance().getScheduleDao();
-                if (isWorkoutExist && isHallExist && isInstructorExist) {
-                    boolean isFree = scheduleDao.isFreeTime(schedule.getIdHall(), schedule.getStartDate(),
-                            schedule.getStartTime(), schedule.getIdSchedule());
-                    if (isFree) {
-                        isUpdated = scheduleDao.updateScheduleParameters(schedule);
+                Optional<Schedule> currentScheduleOpt = scheduleDao.findScheduleById(schedule.getIdSchedule());
+                if (currentScheduleOpt.isPresent()) {
+                    Schedule currentSchedule = currentScheduleOpt.get();
+                    if (isCorrectParametersForUpdateSchedule(schedule, currentSchedule)) {
+                        int duration = schedule.getDuration();
+                        LocalTime endTime = schedule.getStartTime().plusMinutes(duration);
+                        boolean isFree = scheduleDao.isFreeTime(schedule.getIdHall(), schedule.getStartDate(),
+                                schedule.getStartTime(), endTime, schedule.getIdSchedule());
+                        if (isFree) {
+                            isUpdated = scheduleDao.updateScheduleParameters(schedule);
+                            if (isUpdated && (!schedule.getStartDate().equals(currentSchedule.getStartDate()) ||
+                                    !schedule.getStartTime().equals(currentSchedule.getStartTime()))) {
+                                UserDao userDao = DaoFactory.getInstance().getUserDao();
+                                List<Client> subscribedClients = userDao.findSubscribedClients(schedule.getIdSchedule());
+                                if (!subscribedClients.isEmpty()) {
+                                    subscribedClients.forEach(c -> MailCreator.sendMailToUpdateWorkout(locale,
+                                            c.getEmail(), c.getName(), schedule, currentSchedule));
+                                }
+                            }
+                        }
                     }
                 }
-            } catch (DaoException ex) {
+            } catch (
+                    DaoException ex) {
                 throw new ServiceException("Error during update schedule parameters", ex);
             }
         }
         return isUpdated;
+    }
+
+    private boolean isCorrectParametersForUpdateSchedule(Schedule schedule, Schedule currentSchedule)
+            throws DaoException {
+        ScheduleDao scheduleDao = DaoFactory.getInstance().getScheduleDao();
+        boolean isCorrect = !schedule.equals(currentSchedule);
+        int occupiedPlaces = scheduleDao.findAmountOfOccupiedPlaces(schedule.getIdSchedule());
+        isCorrect = isCorrect && (occupiedPlaces <= schedule.getCapacity());
+        WorkoutDao workoutDao = DaoFactory.getInstance().getWorkoutDao();
+        isCorrect = isCorrect && workoutDao.isWorkoutExist(schedule.getWorkout().getIdWorkout());
+        HallDao hallDao = DaoFactory.getInstance().getHallDao();
+        isCorrect = isCorrect && hallDao.isHallExist(schedule.getIdHall());
+        UserDao userDao = DaoFactory.getInstance().getUserDao();
+        isCorrect = isCorrect && userDao.isInstructorExist(schedule.getIdInstructor());
+        return isCorrect;
     }
 
     @Override
@@ -195,8 +221,10 @@ public class ScheduleServiceImpl implements ScheduleService {
                 boolean isHallExist = hallDao.isHallExist(schedule.getIdHall());
                 boolean isInstructorExist = userDao.isInstructorExist(schedule.getIdInstructor());
                 if (isWorkoutExist && isHallExist && isInstructorExist) {
+                    int duration = schedule.getDuration();
+                    LocalTime endTime = schedule.getStartTime().plusMinutes(duration);
                     boolean isFree = scheduleDao.isFreeTime(schedule.getIdHall(), schedule.getStartDate(),
-                            schedule.getStartTime(), IMPOSSIBLE_SCHEDULE_ID);
+                            schedule.getStartTime(), endTime, IMPOSSIBLE_SCHEDULE_ID);
                     if (isFree) {
                         isAdded = DaoFactory.getInstance().getScheduleDao()
                                 .add(schedule);

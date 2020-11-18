@@ -5,9 +5,27 @@ import java.util.Set;
 
 import static com.buyalskaya.fitclub.controller.command.CommandType.*;
 
+/**
+ * The enum Command access control.
+ * It uses to control an access for users with different roles
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public enum CommandAccessControl {
+    /**
+     * Administrator command access control.
+     * The set of command is available for administrators
+     */
     ADMINISTRATOR(EnumSet.of(
             HOME_PAGE,
+            ABOUT_US_PAGE,
+            CONTACT_US_PAGE,
+            CONTACT_US,
+            TELEGRAM_PAGE,
+            INSTAGRAM_PAGE,
+            VKONTAKTE_PAGE,
+            CONTACTS_PAGE,
             CHANGE_LOCALE,
             WORKOUT_PAGE,
             LOW_WORKOUT_PAGE,
@@ -36,8 +54,19 @@ public enum CommandAccessControl {
             MEMBERSHIP_PAGE
     )),
 
+    /**
+     * Instructor command access control.
+     * The set of command is available for instructors
+     */
     INSTRUCTOR(EnumSet.of(
             HOME_PAGE,
+            ABOUT_US_PAGE,
+            CONTACT_US_PAGE,
+            CONTACT_US,
+            CONTACTS_PAGE,
+            TELEGRAM_PAGE,
+            INSTAGRAM_PAGE,
+            VKONTAKTE_PAGE,
             CHANGE_LOCALE,
             WORKOUT_PAGE,
             LOW_WORKOUT_PAGE,
@@ -53,8 +82,19 @@ public enum CommandAccessControl {
             MEMBERSHIP_PAGE
     )),
 
+    /**
+     * Client command access control.
+     * The set of command is available for clients
+     */
     CLIENT(EnumSet.of(
             HOME_PAGE,
+            ABOUT_US_PAGE,
+            CONTACT_US_PAGE,
+            CONTACT_US,
+            CONTACTS_PAGE,
+            TELEGRAM_PAGE,
+            INSTAGRAM_PAGE,
+            VKONTAKTE_PAGE,
             CHANGE_LOCALE,
             WORKOUT_PAGE,
             LOW_WORKOUT_PAGE,
@@ -72,8 +112,19 @@ public enum CommandAccessControl {
             MEMBERSHIP_PAGE
     )),
 
+    /**
+     * Guest command access control.
+     * The set of command is available for non-register users
+     */
     GUEST(EnumSet.of(
             HOME_PAGE,
+            ABOUT_US_PAGE,
+            CONTACT_US_PAGE,
+            CONTACT_US,
+            CONTACTS_PAGE,
+            TELEGRAM_PAGE,
+            INSTAGRAM_PAGE,
+            VKONTAKTE_PAGE,
             CHANGE_LOCALE,
             WORKOUT_PAGE,
             LOW_WORKOUT_PAGE,
@@ -94,6 +145,11 @@ public enum CommandAccessControl {
         this.availableCommands = availableCommands;
     }
 
+    /**
+     * Gets available commands.
+     *
+     * @return the available commands
+     */
     public Set<CommandType> getAvailableCommands() {
         return availableCommands;
     }

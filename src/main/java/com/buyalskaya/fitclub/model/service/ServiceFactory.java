@@ -10,6 +10,7 @@ public class ServiceFactory {
     private final ScheduleService scheduleService = new ScheduleServiceImpl();
     private final MembershipService membershipService = new MembershipServiceImpl();
     private final HallService hallService = new HallServiceImpl();
+    private final ContactService contactService = new ContactServiceImpl();
 
     private ServiceFactory() {
     }
@@ -32,6 +33,10 @@ public class ServiceFactory {
 
     public HallService getHallService() {
         return hallService;
+    }
+
+    public ContactService getContactService() {
+        return contactService;
     }
 
     public static ServiceFactory getInstance() {

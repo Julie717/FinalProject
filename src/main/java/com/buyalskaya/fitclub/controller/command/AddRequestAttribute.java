@@ -13,24 +13,49 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The type Add request attribute.
+ */
 public class AddRequestAttribute {
+    /**
+     * The constant START_PAGE is store the number of the first page
+     */
     public static final int START_PAGE = 1;
+    /**
+     * The constant AMOUNT_OF_SHOWED_RECORDS is store the number of records that will show in the jsp
+     */
     private static final int AMOUNT_OF_SHOWED_RECORDS = 10;
 
+    /**
+     * For instructor page.
+     * Add request attributes to open instructor's private cabinet page
+     *
+     * @param request the request
+     * @param login   the login
+     * @throws ServiceException the service exception
+     */
     public static void forInstructorPage(HttpServletRequest request, String login) throws ServiceException {
         UserService userService = ServiceFactory.getInstance().getUserService();
         Staff staff = userService.findStaffByLogin(login).get();
         HttpSession session = request.getSession();
         session.setAttribute(AttributeName.SESSION_USER, staff);
         ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
-        List<Schedule> instructorSchedule = scheduleService.findInstructorSchedule(staff.getIdUser());
+        List<ClientSchedule> instructorSchedule = scheduleService.findInstructorSchedule(staff.getIdUser());
         request.setAttribute(AttributeName.SCHEDULE, instructorSchedule);
         hallsNames(request, instructorSchedule);
     }
 
+    /**
+     * For client page.
+     * Add request attributes to open client's private cabinet page
+     *
+     * @param request the request
+     * @param idUser  the id user
+     * @throws ServiceException the service exception
+     */
     public static void forClientPage(HttpServletRequest request, int idUser) throws ServiceException {
         ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
-        List<Schedule> clientSchedule = scheduleService.findClientSchedule(idUser);
+        List<ClientSchedule> clientSchedule = scheduleService.findClientSchedule(idUser);
         request.setAttribute(AttributeName.SCHEDULE, clientSchedule);
         hallsNames(request, clientSchedule);
         MembershipService membershipService = ServiceFactory.getInstance().getMembershipService();
@@ -38,6 +63,14 @@ public class AddRequestAttribute {
         request.setAttribute(AttributeName.CLIENT_MEMBERSHIPS, memberships);
     }
 
+    /**
+     * For administrator page.
+     * Add request attributes to open administrator's private cabinet page
+     *
+     * @param request the request
+     * @param login   the login
+     * @throws ServiceException the service exception
+     */
     public static void forAdministratorPage(HttpServletRequest request, String login) throws ServiceException {
         UserService userService = ServiceFactory.getInstance().getUserService();
         Staff staff = userService.findStaffByLogin(login).get();
@@ -45,6 +78,13 @@ public class AddRequestAttribute {
         session.setAttribute(AttributeName.SESSION_USER, staff);
     }
 
+    /**
+     * For workout.
+     * Add request attributes to open page with workouts
+     *
+     * @param request the request
+     * @throws ServiceException the service exception
+     */
     public static void forWorkout(HttpServletRequest request) throws ServiceException {
         WorkoutService workoutService = ServiceFactory.getInstance().getWorkoutService();
         List<Workout> workoutsLow = workoutService.findByLevel(Workout.Level.LOW);
@@ -55,6 +95,14 @@ public class AddRequestAttribute {
         request.setAttribute(AttributeName.WORKOUTS_HIGH, workoutsHigh);
     }
 
+    /**
+     * For check presence.
+     * Add request attributes to open page on which administrator check client's presence
+     *
+     * @param request  the request
+     * @param idClient the id client
+     * @throws ServiceException the service exception
+     */
     public static void forCheckPresence(HttpServletRequest request, String idClient) throws ServiceException {
         MembershipService membershipService = ServiceFactory.getInstance().getMembershipService();
         List<ClientMembership> memberships = membershipService.findActiveClientMemberships(idClient);
@@ -64,13 +112,28 @@ public class AddRequestAttribute {
         request.setAttribute(AttributeName.CLIENT_NAME, clientName);
     }
 
-    private static void hallsNames(HttpServletRequest request, List<Schedule> schedules) {
+    /**
+     * HallsNames.
+     * Add set of hall's names from schedule to the request
+     *
+     * @param request  the request
+     * @param schedules the schedules
+     */
+
+    private static void hallsNames(HttpServletRequest request, List<? extends Schedule> schedules) {
         if (!schedules.isEmpty()) {
             Set<String> nameHalls = CommonUtil.findNameHalls(schedules);
             request.setAttribute(AttributeName.HALLS_NAME, nameHalls);
         }
     }
 
+    /**
+     * For schedule page.
+     * Add request attributes to page with schedule
+     *
+     * @param request the request
+     * @throws ServiceException the service exception
+     */
     public static void forSchedulePage(HttpServletRequest request) throws ServiceException {
         String numberWeek = request.getParameter(ParameterName.SCHEDULE_NUMBER_WEEK);
         HttpSession session = request.getSession();
@@ -85,6 +148,13 @@ public class AddRequestAttribute {
         request.setAttribute(AttributeName.SCHEDULE_NUMBER_WEEK, (numberWeek == null) ? 0 : numberWeek);
     }
 
+    /**
+     * For change schedule page.
+     * Add request attributes to schedule page on which administrator can edit schedule
+     *
+     * @param request the request
+     * @throws ServiceException the service exception
+     */
     public static void forChangeSchedulePage(HttpServletRequest request) throws ServiceException {
         UserService userService = ServiceFactory.getInstance().getUserService();
         Map<Integer, String> instructorsName = userService.findNameInstructors();
@@ -97,6 +167,15 @@ public class AddRequestAttribute {
         request.setAttribute(AttributeName.WORKOUTS_NAME, workoutsName);
     }
 
+    /**
+     * For all users page.
+     * Add request attributes to all users page on which administrator can change user's role
+     *
+     * @param request       the request
+     * @param surnameSearch the surname search
+     * @param numberPage    the number page
+     * @throws ServiceException the service exception
+     */
     public static void forAllUsersPage(HttpServletRequest request,
                                        String surnameSearch, String numberPage) throws ServiceException {
         List<Staff> users;

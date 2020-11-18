@@ -11,11 +11,26 @@ import com.buyalskaya.fitclub.util.DateTimeTransformer;
 import java.time.LocalDate;
 import java.util.Map;
 
+/**
+ * The type User creator.
+ * Is used in services for creating users that provide transfer of
+ * parameters to dao with correct types
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class UserCreator {
 
     private UserCreator() {
     }
 
+    /**
+     * Create user with all parameters user.
+     *
+     * @param userParameters the user parameters
+     * @param locale         the locale
+     * @return the user
+     */
     public static User createUserWithAllParameters(Map<String, String> userParameters, String locale) {
         String login = userParameters.get(ParameterName.USER_LOGIN);
         String name = userParameters.get(ParameterName.USER_NAME);
@@ -29,6 +44,13 @@ public class UserCreator {
         return user;
     }
 
+    /**
+     * Create staff or client staff.
+     *
+     * @param newParameters the new parameters
+     * @param locale        the locale
+     * @return the staff
+     */
     public static Staff createStaffOrClient(Map<String, String> newParameters, String locale) {
         int idUser = Integer.parseInt(newParameters.get(ParameterName.USER_ID));
         int idRole = Integer.parseInt(newParameters.get(ParameterName.USER_ROLE));

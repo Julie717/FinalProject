@@ -9,10 +9,22 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * The type Proxy connection.
+ * It helps to protect connections from wrong using
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class ProxyConnection implements Connection {
     private static final Logger logger = LogManager.getLogger();
     private Connection connection;
 
+    /**
+     * Instantiates a new Proxy connection.
+     *
+     * @param connection the connection
+     */
     ProxyConnection(Connection connection) {
         this.connection = connection;
     }
@@ -62,6 +74,9 @@ public class ProxyConnection implements Connection {
         ConnectionPool.INSTANCE.releaseConnection(this);
     }
 
+    /**
+     * Really close.
+     */
     void reallyClose() {
         if (connection != null) {
             try {

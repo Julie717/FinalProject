@@ -8,26 +8,25 @@ import com.buyalskaya.fitclub.model.dao.SqlQuery;
 import com.buyalskaya.fitclub.model.entity.CommonEntity;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class HallDaoImpl implements HallDao {
     @Override
-    public Map<Integer,String> findNameHalls() throws DaoException {
+    public Map<Integer, String> findNameHalls() throws DaoException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         Statement statement = null;
-        Map<Integer,String> hallNames= new HashMap<>();
+        Map<Integer, String> hallNames = new HashMap<>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_ALL_HALL_NAMES);
             String nameHall;
             int idHall;
             while (resultSet.next()) {
-                nameHall=resultSet.getString(ColumnName.HALLS_NAME_HALL);
-                idHall=resultSet.getInt(ColumnName.HALLS_ID);
-                hallNames.put(idHall,nameHall);
+                nameHall = resultSet.getString(ColumnName.HALLS_NAME_HALL);
+                idHall = resultSet.getInt(ColumnName.HALLS_ID);
+                hallNames.put(idHall, nameHall);
             }
         } catch (SQLException ex) {
             throw new DaoException("SQL exception (request or table failed)", ex);
@@ -61,11 +60,11 @@ public class HallDaoImpl implements HallDao {
 
     @Override
     public boolean add(CommonEntity hall) throws DaoException {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public List findAll() throws DaoException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

@@ -10,15 +10,43 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * The interface Common dao.
+ * Consists of the common methods for all dao
+ *
+ * @param <T> the type parameter
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public interface CommonDao<T extends CommonEntity> {
+    /**
+     * The constant logger.
+     */
     Logger logger = LogManager.getLogger();
 
+    /**
+     * Add boolean.
+     *
+     * @param entity the entity
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
     boolean add(T entity) throws DaoException;
 
+    /**
+     * Find all list.
+     *
+     * @return the list
+     * @throws DaoException the dao exception
+     */
     List<T> findAll() throws DaoException;
 
+    /**
+     * Close statement.
+     *
+     * @param statement the statement
+     */
     default void closeStatement(Statement statement) {
         if (statement != null) {
             try {
@@ -29,6 +57,11 @@ public interface CommonDao<T extends CommonEntity> {
         }
     }
 
+    /**
+     * Rollback connection.
+     *
+     * @param connection the connection
+     */
     default void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {

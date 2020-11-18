@@ -5,6 +5,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
+/**
+ * The type Encoding filter.
+ * This filter changes encoding
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = {"/*"},
         initParams = {
                 @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")})
@@ -15,14 +22,14 @@ public class EncodingFilter implements Filter {
         code = fConfig.getInitParameter("encoding");
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response,
+    public void doFilter(ServletRequest req, ServletResponse resp,
                          FilterChain chain) throws IOException, ServletException {
-        String codeRequest = request.getCharacterEncoding();
+        String codeRequest = req.getCharacterEncoding();
         if (code != null && !code.equalsIgnoreCase(codeRequest)) {
-            request.setCharacterEncoding(code);
-            response.setCharacterEncoding(code);
+            req.setCharacterEncoding(code);
+            resp.setCharacterEncoding(code);
         }
-        chain.doFilter(request, response);
+        chain.doFilter(req, resp);
     }
 
     public void destroy() {

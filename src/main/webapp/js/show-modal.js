@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    if ($("#showModal").val() == "true") {
+    if ($("#showModal").val() === "true") {
         $("#modalLogin").modal('show');
-        if ($("#incorrectLoginOrPassword").val() == "true") {
+        if ($("#incorrectLoginOrPassword").val() === "true") {
             document.getElementById('incorrectData').hidden = false;
         }
-        if ($("#loginWithoutConfirm").val() == "true") {
+        if ($("#loginWithoutConfirm").val() === "true") {
             document.getElementById('incorrectLoginWithoutConfirm').hidden = false;
         }
     }
@@ -16,6 +16,11 @@ $(document).ready(function () {
         document.getElementById('incorrectData').hidden = true;
         document.getElementById('incorrectLoginWithoutConfirm').hidden = true;
     });
+    if ($("#showModalContactUs").val() === "true") {
+        $("#modalContactUs").modal('show');
+    }else{
+        $("#modalContactUs").modal('hide');
+    }
 });
 
 $(document).ready(function () {
@@ -23,10 +28,10 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    if ($("#showRegistrationMessage").val() == "true") {
+    if ($("#showRegistrationMessage").val() === "true") {
         $("#modalRegistration").modal('show');
     }
-    if ($("#showConfirmRegistrationMessage").val() == "true") {
+    if ($("#showConfirmRegistrationMessage").val() === "true") {
         $("#modalRegistration").modal('show');
     }
 });

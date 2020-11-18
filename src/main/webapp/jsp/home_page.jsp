@@ -24,7 +24,12 @@
     <div class="jumbotron">
         <h1><br><strong><fmt:message key="homepage.title"/></strong><br></h1>
         <p><br><fmt:message key="homepage.invitation"/><br><br></p>
-        <p><a class="btn btn-primary text-uppercase" role="button"><fmt:message key="homepage.signup"/></a></p>
+        <p>
+            <a class="btn btn-primary text-uppercase" role="button" style="color: black"
+               href="${pageContext.request.contextPath}controller?commandName=contact_us_page">
+                <fmt:message key="homepage.signup"/>
+            </a>
+        </p>
     </div>
 </div>
 <input type="hidden" id="showRegistrationMessage" value="${showRegistrationMessage}">
@@ -52,6 +57,36 @@
                         <c:if test="${not empty showConfirmRegistrationMessage and confirmRegistration == false}">
                             <fmt:message key="confirmRegistration.warnMessage"/>
                         </c:if>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">
+                        <fmt:message key="homepage.close"/>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="showModalContactUs" value="${showModalContactUs}">
+<div role="dialog" tabindex="-1" class="modal fade" id="modalContactUs">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" align="justify">
+                    <p>
+                        <c:choose>
+                            <c:when test="${isSend==true}">
+                                <fmt:message key="contactUs.resultMessagePositive"/>
+                            </c:when>
+                            <c:otherwise>
+                                <fmt:message key="contactUs.resultMessageNegative"/>
+                            </c:otherwise>
+                        </c:choose>
                     </p>
                 </div>
                 <div class="form-group">

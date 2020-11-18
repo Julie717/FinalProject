@@ -3,7 +3,13 @@ package com.buyalskaya.fitclub.model.connection;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-
+/**
+ * The type Db property reader.
+ * Uses for reading properties for creating connection with database.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 class DbPropertyReader {
     private static final String FILE_DATABASE_CONFIG = "config/database";
     private static final String URL = "url";
@@ -18,6 +24,11 @@ class DbPropertyReader {
     private DbPropertyReader() {
     }
 
+    /**
+     * Receive properties properties.
+     *
+     * @return the properties
+     */
     static Properties receiveProperties() {
         String user = resourceBundle.getString(USER);
         String pass = resourceBundle.getString(PASS);
@@ -35,6 +46,11 @@ class DbPropertyReader {
         return properties;
     }
 
+    /**
+     * Receive url string.
+     *
+     * @return the string
+     */
     static String receiveUrl() {
         return resourceBundle.getString(URL);
     }

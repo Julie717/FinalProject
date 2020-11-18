@@ -1,4 +1,4 @@
-package com.buyalskaya.fitclub.pageconfiguration;
+package com.buyalskaya.fitclub.util;
 
 import java.util.ResourceBundle;
 

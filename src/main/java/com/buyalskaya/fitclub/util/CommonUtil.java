@@ -26,13 +26,13 @@ public class CommonUtil {
     }
 
 
-    public static Set<String> findNameHalls(List<Schedule> schedules) {
+    public static Set<String> findNameHalls(List<? extends Schedule> schedules) {
         Set<String> nameHalls = new TreeSet<>();
         schedules.stream().forEach(s -> nameHalls.add(s.getNameHall()));
         return nameHalls;
     }
 
-    private static Set<LocalDate> findDatesInOneHall(List<Schedule> schedules, String nameHall) {
+    private static Set<LocalDate> findDatesInOneHall(List<? extends Schedule> schedules, String nameHall) {
         Set<LocalDate> possibleDate = new TreeSet<>();
         schedules.stream()
                 .filter(s -> s.getNameHall().equals(nameHall))
@@ -40,7 +40,7 @@ public class CommonUtil {
         return possibleDate;
     }
 
-    private static Set<LocalTime> findTimesInOneHall(List<Schedule> schedules, String nameHall) {
+    private static Set<LocalTime> findTimesInOneHall(List<? extends Schedule> schedules, String nameHall) {
         Set<LocalTime> possibleTime = new TreeSet<>();
         schedules.stream()
                 .filter(s -> s.getNameHall().equals(nameHall))
@@ -48,7 +48,7 @@ public class CommonUtil {
         return possibleTime;
     }
 
-    public static Map<String, Set<LocalTime>> findTimesInEachHall(List<Schedule> schedules) {
+    public static Map<String, Set<LocalTime>> findTimesInEachHall(List<? extends Schedule> schedules) {
         Set<String> nameHalls = CommonUtil.findNameHalls(schedules);
         Map<String, Set<LocalTime>> hallsSchedule = new HashMap<>();
         Set<LocalTime> possibleTime;
@@ -59,7 +59,7 @@ public class CommonUtil {
         return hallsSchedule;
     }
 
-    public static Map<String, Set<LocalDate>> findDatesInEachHall(List<Schedule> schedules) {
+    public static Map<String, Set<LocalDate>> findDatesInEachHall(List<? extends Schedule> schedules) {
         Set<String> nameHalls = CommonUtil.findNameHalls(schedules);
         Map<String, Set<LocalDate>> hallsSchedule = new HashMap<>();
         Set<LocalDate> possibleDate;

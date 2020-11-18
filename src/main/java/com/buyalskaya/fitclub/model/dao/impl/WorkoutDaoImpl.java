@@ -6,7 +6,6 @@ import com.buyalskaya.fitclub.model.dao.AddAttributesFromResultSet;
 import com.buyalskaya.fitclub.model.dao.ColumnName;
 import com.buyalskaya.fitclub.model.dao.SqlQuery;
 import com.buyalskaya.fitclub.model.dao.WorkoutDao;
-import com.buyalskaya.fitclub.model.entity.User;
 import com.buyalskaya.fitclub.model.entity.Workout;
 
 import java.sql.*;
@@ -15,7 +14,7 @@ import java.util.*;
 public class WorkoutDaoImpl implements WorkoutDao {
     @Override
     public boolean add(Workout workout) throws DaoException {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override

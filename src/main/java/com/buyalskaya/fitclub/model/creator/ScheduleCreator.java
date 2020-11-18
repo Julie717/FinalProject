@@ -8,10 +8,25 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
 
+/**
+ * The type Schedule creator.
+ * Is used in services for creating schedules that provide transfer of
+ * parameters to dao with correct types
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class ScheduleCreator {
     private ScheduleCreator() {
     }
 
+    /**
+     * Create schedule schedule.
+     *
+     * @param scheduleParameters the schedule parameters
+     * @param locale             the locale
+     * @return the schedule
+     */
     public static Schedule createSchedule(Map<String, String> scheduleParameters, String locale) {
         Schedule schedule = new Schedule();
         String idSchedule = scheduleParameters.get(ParameterName.SCHEDULE_ID);

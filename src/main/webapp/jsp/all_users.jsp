@@ -68,7 +68,8 @@
                                 <th><fmt:message key="allUser.endWorkingDate"/></th>
                             </tr>
                             </thead>
-                            <form method="post" action="${pageContext.request.contextPath}/controller" id="userRoleForm">
+                            <form method="post" action="${pageContext.request.contextPath}/controller"
+                                  id="userRoleForm">
                                 <input type="hidden" name="commandName" value="change_user_role"/>
                                 <input type="hidden" name="idUser" id="idUser" value=""/>
                                 <input type="hidden" name="userRole" id="userRole" value=""/>
@@ -145,20 +146,48 @@
                                                     <fmt:parseDate value="${user.startWorkingDate}" type="date"
                                                                    pattern="yyyy-MM-dd"
                                                                    var="startDate"/>
-                                                    <input class="form-control choose-date"
-                                                           id="startDate${user.idUser}"
-                                                           disabled style="width:150px; padding-left: 0" onload="useCalendar('${user.idUser}')"
-                                                           name="startWorkingDate${user.idUser}" required=""
-                                                           data-provide="datepicker"
-                                                           value="<fmt:formatDate value="${startDate}" dateStyle="short"/>">
+                                                    <c:choose>
+                                                        <c:when test="${sessionScope.locale =='ru_RU'}">
+                                                            <input class="form-control choose-date"
+                                                                   id="startDate${user.idUser}"
+                                                                   disabled style="width:150px; padding-left: 0"
+                                                                   onload="useCalendar('${user.idUser}')"
+                                                                   name="startWorkingDate${user.idUser}" required=""
+                                                                   data-provide="datepicker"
+                                                                   value="<fmt:formatDate value="${startDate}" pattern="dd.MM.yyyy"/>">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input class="form-control choose-date"
+                                                                   id="startDate${user.idUser}"
+                                                                   disabled style="width:150px; padding-left: 0"
+                                                                   onload="useCalendar('${user.idUser}')"
+                                                                   name="startWorkingDate${user.idUser}" required=""
+                                                                   data-provide="datepicker"
+                                                                   value="<fmt:formatDate value="${startDate}" pattern="MM/dd/yyyy"/>">
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input class="form-control choose-date"
-                                                           id="startDate${user.idUser}"
-                                                           style="width:150px; padding-left: 0" hidden oninput="useCalendar('${user.idUser}')"
-                                                           name="startWorkingDate${user.idUser}" required=""
-                                                           data-provide="datepicker"
-                                                           value="" dateStyle="short"/>
+                                                    <c:choose>
+                                                        <c:when test="${sessionScope.locale =='ru_RU'}">
+                                                            <input class="form-control choose-date"
+                                                                   id="startDate${user.idUser}"
+                                                                   style="width:150px; padding-left: 0" hidden
+                                                                   oninput="useCalendar('${user.idUser}')"
+                                                                   name="startWorkingDate${user.idUser}" required=""
+                                                                   data-provide="datepicker"
+                                                                   value="" pattern="dd.MM.yyyy"/>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input class="form-control choose-date"
+                                                                   id="startDate${user.idUser}"
+                                                                   style="width:150px; padding-left: 0" hidden
+                                                                   oninput="useCalendar('${user.idUser}')"
+                                                                   name="startWorkingDate${user.idUser}" required=""
+                                                                   data-provide="datepicker"
+                                                                   value="" pattern="MM/dd/yyyy"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
@@ -168,19 +197,48 @@
                                                     <fmt:parseDate value="${user.endWorkingDate}" type="date"
                                                                    pattern="yyyy-MM-dd"
                                                                    var="endDate"/>
-                                                    <input class="form-control choose-date" id="endDate${user.idUser}"
-                                                           disabled
-                                                           style="width:150px; padding-left: 0"
-                                                           name="endWorkingDate${ucccccser.idUser}"
-                                                           data-provide="datepicker"
-                                                           value="<fmt:formatDate value="${endDate}" dateStyle="short"/>">
+                                                    <c:choose>
+                                                        <c:when test="${sessionScope.locale =='ru_RU'}">
+                                                            <input class="form-control choose-date"
+                                                                   id="endDate${user.idUser}"
+                                                                   disabled
+                                                                   style="width:150px; padding-left: 0"
+                                                                   name="endWorkingDate${user.idUser}"
+                                                                   data-provide="datepicker"
+                                                                   value="<fmt:formatDate value="${endDate}" pattern="dd.MM.yyyy"/>">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input class="form-control choose-date"
+                                                                   id="endDate${user.idUser}"
+                                                                   disabled
+                                                                   style="width:150px; padding-left: 0"
+                                                                   name="endWorkingDate${user.idUser}"
+                                                                   data-provide="datepicker"
+                                                                   value="<fmt:formatDate value="${endDate}" pattern="MM/dd/yyyy"/>">
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input class="form-control choose-date" id="endDate${user.idUser}"
-                                                           hidden
-                                                           style="width:150px; padding-left: 0"
-                                                           name="endWorkingDate${user.idUser}" data-provide="datepicker"
-                                                           value="" dateStyle="short"/>
+                                                    <c:choose>
+                                                        <c:when test="${sessionScope.locale =='ru_RU'}">
+                                                            <input class="form-control choose-date"
+                                                                   id="endDate${user.idUser}"
+                                                                   hidden
+                                                                   style="width:150px; padding-left: 0"
+                                                                   name="endWorkingDate${user.idUser}"
+                                                                   data-provide="datepicker"
+                                                                   value="" pattern="dd.MM.yyyy"/>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input class="form-control choose-date"
+                                                                   id="endDate${user.idUser}"
+                                                                   hidden
+                                                                   style="width:150px; padding-left: 0"
+                                                                   name="endWorkingDate${user.idUser}"
+                                                                   data-provide="datepicker"
+                                                                   value="" pattern="MM/dd/yyyy"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>

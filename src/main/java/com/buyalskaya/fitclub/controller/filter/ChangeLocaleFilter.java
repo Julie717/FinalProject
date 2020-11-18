@@ -13,6 +13,14 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Change locale filter.
+ * This filter changes locale in session, returns current page
+ * and stores the information from current request
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 @WebFilter(dispatcherTypes = {
         DispatcherType.REQUEST,
         DispatcherType.FORWARD
@@ -58,6 +66,7 @@ public class ChangeLocaleFilter implements Filter {
             request.removeAttribute(AttributeName.SHOW_MODAL_DELETE_SCHEDULE);
             request.removeAttribute(AttributeName.SHOW_MODAL_REGISTRATION);
             request.removeAttribute(AttributeName.SHOW_MODAL_ADD_SCHEDULE);
+            request.removeAttribute(AttributeName.SHOW_MODAL_CONTACT_US);
         }
         requestAttributeHandler.setAttributes(request);
         session.setAttribute(AttributeName.REQUEST_ATTRIBUTE_HANDLER, requestAttributeHandler);

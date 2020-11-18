@@ -113,10 +113,20 @@
                                 <fmt:parseDate value="${schedule.startDate}" type="date"
                                                pattern="yyyy-MM-dd"
                                                var="startDate"/>
-                                <input class="form-control" id="from-workout-date"
-                                       name="startDate" required="" data-provide="datepicker"
-                                       value="<fmt:formatDate value="${startDate}" dateStyle="short"/>"
-                                       placeholder="<fmt:message key="scheduleEdit.workoutDate"/>">
+                                <c:choose>
+                                    <c:when test="${sessionScope.locale =='ru_RU'}">
+                                        <input class="form-control" id="from-workout-date"
+                                               name="startDate" required="" data-provide="datepicker"
+                                               value="<fmt:formatDate value="${startDate}"  pattern="dd.MM.yyyy"/>"
+                                               placeholder="<fmt:message key="scheduleEdit.workoutDate"/>">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input class="form-control" id="from-workout-date"
+                                               name="startDate" required="" data-provide="datepicker"
+                                               value="<fmt:formatDate value="${startDate}"  pattern="MM/dd/yyyy"/>"
+                                               placeholder="<fmt:message key="scheduleEdit.workoutDate"/>">
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -273,6 +283,9 @@
                                         <th>
                                             <fmt:message key="scheduleEdit.tableSurnameName"/>
                                         </th>
+                                        <th>
+                                            <fmt:message key="scheduleEdit.tablePhone"/>
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -299,6 +312,9 @@
                                             </td>
                                             <td>
                                                     ${client.surname.concat(' ').concat(client.name)}
+                                            </td>
+                                            <td>
+                                                    ${client.phoneNumber}
                                             </td>
                                         </tr>
                                     </c:forEach>

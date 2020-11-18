@@ -170,13 +170,25 @@
                                     </span>
                                     </div>
                                     <fmt:parseDate value="${sessionScope.user.birthday}" type="date"
-                                                   var="birthday"/>
-                                    <input class="form-control" id="birthday" name="birthday" disabled
-                                           previousValue=
-                                                   "<fmt:formatDate value="${birthday}" dateStyle="short"/>"
-                                           required="" data-provide="datepicker"
-                                           value="<fmt:formatDate value="${birthday}"  dateStyle="short"/>"
-                                           placeholder="<fmt:message key="registration.birthday"/>">
+                                                   var="birthday" pattern="yyyy-MM-dd"/>
+                                    <c:choose>
+                                        <c:when test="${sessionScope.locale =='ru_RU'}">
+                                            <input class="form-control" id="birthday" name="birthday" disabled
+                                                   previousValue=
+                                                           "<fmt:formatDate value="${birthday}" pattern="dd.MM.yyyy"/>"
+                                                   required="" data-provide="datepicker"
+                                                   value="<fmt:formatDate value="${birthday}" pattern="dd.MM.yyyy"/>"
+                                                   placeholder="<fmt:message key="registration.birthday"/>">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input class="form-control" id="birthday" name="birthday" disabled
+                                                   previousValue=
+                                                           "<fmt:formatDate value="${birthday}" pattern="MM/dd/yyyy"/>"
+                                                   required="" data-provide="datepicker"
+                                                   value="<fmt:formatDate value="${birthday}" pattern="MM/dd/yyyy"/>"
+                                                   placeholder="<fmt:message key="registration.birthday"/>">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
@@ -216,11 +228,24 @@
                                         <fmt:parseDate value="${sessionScope.user.startWorkingDate}" type="date"
                                                        pattern="yyyy-MM-dd"
                                                        var="startWorkingDate"/>
-                                        <input class="form-control" name="startWorkingDate" disabled
-                                               previousValue=
-                                                   <fmt:formatDate value="${startWorkingDate}" dateStyle="short"/>
-                                                       required="" data-provide="datepicker" value=
-                                            <fmt:formatDate value="${startWorkingDate}" dateStyle="short"/>>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.locale =='ru_RU'}">
+                                                <input class="form-control" name="startWorkingDate" disabled
+                                                       previousValue=
+                                                           <fmt:formatDate value="${startWorkingDate}"
+                                                                           pattern="dd.MM.yyyy"/>
+                                                               required="" data-provide="datepicker" value=
+                                                    <fmt:formatDate value="${startWorkingDate}" pattern="dd.MM.yyyy"/>>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input class="form-control" name="startWorkingDate" disabled
+                                                       previousValue=
+                                                           <fmt:formatDate value="${startWorkingDate}"
+                                                                           pattern="MM/dd/yyyy"/>
+                                                               required="" data-provide="datepicker" value=
+                                                    <fmt:formatDate value="${startWorkingDate}" pattern="MM/dd/yyyy"/>>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>

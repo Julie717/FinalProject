@@ -1,7 +1,6 @@
 package com.buyalskaya.fitclub.model.entity;
 
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
@@ -277,30 +276,55 @@ public class User extends CommonEntity {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if ((obj == null) || (getClass() != obj.getClass())) {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (idUser != user.idUser) {
             return false;
         }
-        User user = (User) obj;
-        return (idUser == user.idUser) &&
-                (Objects.equals(login, user.login)) &&
-                (Objects.equals(name, user.name)) &&
-                (Objects.equals(surname, user.surname)) &&
-                (Objects.equals(phoneNumber, user.phoneNumber)) &&
-                (Objects.equals(email, user.email)) &&
-                (role == user.role) &&
-                (status == user.status) &&
-                (Objects.equals(birthday, user.birthday)) &&
-                (Objects.equals(photo, user.photo));
+        if (login != null ? !login.equals(user.login) : user.login != null) {
+            return false;
+        }
+        if (role != user.role) {
+            return false;
+        }
+        if (status != user.status) {
+            return false;
+        }
+        if (name != null ? !name.equals(user.name) : user.name != null) {
+            return false;
+        }
+        if (surname != null ? !surname.equals(user.surname) : user.surname != null) {
+            return false;
+        }
+        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) {
+            return false;
+        }
+        if (email != null ? !email.equals(user.email) : user.email != null) {
+            return false;
+        }
+        if (birthday != null ? !birthday.equals(user.birthday) : user.birthday != null) {
+            return false;
+        }
+        return photo != null ? photo.equals(user.photo) : user.photo == null;
     }
 
     @Override
     public int hashCode() {
-        return 31 * idUser + login.hashCode() + name.hashCode() + surname.hashCode() + phoneNumber.hashCode() +
-                email.hashCode() + birthday.hashCode() + role.hashCode() + status.hashCode() + photo.hashCode();
+        int result = idUser;
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        return result;
     }
 
     @Override

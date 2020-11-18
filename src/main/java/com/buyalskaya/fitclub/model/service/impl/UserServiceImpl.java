@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
         Optional<User> user;
         if (UserValidator.isLoginValid(login)) {
             try {
-                UserDao userDao=DaoFactory.getInstance().getUserDao();
-                user =userDao.findUserByLogin(login);
+                UserDao userDao = DaoFactory.getInstance().getUserDao();
+                user = userDao.findUserByLogin(login);
             } catch (DaoException ex) {
                 throw new ServiceException("Error during find user", ex);
             }
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         Optional<Staff> staff;
         if (UserValidator.isLoginValid(login)) {
             try {
-                UserDao userDao=DaoFactory.getInstance().getUserDao();
+                UserDao userDao = DaoFactory.getInstance().getUserDao();
                 staff = userDao.findStaffByLogin(login);
             } catch (DaoException ex) {
                 throw new ServiceException("Error during find staff", ex);
@@ -75,11 +75,11 @@ public class UserServiceImpl implements UserService {
         if (UserValidator.isUserParametersValid(userParameters)) {
             String login = userParameters.get(ParameterName.USER_LOGIN);
             try {
-                UserDao userDao=DaoFactory.getInstance().getUserDao();
+                UserDao userDao = DaoFactory.getInstance().getUserDao();
                 boolean isUserNotExist = userDao.findUserByLogin(login).isEmpty();
                 if (isUserNotExist) {
                     String encryptPassword = Encryptor.encryptPassword(userParameters.get(ParameterName.USER_PASSWORD));
-                    User user= UserCreator.createUserWithAllParameters(userParameters,locale);
+                    User user = UserCreator.createUserWithAllParameters(userParameters, locale);
                     isRegister = userDao.add(user, encryptPassword);
                 } else {
                     userParameters.put(ParameterName.DUPLICATE_LOGIN, login);
@@ -95,8 +95,8 @@ public class UserServiceImpl implements UserService {
     public boolean confirmRegistration(String login) throws ServiceException {
         boolean isConfirmed;
         try {
-            UserDao userDao=DaoFactory.getInstance().getUserDao();
-            isConfirmed =userDao.confirmRegistration(login);
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
+            isConfirmed = userDao.confirmRegistration(login);
         } catch (DaoException ex) {
             throw new ServiceException("Error during confirm registration user", ex);
         }
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
     public List<Staff> findAllInstructors() throws ServiceException {
         List<Staff> instructors;
         try {
-            UserDao userDao=DaoFactory.getInstance().getUserDao();
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
             instructors = userDao.findAllStaffByRole(UserRole.INSTRUCTOR);
         } catch (DaoException ex) {
             throw new ServiceException("Error during find instructors", ex);
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
         boolean isUpdate = changeUserParameters(newParameters, currentUser, locale);
         if (isUpdate) {
             try {
-                UserDao userDao=DaoFactory.getInstance().getUserDao();
+                UserDao userDao = DaoFactory.getInstance().getUserDao();
                 isUpdate = userDao.updateUserInfo(currentUser);
             } catch (DaoException ex) {
                 throw new ServiceException("Error during update client's information", ex);
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
         boolean hasNewStaffParameters = changeStaffParameters(newParameters, staff);
         boolean isUpdate = false;
         try {
-            UserDao userDao=DaoFactory.getInstance().getUserDao();
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
             if (hasNewUserParameters) {
                 if (hasNewStaffParameters) {
                     isUpdate = userDao.updateUserAndStaffInfo(staff);
@@ -164,7 +164,7 @@ public class UserServiceImpl implements UserService {
                 UserValidator.isPasswordValid(repeatedNewPassword)) {
             if (newPassword.equals(repeatedNewPassword)) {
                 try {
-                    UserDao userDao=DaoFactory.getInstance().getUserDao();
+                    UserDao userDao = DaoFactory.getInstance().getUserDao();
                     String currentPassword = userDao.findPasswordByLogin(user.getLogin());
                     if (Encryptor.isEqualPasswords(oldPassword, currentPassword)) {
                         String encryptPassword = Encryptor.encryptPassword(newPassword);
@@ -178,28 +178,52 @@ public class UserServiceImpl implements UserService {
         return isUpdate;
     }
 
-    private boolean changeUserParameters(Map<String, String> newParameters, User currentUser, String locale) {
+    private boolean changeUserParameters(Map<String, String> newParameters, User user, String locale) {
         boolean isChanged = UserValidator.isUserUpdateParametersValid(newParameters);
         if (isChanged) {
+            isChanged = false;
             if (newParameters.containsKey(ParameterName.USER_LOGIN)) {
-                currentUser.setLogin(newParameters.get(ParameterName.USER_LOGIN));
+                String newLogin = newParameters.get(ParameterName.USER_LOGIN);
+                if (!newLogin.equals(user.getLogin())) {
+                    user.setLogin(newLogin);
+                    isChanged = true;
+                }
             }
             if (newParameters.containsKey(ParameterName.USER_NAME)) {
-                currentUser.setName(newParameters.get(ParameterName.USER_NAME));
+                String newName = newParameters.get(ParameterName.USER_NAME);
+                if (!newName.equals(user.getName())) {
+                    user.setName(newName);
+                    isChanged = true;
+                }
             }
             if (newParameters.containsKey(ParameterName.USER_SURNAME)) {
-                currentUser.setSurname(newParameters.get(ParameterName.USER_SURNAME));
+                String newSurname = newParameters.get(ParameterName.USER_SURNAME);
+                if (!newSurname.equals(user.getSurname())) {
+                    user.setSurname(newSurname);
+                    isChanged = true;
+                }
             }
             if (newParameters.containsKey(ParameterName.USER_PHONE)) {
-                currentUser.setPhoneNumber(newParameters.get(ParameterName.USER_PHONE));
+                String newPhone = newParameters.get(ParameterName.USER_PHONE);
+                if (!newPhone.equals(user.getPhoneNumber())) {
+                    user.setPhoneNumber(newPhone);
+                    isChanged = true;
+                }
             }
             if (newParameters.containsKey(ParameterName.USER_EMAIL)) {
-                currentUser.setEmail(newParameters.get(ParameterName.USER_EMAIL));
+                String newEmail = newParameters.get(ParameterName.USER_EMAIL);
+                if (!newEmail.equals(user.getEmail())) {
+                    user.setEmail(newEmail);
+                    isChanged = true;
+                }
             }
             if (newParameters.containsKey(ParameterName.USER_BIRTHDAY)) {
                 String birthday = newParameters.get(ParameterName.USER_BIRTHDAY);
                 LocalDate birthdayDate = DateTimeTransformer.fromStringToLocalDate(birthday, locale);
-                currentUser.setBirthday(birthdayDate);
+                if (!birthdayDate.equals(user.getBirthday())) {
+                    user.setBirthday(birthdayDate);
+                    isChanged = true;
+                }
             }
         }
         return isChanged;
@@ -208,12 +232,20 @@ public class UserServiceImpl implements UserService {
     private boolean changeStaffParameters(Map<String, String> newParameters, Staff staff) {
         boolean isChanged = UserValidator.isStaffUpdateParametersValid(newParameters);
         if (isChanged) {
+            isChanged = false;
             if (newParameters.containsKey(ParameterName.WORK_EXPERIENCE)) {
                 int workExperience = Integer.parseInt(newParameters.get(ParameterName.WORK_EXPERIENCE));
-                staff.setWorkExperience(workExperience);
+                if (workExperience != staff.getWorkExperience()) {
+                    staff.setWorkExperience(workExperience);
+                    isChanged = true;
+                }
             }
             if (newParameters.containsKey(ParameterName.STAFF_DESCRIPTION)) {
-                staff.setDescription(newParameters.get(ParameterName.STAFF_DESCRIPTION));
+                String newDescription = newParameters.get(ParameterName.STAFF_DESCRIPTION).trim();
+                if (!newDescription.equals(staff.getDescription())) {
+                    staff.setDescription(newDescription);
+                    isChanged = true;
+                }
             }
         }
         return isChanged;
@@ -225,7 +257,7 @@ public class UserServiceImpl implements UserService {
         if (UserValidator.isPhotoExtensionValid(photo)) {
             InputStream decreaseImage = ImageTransformer.decreaseImage(photo);
             try {
-                UserDao userDao=DaoFactory.getInstance().getUserDao();
+                UserDao userDao = DaoFactory.getInstance().getUserDao();
                 isUpdate = userDao.updatePhoto(idUser, decreaseImage);
             } catch (DaoException ex) {
                 throw new ServiceException("Error during download photo", ex);
@@ -240,7 +272,7 @@ public class UserServiceImpl implements UserService {
         if (CommonValidator.isIdValid(idSchedule)) {
             int idScheduleInt = Integer.parseInt(idSchedule);
             try {
-                UserDao userDao=DaoFactory.getInstance().getUserDao();
+                UserDao userDao = DaoFactory.getInstance().getUserDao();
                 subscribedUsers = userDao.findSubscribedClients(idScheduleInt);
             } catch (DaoException ex) {
                 throw new ServiceException("Error during find subscribed clients", ex);
@@ -253,7 +285,7 @@ public class UserServiceImpl implements UserService {
     public Map<Integer, String> findNameInstructors() throws ServiceException {
         Map<Integer, String> instructors;
         try {
-            UserDao userDao=DaoFactory.getInstance().getUserDao();
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
             instructors = userDao.findNameInstructors();
         } catch (DaoException ex) {
             throw new ServiceException("Error during find instructors", ex);
@@ -267,7 +299,7 @@ public class UserServiceImpl implements UserService {
         if (CommonValidator.isIdValid(idClient)) {
             int idClientInt = Integer.parseInt(idClient);
             try {
-                UserDao userDao=DaoFactory.getInstance().getUserDao();
+                UserDao userDao = DaoFactory.getInstance().getUserDao();
                 clientName = userDao.findClientName(idClientInt);
             } catch (DaoException ex) {
                 throw new ServiceException("Error during find client name", ex);
@@ -280,7 +312,7 @@ public class UserServiceImpl implements UserService {
     public Map<Integer, String> findUserRoles() throws ServiceException {
         Map<Integer, String> roles;
         try {
-            UserDao userDao=DaoFactory.getInstance().getUserDao();
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
             roles = userDao.findUserRoles();
         } catch (DaoException ex) {
             throw new ServiceException("Error during find roles", ex);
@@ -292,7 +324,7 @@ public class UserServiceImpl implements UserService {
     public Map<Integer, String> findUserStatuses() throws ServiceException {
         Map<Integer, String> statuses;
         try {
-            UserDao userDao=DaoFactory.getInstance().getUserDao();
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
             statuses = userDao.findUserStatuses();
         } catch (DaoException ex) {
             throw new ServiceException("Error during find statuses", ex);
@@ -304,8 +336,8 @@ public class UserServiceImpl implements UserService {
     public int countPagesAmount(int amountOfRecords) throws ServiceException {
         int pagesAmount;
         try {
-            UserDao userDao=DaoFactory.getInstance().getUserDao();
-            int usersAmount =userDao.countUsersAmount();
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
+            int usersAmount = userDao.countUsersAmount();
             pagesAmount = usersAmount / amountOfRecords;
             if (usersAmount % amountOfRecords > 0) {
                 pagesAmount++;
@@ -326,7 +358,7 @@ public class UserServiceImpl implements UserService {
         int start = (pageNumber - 1) * amountOfRecords + 1;
         int end = pageNumber * amountOfRecords;
         try {
-            UserDao userDao=DaoFactory.getInstance().getUserDao();
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
             users = userDao.findUsersInRange(start, end);
         } catch (DaoException ex) {
             throw new ServiceException("Error during find users in range", ex);
@@ -338,7 +370,7 @@ public class UserServiceImpl implements UserService {
     public List<Staff> findUserBySurname(String surname) throws ServiceException {
         List<Staff> users;
         try {
-            UserDao userDao=DaoFactory.getInstance().getUserDao();
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
             users = userDao.findUserBySurname(surname);
         } catch (DaoException ex) {
             throw new ServiceException("Error during find users surname", ex);
@@ -347,13 +379,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserRoleOrStatus(Map<String, String> newParameters, String locale) throws ServiceException {
+    public boolean updateUserRoleOrStatus(Map<String, String> newParameters, String locale) throws
+            ServiceException {
         boolean isUpdate = false;
         if (UserValidator.isUserParametersForChangeRoleOrStatusValid(newParameters)) {
-           Staff user=UserCreator.createStaffOrClient(newParameters,locale);
+            Staff user = UserCreator.createStaffOrClient(newParameters, locale);
             try {
-                UserDao userDao=DaoFactory.getInstance().getUserDao();
-                Optional<Staff> currentUser =userDao.findUserOrStaffById(user.getIdUser());
+                UserDao userDao = DaoFactory.getInstance().getUserDao();
+                Optional<Staff> currentUser = userDao.findUserOrStaffById(user.getIdUser());
                 if (currentUser.isPresent()) {
                     if (user.getRole() == UserRole.CLIENT && currentUser.get().getRole() == UserRole.CLIENT) {
                         isUpdate = userDao.updateRoleFromClientToClient(user);
@@ -365,7 +398,7 @@ public class UserServiceImpl implements UserService {
                         isUpdate = userDao.updateRoleFromClientToStaff(user);
                     }
                     if (user.getRole() != UserRole.CLIENT && currentUser.get().getRole() != UserRole.CLIENT) {
-                        isUpdate =userDao.updateRoleFromStaffToStaff(user);
+                        isUpdate = userDao.updateRoleFromStaffToStaff(user);
                     }
                 }
             } catch (DaoException ex) {

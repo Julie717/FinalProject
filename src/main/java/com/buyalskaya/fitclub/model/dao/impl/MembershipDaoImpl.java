@@ -7,7 +7,6 @@ import com.buyalskaya.fitclub.model.dao.ColumnName;
 import com.buyalskaya.fitclub.model.dao.MembershipDao;
 import com.buyalskaya.fitclub.model.dao.SqlQuery;
 import com.buyalskaya.fitclub.model.entity.ClientMembership;
-import com.buyalskaya.fitclub.model.entity.CommonEntity;
 import com.buyalskaya.fitclub.model.entity.Membership;
 import com.buyalskaya.fitclub.util.DateTimeTransformer;
 
@@ -67,12 +66,7 @@ public class MembershipDaoImpl implements MembershipDao {
     }
 
     @Override
-    public boolean add(Membership membership) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List findAll() throws DaoException {
+    public List<Membership> findAll() throws DaoException {
         long today = DateTimeTransformer.fromLocalDateToLong(LocalDate.now());
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement preparedStatement = null;
@@ -172,7 +166,7 @@ public class MembershipDaoImpl implements MembershipDao {
             preparedStatement.setInt(2, idClient);
             preparedStatement.setInt(3, idSchedule);
             int amountOfRows = preparedStatement.executeUpdate();
-            isUpdate= amountOfRows > 0;
+            isUpdate = amountOfRows > 0;
             preparedStatement = connection.prepareStatement(SqlQuery.CLIENT_MEMBERSHIP_MINUS_WORKOUT);
             preparedStatement.setInt(1, idClientMembership);
             amountOfRows = preparedStatement.executeUpdate();
@@ -204,7 +198,7 @@ public class MembershipDaoImpl implements MembershipDao {
             preparedStatement.setInt(2, idClient);
             preparedStatement.setInt(3, idSchedule);
             int amountOfRows = preparedStatement.executeUpdate();
-            isUpdate =amountOfRows > 0;
+            isUpdate = amountOfRows > 0;
             preparedStatement = connection.prepareStatement(SqlQuery.CLIENT_MEMBERSHIP_PLUS_WORKOUT);
             preparedStatement.setInt(1, idClientMembership);
             amountOfRows = preparedStatement.executeUpdate();
@@ -222,5 +216,10 @@ public class MembershipDaoImpl implements MembershipDao {
             ConnectionPool.INSTANCE.releaseConnection(connection);
         }
         return isUpdate;
+    }
+
+    @Override
+    public boolean add(Membership membership) throws DaoException {
+        throw new UnsupportedOperationException();
     }
 }

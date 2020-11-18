@@ -41,7 +41,7 @@ public class CommonUtilTest {
     }
 
     @Test
-    public void findDatesInEachHall() {
+    public void findDatesInEachHallTest() {
         List<Schedule> schedules = new ArrayList<>();
         Schedule schedule = new Schedule();
         schedule.setStartDate(LocalDate.of(2020,11,12));
@@ -75,7 +75,7 @@ public class CommonUtilTest {
     }
 
     @Test
-    public void findTimesInEachHall() {
+    public void findTimesInEachHallTest() {
         List<Schedule> schedules = new ArrayList<>();
         Schedule schedule = new Schedule();
         schedule.setStartTime(LocalTime.of(18,0));

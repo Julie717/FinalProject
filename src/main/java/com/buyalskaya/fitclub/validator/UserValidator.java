@@ -7,14 +7,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class UserValidator {

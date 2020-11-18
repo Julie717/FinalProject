@@ -152,11 +152,6 @@ public class UserDaoImpl implements UserDao {
         return users;
     }
 
-    @Override
-    public boolean add(User user) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
     public List<Staff> findAllStaffByRole(UserRole userRole) throws DaoException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement preparedStatement = null;
@@ -651,5 +646,10 @@ public class UserDaoImpl implements UserDao {
             ConnectionPool.INSTANCE.releaseConnection(connection);
         }
         return resultUser;
+    }
+
+    @Override
+    public boolean add(User user) throws DaoException {
+        throw new UnsupportedOperationException();
     }
 }

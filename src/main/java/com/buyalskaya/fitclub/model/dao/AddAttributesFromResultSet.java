@@ -12,10 +12,24 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 
+/**
+ * The type Add attributes from result set.
+ * It is used to add parameters to objects that was received from the database.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class AddAttributesFromResultSet {
     private AddAttributesFromResultSet() {
     }
 
+    /**
+     * Add user attributes.
+     *
+     * @param user      the user
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
     public static void addUserAttributes(User user, ResultSet resultSet) throws SQLException {
         addIdLoginName(user, resultSet);
         addRoleAndStatus(user, resultSet);
@@ -29,6 +43,13 @@ public class AddAttributesFromResultSet {
         user.setPhoto(photo);
     }
 
+    /**
+     * Add role and status.
+     *
+     * @param user      the user
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
     public static void addRoleAndStatus(User user, ResultSet resultSet) throws SQLException {
         int idRole = resultSet.getInt(ColumnName.USERS_ROLE);
         UserRole userRole = CommonUtil.findRole(idRole);
@@ -38,6 +59,13 @@ public class AddAttributesFromResultSet {
         user.setStatus(userStatus);
     }
 
+    /**
+     * Add id login name.
+     *
+     * @param user      the user
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
     public static void addIdLoginName(User user, ResultSet resultSet) throws SQLException {
         user.setIdUser(resultSet.getInt(ColumnName.USERS_ID));
         user.setLogin(resultSet.getString(ColumnName.USERS_LOGIN));
@@ -45,6 +73,13 @@ public class AddAttributesFromResultSet {
         user.setSurname(resultSet.getString(ColumnName.USERS_SURNAME));
     }
 
+    /**
+     * Add staff attributes.
+     *
+     * @param staff     the staff
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
     public static void addStaffAttributes(Staff staff, ResultSet resultSet) throws SQLException {
         addUserAttributes(staff, resultSet);
         staff.setWorkExperience(resultSet.getInt(ColumnName.STAFFS_WORK_EXPERIENCE));
@@ -58,6 +93,13 @@ public class AddAttributesFromResultSet {
     }
 
 
+    /**
+     * Add workout attributes.
+     *
+     * @param workout   the workout
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
     public static void addWorkoutAttributes(Workout workout, ResultSet resultSet) throws SQLException {
         workout.setIdWorkout(resultSet.getInt(ColumnName.WORKOUTS_ID));
         workout.setName(resultSet.getString(ColumnName.WORKOUTS_NAME));
@@ -70,30 +112,66 @@ public class AddAttributesFromResultSet {
         workout.setDescription(resultSet.getString(ColumnName.WORKOUTS_DESCRIPTION));
     }
 
+    /**
+     * Add schedule attributes.
+     *
+     * @param schedule  the schedule
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
     public static void addScheduleAttributes(Schedule schedule, ResultSet resultSet) throws SQLException {
         schedule.setIdSchedule(resultSet.getInt(ColumnName.SCHEDULES_ID));
         Workout workout = new Workout();
-        addWorkoutAttributes(workout, resultSet);
+        workout.setIdWorkout(resultSet.getInt(ColumnName.WORKOUTS_ID));
         schedule.setWorkout(workout);
         schedule.setIdInstructor(resultSet.getInt(ColumnName.USERS_ID));
-        schedule.setNameInstructor(resultSet.getString(ColumnName.USERS_NAME));
-        schedule.setSurnameInstructor(resultSet.getString(ColumnName.USERS_SURNAME));
         LocalDate startDate = DateTimeTransformer.fromLongToLocalDate(resultSet.getLong(ColumnName.SCHEDULES_START_DATE));
         schedule.setStartDate(startDate);
         LocalTime startTime = DateTimeTransformer.fromLongToLocalTime(resultSet.getLong(ColumnName.SCHEDULES_START_TIME));
         schedule.setStartTime(startTime);
         schedule.setCapacity(resultSet.getInt(ColumnName.SCHEDULES_CAPACITY));
-        schedule.setFreeCapacity(resultSet.getInt(ColumnName.SCHEDULES_FREE_CAPACITY));
-        schedule.setNameHall(resultSet.getString(ColumnName.HALLS_NAME_HALL));
+        schedule.setIdHall(resultSet.getInt(ColumnName.HALLS_ID));
         schedule.setDuration(resultSet.getInt(ColumnName.SCHEDULES_DURATION));
     }
 
-    public static void addClientScheduleAttributes(Schedule schedule, ResultSet resultSet) throws SQLException {
-        addScheduleAttributes(schedule, resultSet);
+    /**
+     * Add additional schedule attributes.
+     *
+     * @param schedule  the schedule
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
+    public static void addAdditionalScheduleAttributes(Schedule schedule, ResultSet resultSet) throws SQLException {
+        addScheduleAttributes(schedule,resultSet);
+        Workout workout = new Workout();
+        addWorkoutAttributes(workout, resultSet);
+        schedule.setWorkout(workout);
+        schedule.setNameInstructor(resultSet.getString(ColumnName.USERS_NAME));
+        schedule.setSurnameInstructor(resultSet.getString(ColumnName.USERS_SURNAME));
+        schedule.setFreeCapacity(resultSet.getInt(ColumnName.SCHEDULES_FREE_CAPACITY));
+        schedule.setNameHall(resultSet.getString(ColumnName.HALLS_NAME_HALL));
+    }
+
+    /**
+     * Add client schedule attributes.
+     *
+     * @param schedule  the schedule
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
+    public static void addClientScheduleAttributes(ClientSchedule schedule, ResultSet resultSet) throws SQLException {
+        addAdditionalScheduleAttributes(schedule, resultSet);
         int subscribed = resultSet.getInt(ColumnName.SUBSCRIBED);
         schedule.setSubscribed(subscribed > 0);
     }
 
+    /**
+     * Add client membership attributes.
+     *
+     * @param clientMembership the client membership
+     * @param resultSet        the result set
+     * @throws SQLException the sql exception
+     */
     public static void addClientMembershipAttributes(ClientMembership clientMembership, ResultSet resultSet) throws SQLException {
         clientMembership.setIdClientMembership(
                 resultSet.getInt(ColumnName.CLIENT_SCHEDULE_ID_CLIENT_MEMBERSHIP));
@@ -109,12 +187,27 @@ public class AddAttributesFromResultSet {
         clientMembership.setCloseDate(closeDate);
     }
 
+    /**
+     * Add client attributes for edit schedule.
+     *
+     * @param client    the client
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
     public static void addClientAttributesForEditSchedule(Client client, ResultSet resultSet) throws SQLException {
         addIdLoginName(client, resultSet);
         client.setEmail(resultSet.getString(ColumnName.USERS_EMAIL));
+        client.setPhoneNumber(resultSet.getString(ColumnName.USERS_PHONE));
         client.setIdClientMembership(resultSet.getInt(ColumnName.CLIENT_SCHEDULE_ID_CLIENT_MEMBERSHIP));
     }
 
+    /**
+     * Add membership attributes.
+     *
+     * @param membership the membership
+     * @param resultSet  the result set
+     * @throws SQLException the sql exception
+     */
     public static void addMembershipAttributes(Membership membership, ResultSet resultSet) throws SQLException {
         membership.setIdMembership(resultSet.getInt(ColumnName.MEMBERSHIPS_ID));
         membership.setDuration(resultSet.getInt(ColumnName.MEMBERSHIPS_DURATION));
@@ -134,6 +227,13 @@ public class AddAttributesFromResultSet {
         membership.setPeriodTime(resultSet.getString(ColumnName.TYPE_CLASSES_PERIOD_TIME));
     }
 
+    /**
+     * Add user or staff attributes.
+     *
+     * @param user      the user
+     * @param resultSet the result set
+     * @throws SQLException the sql exception
+     */
     public static void addUserOrStaffAttributes(Staff user, ResultSet resultSet) throws SQLException {
         addRoleAndStatus(user, resultSet);
         addIdLoginName(user, resultSet);

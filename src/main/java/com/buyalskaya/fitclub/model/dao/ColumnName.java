@@ -1,5 +1,15 @@
 package com.buyalskaya.fitclub.model.dao;
 
+/**
+ * The type Column name.
+ * Is used for store the database's field's names.
+ * The first part of the constant name is a database's table's name,
+ * the last part is a table's field's name
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+
+ */
 public class ColumnName {
     public static final String USERS_ID = "id_user";
     public static final String USERS_LOGIN = "login";
@@ -66,6 +76,7 @@ public class ColumnName {
     public static final String STATUSES_NAME = "name";
 
     public static final String USERS_AMOUNT = "users_amount";
+    public static final String OCCUPIED_PLACES ="occupied_places";
 
     private ColumnName() {
     }

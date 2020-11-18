@@ -1,7 +1,6 @@
 package com.buyalskaya.fitclub.model.dao.impl;
 
 import com.buyalskaya.fitclub.exception.DaoException;
-import com.buyalskaya.fitclub.exception.ServiceException;
 import com.buyalskaya.fitclub.model.connection.ConnectionPool;
 import com.buyalskaya.fitclub.model.dao.AddAttributesFromResultSet;
 import com.buyalskaya.fitclub.model.dao.ColumnName;
@@ -32,7 +31,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
             Schedule schedule;
             while (resultSet.next()) {
                 schedule = new Schedule();
-                AddAttributesFromResultSet.addScheduleAttributes(schedule, resultSet);
+                AddAttributesFromResultSet.addAdditionalScheduleAttributes(schedule, resultSet);
                 schedules.add(schedule);
             }
         } catch (SQLException ex) {
@@ -42,6 +41,29 @@ public class ScheduleDaoImpl implements ScheduleDao {
             ConnectionPool.INSTANCE.releaseConnection(connection);
         }
         return schedules;
+    }
+
+    @Override
+    public Optional<Schedule> findScheduleById(int idSchedule) throws DaoException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement preparedStatement = null;
+        Optional<Schedule> resultSchedule = Optional.empty();
+        try {
+            preparedStatement = connection.prepareStatement(SqlQuery.SELECT_SCHEDULE_BY_ID);
+            preparedStatement.setInt(1, idSchedule);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Schedule schedule = new Schedule();
+                AddAttributesFromResultSet.addScheduleAttributes(schedule, resultSet);
+                resultSchedule = Optional.of(schedule);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("SQL exception (request or table failed)", ex);
+        } finally {
+            closeStatement(preparedStatement);
+            ConnectionPool.INSTANCE.releaseConnection(connection);
+        }
+        return resultSchedule;
     }
 
     @Override
@@ -55,9 +77,9 @@ public class ScheduleDaoImpl implements ScheduleDao {
             preparedStatement.setLong(2, DateTimeTransformer.fromLocalDateToLong(startDate));
             preparedStatement.setLong(3, DateTimeTransformer.fromLocalDateToLong(endDate));
             ResultSet resultSet = preparedStatement.executeQuery();
-            Schedule schedule;
+            ClientSchedule schedule;
             while (resultSet.next()) {
-                schedule = new Schedule();
+                schedule = new ClientSchedule();
                 AddAttributesFromResultSet.addClientScheduleAttributes(schedule, resultSet);
                 schedules.add(schedule);
             }
@@ -71,12 +93,12 @@ public class ScheduleDaoImpl implements ScheduleDao {
     }
 
     @Override
-    public List<Schedule> findClientSchedule(int idClient) throws DaoException {
+    public List<ClientSchedule> findClientSchedule(int idClient) throws DaoException {
         long today = DateTimeTransformer.fromLocalDateToLong(LocalDate.now());
         long timeNow = DateTimeTransformer.fromLocalTimeToLong(LocalTime.now());
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement preparedStatement = null;
-        List<Schedule> schedules = new ArrayList<>();
+        List<ClientSchedule> schedules = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SqlQuery.SELECT_CLIENT_SCHEDULE);
             preparedStatement.setInt(1, idClient);
@@ -85,10 +107,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
             preparedStatement.setLong(4, today);
             preparedStatement.setLong(5, timeNow);
             ResultSet resultSet = preparedStatement.executeQuery();
-            Schedule schedule;
+            ClientSchedule schedule;
             while (resultSet.next()) {
-                schedule = new Schedule();
-                AddAttributesFromResultSet.addScheduleAttributes(schedule, resultSet);
+                schedule = new ClientSchedule();
+                AddAttributesFromResultSet.addAdditionalScheduleAttributes(schedule, resultSet);
                 schedule.setSubscribed(true);
                 schedules.add(schedule);
             }
@@ -102,12 +124,12 @@ public class ScheduleDaoImpl implements ScheduleDao {
     }
 
     @Override
-    public List<Schedule> findInstructorSchedule(int idInstructor) throws DaoException {
+    public List<ClientSchedule> findInstructorSchedule(int idInstructor) throws DaoException {
         long today = DateTimeTransformer.fromLocalDateToLong(LocalDate.now());
         long timeNow = DateTimeTransformer.fromLocalTimeToLong(LocalTime.now());
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement preparedStatement = null;
-        List<Schedule> schedules = new ArrayList<>();
+        List<ClientSchedule> schedules = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(SqlQuery.SELECT_INSTRUCTOR_SCHEDULE);
             preparedStatement.setInt(1, idInstructor);
@@ -116,10 +138,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
             preparedStatement.setLong(4, today);
             preparedStatement.setLong(5, timeNow);
             ResultSet resultSet = preparedStatement.executeQuery();
-            Schedule schedule;
+            ClientSchedule schedule;
             while (resultSet.next()) {
-                schedule = new Schedule();
-                AddAttributesFromResultSet.addScheduleAttributes(schedule, resultSet);
+                schedule = new ClientSchedule();
+                AddAttributesFromResultSet.addAdditionalScheduleAttributes(schedule, resultSet);
                 schedule.setSubscribed(true);
                 schedules.add(schedule);
             }
@@ -183,7 +205,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 Schedule schedule = new Schedule();
-                AddAttributesFromResultSet.addScheduleAttributes(schedule, resultSet);
+                AddAttributesFromResultSet.addAdditionalScheduleAttributes(schedule, resultSet);
                 scheduleResult = Optional.of(schedule);
             }
         } catch (SQLException ex) {
@@ -246,7 +268,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
     }
 
     @Override
-    public boolean isFreeTime(int idHall, LocalDate startDate, LocalTime startTime, int idSchedule) throws DaoException {
+    public boolean isFreeTime(int idHall, LocalDate startDate, LocalTime startTime, LocalTime endTime, int idSchedule) throws DaoException {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         boolean isExist = false;
@@ -255,7 +277,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
             preparedStatement.setInt(1, idHall);
             preparedStatement.setLong(2, DateTimeTransformer.fromLocalDateToLong(startDate));
             preparedStatement.setLong(3, DateTimeTransformer.fromLocalTimeToLong(startTime));
-            preparedStatement.setInt(4, idSchedule);
+            preparedStatement.setLong(4, DateTimeTransformer.fromLocalTimeToLong(startTime));
+            preparedStatement.setLong(5, DateTimeTransformer.fromLocalTimeToLong(endTime));
+            preparedStatement.setLong(6, DateTimeTransformer.fromLocalTimeToLong(endTime));
+            preparedStatement.setInt(7, idSchedule);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 isExist = resultSet.getInt(ColumnName.EXIST_SCHEDULE) == 0;
@@ -300,7 +325,28 @@ public class ScheduleDaoImpl implements ScheduleDao {
     }
 
     @Override
-    public List findAll() throws DaoException {
+    public int findAmountOfOccupiedPlaces(int idSchedule) throws DaoException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement preparedStatement = null;
+        int occupied_places=0;
+        try {
+            preparedStatement = connection.prepareStatement(SqlQuery.SELECT_AMOUNT_OF_OCCUPIED_PLACES);
+            preparedStatement.setInt(1, idSchedule);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                occupied_places=resultSet.getInt(ColumnName.OCCUPIED_PLACES);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("SQL exception (request or table failed)", ex);
+        } finally {
+            closeStatement(preparedStatement);
+            ConnectionPool.INSTANCE.releaseConnection(connection);
+        }
+        return occupied_places;
+    }
+
+    @Override
+    public List<Schedule> findAll() throws DaoException {
         throw new UnsupportedOperationException();
     }
 }

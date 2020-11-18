@@ -12,8 +12,17 @@ import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
-
+/**
+ * The enum Connection pool.
+ * Creates, gives and monitors connections with database
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public enum ConnectionPool {
+    /**
+     * Instance connection pool.
+     */
     INSTANCE;
 
     private final Logger logger = LogManager.getLogger();
@@ -41,6 +50,11 @@ public enum ConnectionPool {
         }
     }
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
     public Connection getConnection() {
         ProxyConnection connection = null;
         try {
@@ -52,11 +66,16 @@ public enum ConnectionPool {
         return connection;
     }
 
+    /**
+     * Release connection.
+     *
+     * @param connection the connection
+     */
     public void releaseConnection(Connection connection) {
         if (connection instanceof ProxyConnection) {
             if (givenConnections.remove(connection)) {
                 try {
-                    if(!connection.getAutoCommit()){
+                    if (!connection.getAutoCommit()) {
                         connection.setAutoCommit(true);
                     }
                 } catch (SQLException ex) {
@@ -71,6 +90,9 @@ public enum ConnectionPool {
         }
     }
 
+    /**
+     * Destroy pool.
+     */
     public void destroyPool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {

@@ -13,7 +13,7 @@ import java.util.StringJoiner;
 public class Client extends User {
     /**
      * The value is used for storage the active id membership that belongs to client
-     * **/
+     **/
     private int idClientMembership;
 
     /**
@@ -35,23 +35,25 @@ public class Client extends User {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if ((obj == null) || (getClass() != obj.getClass())) {
+        if (!(o instanceof Client)) {
             return false;
         }
-        if (!super.equals(obj)) {
+        if (!super.equals(o)) {
             return false;
         }
-        Client client = (Client) obj;
+        Client client = (Client) o;
         return idClientMembership == client.idClientMembership;
     }
 
     @Override
     public int hashCode() {
-        return 31 * idClientMembership + super.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + idClientMembership;
+        return result;
     }
 
     @Override

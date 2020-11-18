@@ -86,14 +86,27 @@
                                             <input type="hidden" name="idSchedule" value="${schedule.idSchedule}"/>
                                             <input type="hidden" name="numberWeek" value="${numberWeek}"
                                                    id="numberWeek"/>
-                                            <ctg:schedule-box nameWorkout="${schedule.workout.name}"
-                                                              nameInstructor="${schedule.nameInstructor}"
-                                                              surnameInstructor="${schedule.surnameInstructor}"
-                                                              date="${schedule.startDate}"
-                                                              time="${schedule.startTime}"
-                                                              capacity="${schedule.capacity}"
-                                                              freeCapacity="${schedule.freeCapacity}"
-                                                              subscribed="${schedule.subscribed}"/>
+                                            <c:choose>
+                                                <c:when test="${sessionScope.user.role=='CLIENT'}">
+                                                    <ctg:schedule-box nameWorkout="${schedule.workout.name}"
+                                                                      nameInstructor="${schedule.nameInstructor}"
+                                                                      surnameInstructor="${schedule.surnameInstructor}"
+                                                                      date="${schedule.startDate}"
+                                                                      time="${schedule.startTime}"
+                                                                      capacity="${schedule.capacity}"
+                                                                      freeCapacity="${schedule.freeCapacity}"
+                                                                      subscribed="${schedule.subscribed}"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <ctg:schedule-box nameWorkout="${schedule.workout.name}"
+                                                                      nameInstructor="${schedule.nameInstructor}"
+                                                                      surnameInstructor="${schedule.surnameInstructor}"
+                                                                      date="${schedule.startDate}"
+                                                                      time="${schedule.startTime}"
+                                                                      capacity="${schedule.capacity}"
+                                                                      freeCapacity="${schedule.freeCapacity}"/>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </form>
                                         <c:set var="showEmptyBox" value="false"/>
                                     </c:if>
