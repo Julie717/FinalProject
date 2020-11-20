@@ -5,6 +5,12 @@ import com.buyalskaya.fitclub.controller.ParameterName;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+/**
+ * The type Common validator.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class CommonValidator {
     private static final String CHECK_NUMBER = "\\d+";
     private static final String REGEX_DATE_RU = "((0[1-9])|([1-2][0-9])|(3[0-1]))\\.((0[1-9])|(1[0-2]))\\.((19[6-9][0-9]|20[0-9]{2}))";
@@ -16,6 +22,13 @@ public class CommonValidator {
     private CommonValidator() {
     }
 
+    /**
+     * Is positive integer boolean.
+     * It makes a  check if number is positive integer
+     *
+     * @param number the number
+     * @return the boolean
+     */
     public static boolean isPositiveInteger(String number) {
         boolean isValid = false;
         if (number != null && !number.isEmpty()) {
@@ -24,10 +37,24 @@ public class CommonValidator {
         return isValid;
     }
 
+    /**
+     * Is id valid boolean.
+     * Is used to check the correctness of id
+     *
+     * @param id the id
+     * @return the boolean
+     */
     public static boolean isIdValid(String id) {
         return CommonValidator.isPositiveInteger(id);
     }
 
+    /**
+     * Is date valid boolean.
+     * Is used to check the correctness of date
+     *
+     * @param date the date
+     * @return the boolean
+     */
     public static boolean isDateValid(String date) {
         boolean isValid = false;
         if (date != null && !date.isEmpty()) {
@@ -37,6 +64,13 @@ public class CommonValidator {
         return isValid;
     }
 
+    /**
+     * Is time valid boolean.
+     * Is used to check the correctness of time
+     *
+     * @param time the time
+     * @return the boolean
+     */
     public static boolean isTimeValid(String time) {
         boolean isValid = false;
         if (time != null && !time.isEmpty()) {
@@ -45,6 +79,13 @@ public class CommonValidator {
         return isValid;
     }
 
+    /**
+     * Is contact parameters valid boolean.
+     * Is used to check the correctness of parameters to send a message from user to administrators
+     *
+     * @param contactParameters the contact parameters
+     * @return the boolean
+     */
     public static boolean isContactParametersValid(Map<String, String> contactParameters) {
         boolean isValid = isNameValid(contactParameters.get(ParameterName.CONTACT_US_NAME));
         isValid = isValid & UserValidator.isPhoneValid(contactParameters.get(ParameterName.CONTACT_US_PHONE));
@@ -53,6 +94,13 @@ public class CommonValidator {
         return isValid;
     }
 
+    /**
+     * Is name valid boolean.
+     * Is used to check the correctness of user's name
+     *
+     * @param name the name
+     * @return the boolean
+     */
     private static boolean isNameValid(String name) {
         boolean isValid = false;
         if (name != null && !name.isEmpty()) {
@@ -61,6 +109,13 @@ public class CommonValidator {
         return isValid;
     }
 
+    /**
+     * Is message valid boolean.
+     * Is used to check the correctness of a message
+     *
+     * @param message the message
+     * @return the boolean
+     */
     private static boolean isMessageValid(String message) {
         boolean isValid = false;
         if (message != null) {

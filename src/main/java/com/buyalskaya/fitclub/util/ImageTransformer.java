@@ -13,6 +13,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 
+/**
+ * The type Image transformer.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class ImageTransformer {
     private static final Logger logger = LogManager.getLogger();
     private static final String IMAGE_TYPE = "jpg";
@@ -22,6 +28,12 @@ public class ImageTransformer {
     private ImageTransformer() {
     }
 
+    /**
+     * Transform image to string base 64 string.
+     *
+     * @param inputStream the input stream
+     * @return the string
+     */
     public static String transformImageToStringBase64(InputStream inputStream) {
         String base64Image = null;
         if (inputStream != null) {
@@ -35,6 +47,13 @@ public class ImageTransformer {
         return base64Image;
     }
 
+    /**
+     * Decrease image input stream.
+     * Is used to make picture smaller
+     *
+     * @param image the image
+     * @return the input stream
+     */
     public static InputStream decreaseImage(InputStream image) {
         InputStream newImage = null;
         try {

@@ -93,8 +93,8 @@ public class DateTimeTransformerTest {
     public Object[][] dataForFromStringToLocalDateEn() {
         return new Object[][]{
                 {"11/12/2020", LocalDate.of(2020, 11, 12)},
-                {"1/2/2020", LocalDate.of(2020, 1, 2)},
-                {"5/4/87", LocalDate.of(1987, 5, 4)},
+                {"01/02/2020", LocalDate.of(2020, 1, 2)},
+                {"05/04/1987", LocalDate.of(1987, 5, 4)},
                 {"08/04/1990", LocalDate.of(1990, 8, 4)},
                 {"12/30/1899", LocalDate.of(1899, 12, 30)},
                 {"12/25/1899", LocalDate.of(1899, 12, 25)}
@@ -110,10 +110,10 @@ public class DateTimeTransformerTest {
     @DataProvider(name = "dataForFindMonday")
     public Object[][] dataForFindMonday() {
         return new Object[][]{
-                {0, LocalDate.of(2020, 11, 9)},
-                {1, LocalDate.of(2020, 11, 16)},
-                {2, LocalDate.of(2020, 11, 23)},
-                {-1, LocalDate.of(2020, 11, 2)}
+                {0, LocalDate.of(2020, 11, 23)},
+                {1, LocalDate.of(2020, 11, 30)},
+                {2, LocalDate.of(2020, 12, 7)},
+                {-1, LocalDate.of(2020, 11, 16)}
         };
     }
 
@@ -126,10 +126,10 @@ public class DateTimeTransformerTest {
     @DataProvider(name = "dataForFindSunday")
     public Object[][] dataForFindSunday() {
         return new Object[][]{
-                {0, LocalDate.of(2020, 11, 15)},
-                {1, LocalDate.of(2020, 11, 22)},
-                {2, LocalDate.of(2020, 11, 29)},
-                {-1, LocalDate.of(2020, 11, 8)}
+                {0, LocalDate.of(2020, 11, 29)},
+                {1, LocalDate.of(2020, 11, 6)},
+                {2, LocalDate.of(2020, 11, 13)},
+                {-1, LocalDate.of(2020, 11, 22)}
         };
     }
 

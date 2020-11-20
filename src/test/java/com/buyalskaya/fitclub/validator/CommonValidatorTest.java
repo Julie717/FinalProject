@@ -3,7 +3,10 @@ package com.buyalskaya.fitclub.validator;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.testng.Assert.*;
 
 public class CommonValidatorTest {
     @DataProvider(name = "dataForIsPositiveInteger")
@@ -39,11 +42,11 @@ public class CommonValidatorTest {
         return new Object[][]{
                 {"04.10.1985", true},
                 {"01/12/2020", true},
-                {"1/1/2020", true},
-                {"4/5/87", true},
-                {"1/1/20", true},
-                {"1.1.2020",false},
-                {"45780",false},
+                {"01/01/2020", true},
+                {"4/5/87", false},
+                {"1/1/20", false},
+                {"1.1.2020", false},
+                {"45780", false},
                 {"", false},
                 {null, false}
         };
@@ -74,5 +77,24 @@ public class CommonValidatorTest {
     public void isTimeValidValidTest(String time, boolean expected) {
         boolean actual = CommonValidator.isTimeValid(time);
         assertEquals(actual, expected);
+    }
+
+    @Test
+    public void isContactParametersValidPositiveTest() {
+        Map<String, String> contactParameters = new HashMap<>();
+        contactParameters.put("name", "Виктория Иванова");
+        contactParameters.put("phone", "+375299876541");
+        contactParameters.put("email", "ivanov_vv@gmail.com");
+        contactParameters.put("message", "Здравствуйте! Можно ли записать на занятие во вторник в 19:00 в большой зал?");
+        assertTrue(CommonValidator.isContactParametersValid(contactParameters));
+    }
+
+    @Test
+    public void isContactParametersValidNegativeTest() {
+        Map<String, String> contactParameters = new HashMap<>();
+        contactParameters.put("name", "Виктория Иванова");
+        contactParameters.put("email", "ivanov_vv@gmail.com");
+        contactParameters.put("message", "Здравствуйте! Можно ли записать на занятие во вторник в 19:00 в большой зал?");
+        assertFalse(CommonValidator.isContactParametersValid(contactParameters));
     }
 }

@@ -3,13 +3,11 @@ package com.buyalskaya.fitclub.model.service.impl;
 import com.buyalskaya.fitclub.exception.DaoException;
 import com.buyalskaya.fitclub.exception.ServiceException;
 import com.buyalskaya.fitclub.model.dao.DaoFactory;
-import com.buyalskaya.fitclub.model.dao.MembershipDao;
 import com.buyalskaya.fitclub.model.dao.ScheduleDao;
 import com.buyalskaya.fitclub.model.dao.UserDao;
-import com.buyalskaya.fitclub.model.dao.impl.MembershipDaoImpl;
 import com.buyalskaya.fitclub.model.dao.impl.ScheduleDaoImpl;
+import com.buyalskaya.fitclub.model.dao.impl.UserDaoImpl;
 import com.buyalskaya.fitclub.model.entity.*;
-import com.buyalskaya.fitclub.model.service.MembershipService;
 import com.buyalskaya.fitclub.model.service.ScheduleService;
 import com.buyalskaya.fitclub.model.service.ServiceFactory;
 import org.mockito.Mockito;
@@ -27,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.mock;
 import static org.testng.Assert.*;
 
 @PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.*",
@@ -45,8 +44,9 @@ public class ScheduleServiceImplTest {
     @BeforeMethod
     public void setUp() {
         PowerMockito.mockStatic(DaoFactory.class);
-        daoFactory = Mockito.mock(DaoFactory.class);
-        scheduleDao = Mockito.mock(ScheduleDaoImpl.class);
+        daoFactory = mock(DaoFactory.class);
+        scheduleDao = mock(ScheduleDaoImpl.class);
+        userDao = mock(UserDaoImpl.class);
         Mockito.when(DaoFactory.getInstance()).thenReturn(daoFactory);
         Mockito.when(daoFactory.getScheduleDao()).thenReturn(scheduleDao);
         Mockito.when(daoFactory.getUserDao()).thenReturn(userDao);
@@ -238,7 +238,7 @@ public class ScheduleServiceImplTest {
     }
 
     @Test
-    public void deleteWorkoutFromSchedulePositive1Test() {
+    public void deleteWorkoutFromSchedulePositiveTest() {
         ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
         Schedule schedule = new Schedule();
         try {
@@ -254,34 +254,20 @@ public class ScheduleServiceImplTest {
     }
 
     @Test
-    public void deleteWorkoutFromSchedulePositive2Test() {
+    public void deleteWorkoutFromScheduleNegativeTest() {
         ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
-        Schedule schedule = new Schedule();
         try {
-            List<Client> subscribedClients = new ArrayList<>();
-            Client client = new Client();
-            client.setIdUser(1);
-            subscribedClients.add(client);
-            client = new Client();
-            client.setIdUser(2);
-            subscribedClients.add(client);
-            client = new Client();
-            client.setIdUser(3);
-            subscribedClients.add(client);
-            Mockito.when(userDao.findSubscribedClients(Mockito.anyInt())).thenReturn(subscribedClients);
-            Mockito.when(scheduleDao.findOneSchedule(Mockito.anyInt())).thenReturn(Optional.of(schedule));
-            Mockito.when(scheduleDao.deleteWorkoutFromSchedule(Mockito.anyInt())).thenReturn(true);
-            boolean actual = scheduleService.deleteWorkoutFromSchedule("18", "ru_RU");
-            assertTrue(actual);
-        } catch (ServiceException | DaoException e) {
+            boolean actual = scheduleService.deleteWorkoutFromSchedule("a18", "ru_RU");
+            assertFalse(actual);
+        } catch (ServiceException e) {
             fail(e.getMessage());
         }
     }
 
     @Test
-    public void deleteWorkoutFromScheduleNegativeTest() throws DaoException {
+    public void deleteWorkoutFromScheduleExceptionTest() throws DaoException {
         ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
         Mockito.when(userDao.findSubscribedClients(Mockito.anyInt())).thenThrow(DaoException.class);
-        assertThrows(ServiceException.class, () -> scheduleService.deleteWorkoutFromSchedule("157","ru_RU"));
+        assertThrows(ServiceException.class, () -> scheduleService.deleteWorkoutFromSchedule("157", "ru_RU"));
     }
 }

@@ -4,6 +4,12 @@ import com.buyalskaya.fitclub.controller.ParameterName;
 
 import java.util.Map;
 
+/**
+ * The type Schedule validator.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class ScheduleValidator {
     private static final int MIN_CAPACITY = 1;
     private static final int MAX_CAPACITY = 30;
@@ -13,6 +19,13 @@ public class ScheduleValidator {
     private ScheduleValidator() {
     }
 
+    /**
+     * Is schedule parameters valid boolean.
+     * Is used to check the correctness of workout's parameters to add into schedule
+     *
+     * @param scheduleParameters the schedule parameters
+     * @return the boolean
+     */
     public static boolean isScheduleParametersValid(Map<String, String> scheduleParameters) {
         return CommonValidator.isIdValid(scheduleParameters.get(ParameterName.SCHEDULE_WORKOUT_ID)) &&
                 CommonValidator.isIdValid(scheduleParameters.get(ParameterName.SCHEDULE_HALL_ID)) &&
@@ -23,6 +36,13 @@ public class ScheduleValidator {
                 CommonValidator.isPositiveInteger(scheduleParameters.get(ParameterName.SCHEDULE_CAPACITY));
     }
 
+    /**
+     * Is capacity valid boolean.
+     * Is used to check the correctness of workout's capacity
+     *
+     * @param capacity the capacity
+     * @return the boolean
+     */
     public static boolean isCapacityValid(String capacity) {
         boolean isValid = CommonValidator.isPositiveInteger(capacity);
         if (isValid) {
@@ -32,6 +52,13 @@ public class ScheduleValidator {
         return isValid;
     }
 
+    /**
+     * Is duration valid boolean.
+     * Is used to check the correctness of workout's duration
+     *
+     * @param duration the duration
+     * @return the boolean
+     */
     public static boolean isDurationValid(String duration) {
         boolean isValid = CommonValidator.isPositiveInteger(duration);
         if (isValid) {

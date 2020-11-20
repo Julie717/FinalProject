@@ -1,5 +1,12 @@
 package com.buyalskaya.fitclub.util;
 
+/**
+ * The type Page config name.
+ * Stores the page's names in property file
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public final class PageConfigName {
     public static final String INDEX = "index";
     public static final String HOMEPAGE = "homepage";
@@ -17,16 +24,15 @@ public final class PageConfigName {
     public static final String EDIT_SCHEDULE = "edit_schedule";
     public static final String CHECK_PRESENCE = "check_presence";
     public static final String SALE_MEMBERSHIP = "sale_membership";
-    public static final String ADD_SCHEDULE="add_schedule";
-    public static final String ALL_USERS="all_users";
-    public static final String MEMBERSHIP="membership";
-    public static final String ABOUT_US="about_us";
-    public static final String CONTACTS="contacts";
-    public static final String CONTACT_US="contact_us";
-    public static final String TELEGRAM="telegram";
-    public static final String INSTAGRAM="instagram";
-    public static final String VKONTAKTE="vkontakte";
-
+    public static final String ADD_SCHEDULE = "add_schedule";
+    public static final String ALL_USERS = "all_users";
+    public static final String MEMBERSHIP = "membership";
+    public static final String ABOUT_US = "about_us";
+    public static final String CONTACTS = "contacts";
+    public static final String CONTACT_US = "contact_us";
+    public static final String TELEGRAM = "telegram";
+    public static final String INSTAGRAM = "instagram";
+    public static final String VKONTAKTE = "vkontakte";
 
     private PageConfigName() {
     }

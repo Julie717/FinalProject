@@ -11,6 +11,12 @@ import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.util.Properties;
 
+/**
+ * The type Mail sender.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class MailSender {
     private static final MailSender INSTANCE = new MailSender();
     private static final Logger logger = LogManager.getLogger();
@@ -28,6 +34,15 @@ public class MailSender {
         }
     }
 
+    /**
+     * Send boolean.
+     * Is used to send any message
+     *
+     * @param sendToEmail the send to email
+     * @param mailSubject the mail subject
+     * @param mailText    the mail text
+     * @return the boolean
+     */
     public boolean send(String sendToEmail, String mailSubject, String mailText) {
         boolean isSend = false;
         try {
@@ -64,6 +79,11 @@ public class MailSender {
         return session;
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static MailSender getINSTANCE() {
         return INSTANCE;
     }

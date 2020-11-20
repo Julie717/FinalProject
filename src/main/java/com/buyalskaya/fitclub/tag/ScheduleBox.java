@@ -16,6 +16,12 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * The type Schedule box.
+ * Is used to create a tag for showing a workout's box inside a schedule
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 @SuppressWarnings("serial")
 public class ScheduleBox extends TagSupport {
     private final static String FILE_NAME = "prop.pagecontent";
@@ -35,39 +41,82 @@ public class ScheduleBox extends TagSupport {
     private int freeCapacity;
     private String subscribed;
 
+    /**
+     * Instantiates a new Schedule box.
+     */
     public ScheduleBox() {
         this.freeCapacity = 0;
         this.capacity = 0;
     }
 
+    /**
+     * Sets name workout.
+     *
+     * @param nameWorkout the name workout
+     */
     public void setNameWorkout(String nameWorkout) {
         this.nameWorkout = nameWorkout;
     }
 
+    /**
+     * Sets name instructor.
+     *
+     * @param nameInstructor the name instructor
+     */
     public void setNameInstructor(String nameInstructor) {
         this.nameInstructor = nameInstructor;
     }
 
+    /**
+     * Sets surname instructor.
+     *
+     * @param surnameInstructor the surname instructor
+     */
     public void setSurnameInstructor(String surnameInstructor) {
         this.surnameInstructor = surnameInstructor;
     }
 
+    /**
+     * Sets date.
+     *
+     * @param date the date
+     */
     public void setDate(LocalDate date) {
         this.date = date;
     }
 
+    /**
+     * Sets time.
+     *
+     * @param time the time
+     */
     public void setTime(LocalTime time) {
         this.time = time;
     }
 
+    /**
+     * Sets capacity.
+     *
+     * @param capacity the capacity
+     */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
+    /**
+     * Sets free capacity.
+     *
+     * @param freeCapacity the free capacity
+     */
     public void setFreeCapacity(int freeCapacity) {
         this.freeCapacity = freeCapacity;
     }
 
+    /**
+     * Sets subscribed.
+     *
+     * @param subscribed the subscribed
+     */
     public void setSubscribed(String subscribed) {
         this.subscribed = subscribed;
     }

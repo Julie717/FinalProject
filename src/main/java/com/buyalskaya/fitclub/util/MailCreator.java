@@ -9,6 +9,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * The type Mail creator.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class MailCreator {
     private static final String FILENAME_WITH_MESSAGES = "prop.mail_message";
     private static final String MAIL_SUBJECT = "mail.confirmRegistration.subject";
@@ -43,6 +49,17 @@ public class MailCreator {
     private MailCreator() {
     }
 
+    /**
+     * Send mail to confirm registration boolean.
+     * Is used to send message after registration. This message consists of
+     * URL following which user confirm registration
+     *
+     * @param locale    the locale
+     * @param userEmail the user email
+     * @param userName  the user name
+     * @param login     the login
+     * @return the boolean
+     */
     public static boolean sendMailToConfirmRegistration(String locale, String userEmail, String userName, String login) {
         String[] localeArray = locale.split(UNDERLINE);
         String language = localeArray[0];
@@ -65,6 +82,16 @@ public class MailCreator {
         return MailSender.getINSTANCE().send(userEmail, mailSubject, mailText.toString());
     }
 
+    /**
+     * Send mail to cancel workout boolean.
+     * Is used to send message for a client when a workout was canceled
+     *
+     * @param locale    the locale
+     * @param userEmail the user email
+     * @param userName  the user name
+     * @param schedule  the schedule
+     * @return the boolean
+     */
     public static boolean sendMailToCancelWorkout(String locale, String userEmail, String userName, Schedule schedule) {
         String[] localeArray = locale.split(UNDERLINE);
         String language = localeArray[0];
@@ -103,6 +130,17 @@ public class MailCreator {
         return MailSender.getINSTANCE().send(userEmail, mailSubject, mailText.toString());
     }
 
+    /**
+     * Send mail to update workout boolean.
+     * Is used to send message for a client when date or time of a workout was changed
+     *
+     * @param locale          the locale
+     * @param userEmail       the user email
+     * @param userName        the user name
+     * @param schedule        the schedule
+     * @param currentSchedule the current schedule
+     * @return the boolean
+     */
     public static boolean sendMailToUpdateWorkout(String locale, String userEmail, String userName, Schedule schedule,
                                                   Schedule currentSchedule) {
         String[] localeArray = locale.split(UNDERLINE);
@@ -143,6 +181,15 @@ public class MailCreator {
         return MailSender.getINSTANCE().send(userEmail, mailSubject, mailText.toString());
     }
 
+    /**
+     * Send mail to admin boolean.
+     * Is used to send message from user to administrator
+     *
+     * @param userEmail         the user email
+     * @param contactParameters the contact parameters
+     * @param locale            the locale
+     * @return the boolean
+     */
     public static boolean sendMailToAdmin(String userEmail, Map<String, String> contactParameters, String locale) {
         String[] localeArray = locale.split(UNDERLINE);
         String language = localeArray[0];

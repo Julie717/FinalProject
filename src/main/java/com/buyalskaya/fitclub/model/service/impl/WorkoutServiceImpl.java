@@ -11,17 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class WorkoutServiceImpl implements WorkoutService {
-    @Override
-    public List<Workout> findAllWorkouts() throws ServiceException {
-        List<Workout> workouts;
-        try {
-            WorkoutDao workoutDao = DaoFactory.getInstance().getWorkoutDao();
-            workouts = workoutDao.findAll();
-        } catch (DaoException ex) {
-            throw new ServiceException("Error during find workouts", ex);
-        }
-        return workouts;
-    }
 
     @Override
     public List<Workout> findByLevel(Workout.Level level) throws ServiceException {
@@ -43,6 +32,18 @@ public class WorkoutServiceImpl implements WorkoutService {
             workouts = workoutDao.findNameWorkouts();
         } catch (DaoException ex) {
             throw new ServiceException("Error during find instructors", ex);
+        }
+        return workouts;
+    }
+
+    @Override
+    public List<Workout> findAllWorkouts() throws ServiceException {
+        List<Workout> workouts;
+        try {
+            WorkoutDao workoutDao = DaoFactory.getInstance().getWorkoutDao();
+            workouts = workoutDao.findAll();
+        } catch (DaoException ex) {
+            throw new ServiceException("Error during find workouts", ex);
         }
         return workouts;
     }
