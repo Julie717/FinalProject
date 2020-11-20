@@ -1,4 +1,4 @@
-# **Проект – Фитнес-клуб**
+# **Проект – Фитнес-клуб**<a name="russian"/>
 ### Автор: Буяльская Юлия
 ---
 ### Описание проекта
@@ -42,11 +42,11 @@
 *	Добавлять новые занятия в расписание
 * Отменять занятия
 
-# **Project – Fitness club**
+# **Project – Fitness club** <a name="english"/>
 ### Author: Buyalskaya Yuliya
 ---
 ### Project description
-[RU](#русский)
+[RU](#russian)
 
  The realization of this project is a website that provides basic information about the fitness club: training schedule, type of memberships, contact information. The main functionality has connection with the necessarity to control client's attendance at trainings, that there aren't too many clients in the workout and otherwise, no one comes. 
 There are 3 roles in this application:
