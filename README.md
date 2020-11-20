@@ -2,18 +2,13 @@
 ### Автор: Буяльская Юлия
 ---
 ### Описание проекта
+[EN](#english)
 
  Реализация данного проекта представляет собой сайт, содержащий основную информацию о фитнес-клубе: расписание занятий, типы абонементов, инструкторы, контактная информация. Основная функциональность связана с необходимостью контролировать посещаемость тренировок, чтобы на занятиях не было слишком много клиентов и, наоборот, никто не пришел.
   В приложении определены следующие роли: 
   * Администратор
   * Клиент
   * Инструктор 
-
-### Проект – Фитнес-клуб
-  
-### Описание проекта 
-
-Реализация данного проекта представляет собой сайт, содержащий основную информацию о фитнес-клубе: расписание занятий, типы абонементов, инструкторы, контактная информация. Основная функциональность связана с необходимостью контролировать посещаемость тренировок, чтобы на занятиях не было слишком много клиентов и, наоборот, никто не пришел.
 
 **Общий функционал всех пользователей:**
 *	Просмотр расписания
@@ -31,8 +26,7 @@
 *	Редактировать личную информацию 
 *	Посмотреть действующие абонементы и количество оставшихся занятий
 *	Записаться (отменить запись) на занятие
-*	Посмотреть перечень тренировок, на которые он записан клиент
-*	Редактировать личную информацию
+*	Посмотреть перечень тренировок, на которые он записан
 
 **Возможности инструктора:**
 *	Редактировать личную информацию
@@ -40,12 +34,54 @@
 
 **Возможности администратора:**
 *	Редактировать личную информацию
-*	Посмотреть перечень всех клиентов
-*	Добавить клиента
+*	Посмотреть перечень всех клиентов, записанных на занятие
+*	Изменить роль пользователя
 *	Продать клиенту абонемент
 *	Отметить присутствие клиента
-*	Изменить роль пользователя
 * Заблокировать пользователя
 *	Добавлять новые занятия в расписание
 * Отменять занятия
 
+# **Project – Fitness club**
+### Author: Buyalskaya Yuliya
+---
+### Project description
+[RU](#русский)
+
+ The realization of this project is a website that provides basic information about the fitness club: training schedule, type of memberships, contact information. The main functionality has connection with the necessarity to control client's attendance at trainings, that there aren't too many clients in the workout and otherwise, no one comes. 
+There are 3 roles in this application:
+  * Administrator
+  * Client
+  * Instructor
+
+**The common functional of all users:**
+*	View schedule
+*	View available memberships
+*	View contact information
+*	View workout's types
+*	View information about instructors
+*	Switch language (Russian/English)
+
+**Opportunities of a non-registered user:**
+*	Registration as a client
+*	Authorisation
+
+**Opportunities of a client:**
+*	Edit his private information 
+*	View his active memberships and amount of remaining classes
+*	Sign up (cancel) for training
+*	View all workouts on which he signs up
+
+**Opportunities of an instructor:**
+*	Edit his private information
+*	View all workouts which he conducts
+
+**Opportunities of an administrator:**
+*	Edit his private information
+*	View all clients who sign up for a workout
+*	Change user's role
+*	Sale a membership to a client
+*	Cancel attendance of a client
+* Block user
+*	Add new workouts into schedule
+* Cancel workouts
