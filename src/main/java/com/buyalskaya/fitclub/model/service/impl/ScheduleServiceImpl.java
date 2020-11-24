@@ -12,8 +12,10 @@ import com.buyalskaya.fitclub.util.MailCreator;
 import com.buyalskaya.fitclub.validator.CommonValidator;
 import com.buyalskaya.fitclub.validator.ScheduleValidator;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -233,6 +235,23 @@ public class ScheduleServiceImpl implements ScheduleService {
             } catch (DaoException ex) {
                 throw new ServiceException("Error during add schedule", ex);
             }
+        }
+        return isAdded;
+    }
+
+    @Override
+    public boolean copyScheduleOfLastWeek() throws ServiceException {
+        boolean isAdded = false;
+        try {
+            ScheduleDao scheduleDao = DaoFactory.getInstance().getScheduleDao();
+            LocalDate lastDate = scheduleDao.findLastDateInSchedule();
+            if (lastDate != null) {
+                LocalDate monday = lastDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+                LocalDate sunday = lastDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+                isAdded = scheduleDao.copyScheduleToNextWeek(monday, sunday);
+            }
+        } catch (DaoException ex) {
+            throw new ServiceException("Error during copy schedule", ex);
         }
         return isAdded;
     }

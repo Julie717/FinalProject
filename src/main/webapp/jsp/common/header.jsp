@@ -25,6 +25,10 @@
                        href="${pageContext.request.contextPath}/controller?commandName=all_user_page">
                         <fmt:message key="header.adminChangeUserRole"/>
                     </a>
+                    <a class="dropdown-item" role="presentation"
+                       href="${pageContext.request.contextPath}/controller?commandName=copy_schedule">
+                        <fmt:message key="header.adminCopyWorkouts"/>
+                    </a>
                 </div>
             </li>
         </c:if>

@@ -83,9 +83,15 @@
                             <c:when test="${isSend==true}">
                                 <fmt:message key="contactUs.resultMessagePositive"/>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${isSend==false}">
                                 <fmt:message key="contactUs.resultMessageNegative"/>
-                            </c:otherwise>
+                            </c:when>
+                            <c:when test="${isCopySchedule==true}">
+                                <fmt:message key="copySchedule.resultMessagePositive"/>
+                            </c:when>
+                            <c:when test="${isCopySchedule==false}">
+                                <fmt:message key="copySchedule.resultMessageNegative"/>
+                            </c:when>
                         </c:choose>
                     </p>
                 </div>

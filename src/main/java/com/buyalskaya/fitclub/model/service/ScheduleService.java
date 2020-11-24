@@ -116,4 +116,13 @@ public interface ScheduleService {
      * @throws ServiceException the service exception
      */
     boolean addSchedule(Map<String, String> scheduleParameters, String locale) throws ServiceException;
+
+    /**
+     * Copy schedule of last week boolean.
+     * Is used to copy all workouts from the last week to the next in the schedule
+     *
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean copyScheduleOfLastWeek() throws ServiceException;
 }

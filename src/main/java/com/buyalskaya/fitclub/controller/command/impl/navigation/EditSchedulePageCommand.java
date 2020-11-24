@@ -39,7 +39,6 @@ public class EditSchedulePageCommand implements Command {
         session.setAttribute(AttributeName.SCHEDULE_ID, idSchedule);
         session.setAttribute(AttributeName.SCHEDULE_NUMBER_WEEK, numberWeek);
         String page;
-
         try {
             ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
             Optional<Schedule> schedule = scheduleService.findOneSchedule(idSchedule);

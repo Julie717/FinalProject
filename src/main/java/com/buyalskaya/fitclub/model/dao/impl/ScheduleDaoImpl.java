@@ -328,13 +328,13 @@ public class ScheduleDaoImpl implements ScheduleDao {
     public int findAmountOfOccupiedPlaces(int idSchedule) throws DaoException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement preparedStatement = null;
-        int occupied_places=0;
+        int occupied_places = 0;
         try {
             preparedStatement = connection.prepareStatement(SqlQuery.SELECT_AMOUNT_OF_OCCUPIED_PLACES);
             preparedStatement.setInt(1, idSchedule);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                occupied_places=resultSet.getInt(ColumnName.OCCUPIED_PLACES);
+                occupied_places = resultSet.getInt(ColumnName.OCCUPIED_PLACES);
             }
         } catch (SQLException ex) {
             throw new DaoException("SQL exception (request or table failed)", ex);
@@ -343,6 +343,47 @@ public class ScheduleDaoImpl implements ScheduleDao {
             ConnectionPool.INSTANCE.releaseConnection(connection);
         }
         return occupied_places;
+    }
+
+    @Override
+    public LocalDate findLastDateInSchedule() throws DaoException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        Statement statement = null;
+        LocalDate lastDateInSchedule = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SqlQuery.SELECT_LAST_DATE_IN_SCHEDULE);
+            if (resultSet.next()) {
+                long lastDate = resultSet.getLong(ColumnName.SCHEDULE_LAST_DATE);
+                lastDateInSchedule = DateTimeTransformer.fromLongToLocalDate(lastDate);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("SQL exception (request or table failed)", ex);
+        } finally {
+            closeStatement(statement);
+            ConnectionPool.INSTANCE.releaseConnection(connection);
+        }
+        return lastDateInSchedule;
+    }
+
+    @Override
+    public boolean copyScheduleToNextWeek(LocalDate startDate, LocalDate endDate) throws DaoException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement preparedStatement = null;
+        boolean isAdd;
+        try {
+            preparedStatement = connection.prepareStatement(SqlQuery.COPY_SCHEDULE_OF_LAST_WEEK);
+            preparedStatement.setLong(1, DateTimeTransformer.fromLocalDateToLong(startDate));
+            preparedStatement.setLong(2, DateTimeTransformer.fromLocalDateToLong(endDate));
+            int amountOfRows = preparedStatement.executeUpdate();
+            isAdd = amountOfRows > 0;
+        } catch (SQLException ex) {
+            throw new DaoException("SQL exception (request or table failed)", ex);
+        } finally {
+            closeStatement(preparedStatement);
+            ConnectionPool.INSTANCE.releaseConnection(connection);
+        }
+        return isAdd;
     }
 
     @Override

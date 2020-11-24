@@ -8,7 +8,6 @@ package com.buyalskaya.fitclub.model.dao;
  *
  * @author Buyalskaya Yuliya
  * @version 1.0
-
  */
 public class ColumnName {
     public static final String USERS_ID = "id_user";
@@ -76,7 +75,9 @@ public class ColumnName {
     public static final String STATUSES_NAME = "name";
 
     public static final String USERS_AMOUNT = "users_amount";
-    public static final String OCCUPIED_PLACES ="occupied_places";
+    public static final String OCCUPIED_PLACES = "occupied_places";
+
+    public static final String SCHEDULE_LAST_DATE = "last_date";
 
     private ColumnName() {
     }

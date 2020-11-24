@@ -53,6 +53,7 @@ public class AttributeName {
     public static final String USERS_NUMBER_PAGE = "numberPage";
     public static final String SHOW_MODAL_CONTACT_US = "showModalContactUs";
     public static final String SEND_MESSAGE_TO_ADMIN = "isSend";
+    public static final String IS_COPY_SCHEDULE = "isCopySchedule";
 
     private AttributeName() {
     }

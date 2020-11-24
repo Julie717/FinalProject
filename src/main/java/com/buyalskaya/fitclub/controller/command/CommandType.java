@@ -152,6 +152,11 @@ public enum CommandType {
      */
     CONTACT_US(new ContactUsCommand()),
     /**
+     * The Copy schedule is used to copy all workouts in schedule (stored in database) from the last week,
+     * to the next week
+     */
+    COPY_SCHEDULE(new CopyScheduleCommand()),
+    /**
      * The Contact us page is command that allows users to go to the page
      * on witch they can send a message to administrators
      */

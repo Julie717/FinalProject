@@ -316,6 +316,15 @@ public class SqlQuery {
             "GROUP BY(id_schedule) " +
             "HAVING (id_schedule = ?)";
 
+    public static final String SELECT_LAST_DATE_IN_SCHEDULE = "SELECT MAX(start_date) AS last_date " +
+            "FROM schedules";
+
+    public static final String COPY_SCHEDULE_OF_LAST_WEEK ="INSERT INTO schedules (start_date, start_time, " +
+            "duration, capacity, id_workout, id_hall, id_instructor) " +
+            "SELECT start_date + 7 AS start_date, start_time, duration, capacity, id_workout, id_hall, id_instructor " +
+            "FROM schedules " +
+            "WHERE (start_date >= ? AND start_date <= ?)";
+
     private SqlQuery() {
     }
 }

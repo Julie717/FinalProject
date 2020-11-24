@@ -51,7 +51,8 @@ public enum CommandAccessControl {
             ALL_USER_PAGE,
             SEARCH_USER,
             CHANGE_USER_ROLE,
-            MEMBERSHIP_PAGE
+            MEMBERSHIP_PAGE,
+            COPY_SCHEDULE
     )),
 
     /**
