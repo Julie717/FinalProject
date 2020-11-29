@@ -24,7 +24,6 @@ public class ParameterName {
     public static final String REQUEST_PARAMETER_HANDLER = "requestParameterHandler";
     public static final String SCHEDULE_NUMBER_WEEK = "numberWeek";
     public static final String SCHEDULE_ID = "idSchedule";
-    public static final String CLIENT_SCHEDULE_ID = "id_schedule";
     public static final String SUBSCRIBE = "subscribe";
     public static final String OLD_PASSWORD = "oldPassword";
     public static final String NEW_PASSWORD = "newPassword";
@@ -52,6 +51,7 @@ public class ParameterName {
     public static final String CONTACT_US_PHONE = "phone";
     public static final String CONTACT_US_EMAIL = "email";
     public static final String CONTACT_US_MESSAGE = "message";
+    public static final String LANGUAGE = "language";
 
     private ParameterName() {
     }

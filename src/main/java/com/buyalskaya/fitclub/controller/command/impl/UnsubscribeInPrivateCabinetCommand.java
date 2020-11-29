@@ -30,7 +30,7 @@ public class UnsubscribeInPrivateCabinetCommand implements Command {
         try {
             ServiceFactory.getInstance().getScheduleService().subscribeClient(user.getIdUser(),
                     idSchedule, subscribe);
-            AddRequestAttribute.forClientPage(request,user.getIdUser());
+            AddRequestAttribute.forClientPage(request,user.getLogin());
         } catch (ServiceException ex) {
             logger.log(Level.ERROR,ex);
             page = ConfigurationManager.getProperty(PageConfigName.ERROR_500);

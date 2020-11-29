@@ -39,7 +39,7 @@ public class UpdateClientInfoCommand implements Command {
                     isUpdate = ServiceFactory.getInstance().getUserService()
                             .updateClientInfo(userParameters, user, locale);
                 }
-                AddRequestAttribute.forClientPage(request, user.getIdUser());
+                AddRequestAttribute.forClientPage(request, user.getLogin());
             } else {
                 Staff staff = (Staff) user;
                 Map<String, String> staffParameters = receiveStaffParametersFromRequest(request);

@@ -127,7 +127,7 @@ public interface UserService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean updatePhoto(int idUser, InputStream photo) throws ServiceException;
+    boolean updatePhoto(int idUser, InputStream photo, String extension) throws ServiceException;
 
     /**
      * Find subscribed clients list.

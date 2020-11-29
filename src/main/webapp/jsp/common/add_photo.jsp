@@ -24,7 +24,8 @@
                     <div class="custom-file" style="margin-bottom: 10px">
                         <input class="custom-file-input" type="file" id="photo" translate="yes"
                                name="photo" accept="image/jpg"/>
-                        <label class="custom-file-label" for="photo" id="labelPhoto">
+                        <label style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis"
+                               class="custom-file-label" for="photo" id="labelPhoto">
                             <fmt:message key="account.photoLabel"/>
                         </label>
                     </div>

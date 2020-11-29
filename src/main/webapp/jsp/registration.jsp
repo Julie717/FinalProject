@@ -39,6 +39,9 @@
                     <div class="col-sm-6 input-column">
                         <input class="form-control" type="text" required="" name="surname"
                                pattern="[а-яА-Яa-zA-Z-]{2,50}"
+                               oninvalid="this.setCustomValidity('<fmt:message
+                                       key="registration.warnMessage"/>')"
+                               onchange="this.setCustomValidity('')"
                                value="${userParameters.get('surname')}">
                         <div class="warnMessage">
                             <c:if test="${not empty userParameters and empty userParameters.get('surname')}">
@@ -56,6 +59,9 @@
                     <div class="col-sm-6 input-column">
                         <input class="form-control" type="text" required="" name="name"
                                pattern="[а-яА-Яa-zA-Z]{2,20}"
+                               oninvalid="this.setCustomValidity('<fmt:message
+                                       key="registration.warnMessage"/>')"
+                               onchange="this.setCustomValidity('')"
                                value="${userParameters.get('name')}">
                         <div class="warnMessage">
                             <c:if test="${not empty userParameters and empty userParameters.get('name')}">
@@ -73,6 +79,9 @@
                     <div class="col-sm-6 input-column">
                         <input class="form-control" type="text" required="" name="login"
                                pattern="[a-zA-Z][a-zA-Z_0-9-.]{4,20}"
+                               oninvalid="this.setCustomValidity('<fmt:message
+                                       key="registration.loginDescription"/>')"
+                               onchange="this.setCustomValidity('')"
                                value="${userParameters.get('login')}">
                         <div class="field-description">
                             <fmt:message key="registration.loginDescription"/>
@@ -99,7 +108,11 @@
                     </div>
                     <div class="col-sm-6 input-column">
                         <input class="form-control" type="password" required="" name="password"
-                               pattern="(?=.*\d)(?=.*[A-Z])[\w\p{P}]{8,}" value="${userParameters.get('password')}">
+                               pattern="(?=.*\d)(?=.*[A-Z])[\w\p{P}]{8,}"
+                               oninvalid="this.setCustomValidity('<fmt:message
+                                       key="registration.passwordDescription"/>')"
+                               onchange="this.setCustomValidity('')"
+                               value="${userParameters.get('password')}">
                         <div class="field-description">
                             <fmt:message key="registration.passwordDescription"/>
                         </div>
@@ -118,6 +131,9 @@
                     </div>
                     <div class="col-sm-6 input-column">
                         <input class="form-control" type="password" required="" name="repeatedPassword"
+                               oninvalid="this.setCustomValidity('<fmt:message
+                                       key="registration.warnMessage"/>')"
+                               onchange="this.setCustomValidity('')"
                                value="${userParameters.get('repeatedPassword')}">
                         <div class="warnMessage">
                             <c:if test="${not empty userParameters and empty userParameters.get('repeatedPassword')}">
@@ -134,6 +150,9 @@
                     </div>
                     <div class="col-sm-6 input-column">
                         <input class="form-control" type="email" required="" name="email"
+                               oninvalid="this.setCustomValidity('<fmt:message
+                                       key="registration.warnMessage"/>')"
+                               onchange="this.setCustomValidity('')"
                                value="${userParameters.get('email')}">
                         <div class="warnMessage">
                             <c:if test="${not empty userParameters and empty userParameters.get('email')}">
@@ -150,6 +169,9 @@
                     </div>
                     <div class="col-sm-6 input-column">
                         <input class="form-control" id="phone" required=""
+                               oninvalid="this.setCustomValidity('<fmt:message
+                                       key="registration.warnMessage"/>')"
+                               onchange="this.setCustomValidity('')"
                                name="phone" value="${userParameters.get('phone')}">
                         <div class="warnMessage">
                             <c:if test="${not empty userParameters and empty userParameters.get('phone')}">
@@ -167,6 +189,10 @@
                     <div class="col-sm-6 input-column">
                         <input id="startDate" class="form-control" required=""
                                name="birthday" data-provide="datepicker"
+                               pattern="[0-9]{2}[./][0-9]{2}[./][0-9]{4}"
+                               oninvalid="this.setCustomValidity('<fmt:message
+                                       key="registration.warnMessage"/>')"
+                               onchange="this.setCustomValidity('')"
                                value="${userParameters.get('birthday')}">
                         <div class="warnMessage">
                             <c:if test="${not empty userParameters and empty userParameters.get('birthday')}">

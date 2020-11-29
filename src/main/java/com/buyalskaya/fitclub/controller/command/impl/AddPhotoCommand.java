@@ -31,10 +31,11 @@ public class AddPhotoCommand implements Command {
         User user = (User) session.getAttribute(AttributeName.SESSION_USER);
         try {
             InputStream photo = request.getPart(ParameterName.USER_PHOTO).getInputStream();
+            String extension = request.getPart(ParameterName.USER_PHOTO).getContentType();
             UserService userService = ServiceFactory.getInstance().getUserService();
-            userService.updatePhoto(user.getIdUser(), photo);
+            userService.updatePhoto(user.getIdUser(), photo, extension);
             switch (user.getRole()) {
-                case CLIENT -> AddRequestAttribute.forClientPage(request, user.getIdUser());
+                case CLIENT -> AddRequestAttribute.forClientPage(request, user.getLogin());
                 case INSTRUCTOR -> AddRequestAttribute.forInstructorPage(request, user.getLogin());
                 case ADMINISTRATOR -> AddRequestAttribute.forAdministratorPage(request, user.getLogin());
             }

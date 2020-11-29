@@ -40,21 +40,21 @@ public class CommonValidatorTest {
     @DataProvider(name = "dataForIsDateValid")
     public Object[][] dataForIsDateValid() {
         return new Object[][]{
-                {"04.10.1985", true},
-                {"01/12/2020", true},
-                {"01/01/2020", true},
-                {"4/5/87", false},
-                {"1/1/20", false},
-                {"1.1.2020", false},
-                {"45780", false},
-                {"", false},
-                {null, false}
+                {"04.10.1985", "ru_RU", true},
+                {"01/12/2020", "en_US", true},
+                {"01/01/2020", "en_US", true},
+                {"4/5/87", "en_US", false},
+                {"1/1/20", "en_US", false},
+                {"1.1.2020", "ru_RU", false},
+                {"45780", "ru_RU", false},
+                {"", "ru_RU", false},
+                {null, "en_US", false}
         };
     }
 
     @Test(dataProvider = "dataForIsDateValid")
-    public void isDateValidTest(String date, boolean expected) {
-        boolean actual = CommonValidator.isDateValid(date);
+    public void isDateValidTest(String date, String locale, boolean expected) {
+        boolean actual = CommonValidator.isDateValid(date, locale);
         assertEquals(actual, expected);
     }
 

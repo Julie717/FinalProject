@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
@@ -32,16 +31,9 @@ public class LoginCommand implements Command {
                 if (user.getStatus() == UserStatus.ACTIVE) {
                     UserRole userRole = user.getRole();
                     switch (userRole) {
-                        case ADMINISTRATOR:
-                            AddRequestAttribute.forAdministratorPage(request, login);
-                            break;
-                        case INSTRUCTOR:
-                            AddRequestAttribute.forInstructorPage(request, login);
-                            break;
-                        default:
-                            HttpSession session = request.getSession();
-                            session.setAttribute(AttributeName.SESSION_USER, user);
-                            AddRequestAttribute.forClientPage(request, user.getIdUser());
+                        case ADMINISTRATOR -> AddRequestAttribute.forAdministratorPage(request, login);
+                        case INSTRUCTOR -> AddRequestAttribute.forInstructorPage(request, login);
+                        default -> AddRequestAttribute.forClientPage(request, user.getLogin());
                     }
                     page = ConfigurationManager.getProperty(PageConfigName.PRIVATE_CABINET);
                     request.setAttribute(AttributeName.SHOW_MODAL, false);

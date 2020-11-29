@@ -57,7 +57,7 @@ public class MembershipServiceImpl implements MembershipService {
     public boolean addClientMembership(String idMembership, String openDate, String idClient, String locale) throws ServiceException {
         boolean isAdded = false;
         if (CommonValidator.isIdValid(idMembership) &&
-                CommonValidator.isDateValid(openDate) &&
+                CommonValidator.isDateValid(openDate, locale) &&
                 CommonValidator.isIdValid(idClient)) {
             int idMembershipInt = Integer.parseInt(idMembership);
             LocalDate date = DateTimeTransformer.fromStringToLocalDate(openDate, locale);

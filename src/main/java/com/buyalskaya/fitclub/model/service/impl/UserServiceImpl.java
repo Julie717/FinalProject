@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
             try {
                 UserDao userDao = DaoFactory.getInstance().getUserDao();
                 String correctPassword = userDao.findPasswordByLogin(login);
-                if (Encryptor.isEqualPasswords(password, correctPassword)) {
+                if (correctPassword != null && Encryptor.isEqualPasswords(password, correctPassword)) {
                     isCorrectAuthorization = true;
                 }
             } catch (DaoException ex) {
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registration(Map<String, String> userParameters, String locale) throws ServiceException {
         boolean isRegister = false;
-        if (UserValidator.isUserParametersValid(userParameters)) {
+        if (UserValidator.isUserParametersValid(userParameters, locale)) {
             String login = userParameters.get(ParameterName.USER_LOGIN);
             try {
                 UserDao userDao = DaoFactory.getInstance().getUserDao();
@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean changeUserParameters(Map<String, String> newParameters, User user, String locale) {
-        boolean isChanged = UserValidator.isUserUpdateParametersValid(newParameters);
+        boolean isChanged = UserValidator.isUserUpdateParametersValid(newParameters, locale);
         if (isChanged) {
             isChanged = false;
             if (newParameters.containsKey(ParameterName.USER_LOGIN)) {
@@ -252,9 +252,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updatePhoto(int idUser, InputStream photo) throws ServiceException {
+    public boolean updatePhoto(int idUser, InputStream photo, String extension) throws ServiceException {
         boolean isUpdate = false;
-        if (UserValidator.isPhotoExtensionValid(photo)) {
+        if (UserValidator.isPhotoExtensionValid(extension)) {
             InputStream decreaseImage = ImageTransformer.decreaseImage(photo);
             try {
                 UserDao userDao = DaoFactory.getInstance().getUserDao();
@@ -382,7 +382,7 @@ public class UserServiceImpl implements UserService {
     public boolean updateUserRoleOrStatus(Map<String, String> newParameters, String locale) throws
             ServiceException {
         boolean isUpdate = false;
-        if (UserValidator.isUserParametersForChangeRoleOrStatusValid(newParameters)) {
+        if (UserValidator.isUserParametersForChangeRoleOrStatusValid(newParameters, locale)) {
             Staff user = UserCreator.createStaffOrClient(newParameters, locale);
             try {
                 UserDao userDao = DaoFactory.getInstance().getUserDao();

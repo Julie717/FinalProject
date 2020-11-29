@@ -127,8 +127,8 @@ public class DateTimeTransformerTest {
     public Object[][] dataForFindSunday() {
         return new Object[][]{
                 {0, LocalDate.of(2020, 11, 29)},
-                {1, LocalDate.of(2020, 11, 6)},
-                {2, LocalDate.of(2020, 11, 13)},
+                {1, LocalDate.of(2020, 12, 6)},
+                {2, LocalDate.of(2020, 12, 13)},
                 {-1, LocalDate.of(2020, 11, 22)}
         };
     }

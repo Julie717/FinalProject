@@ -159,7 +159,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public boolean updateScheduleParameters(Map<String, String> scheduleParameters, String locale) throws ServiceException {
         boolean isUpdated = false;
-        if (ScheduleValidator.isScheduleParametersValid(scheduleParameters) &&
+        if (ScheduleValidator.isScheduleParametersValid(scheduleParameters, locale) &&
                 CommonValidator.isIdValid(scheduleParameters.get(ParameterName.SCHEDULE_ID))) {
             Schedule schedule = ScheduleCreator.createSchedule(scheduleParameters, locale);
             try {
@@ -212,7 +212,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public boolean addSchedule(Map<String, String> scheduleParameters, String locale) throws ServiceException {
         boolean isAdded = false;
-        if (ScheduleValidator.isScheduleParametersValid(scheduleParameters)) {
+        if (ScheduleValidator.isScheduleParametersValid(scheduleParameters, locale)) {
             Schedule schedule = ScheduleCreator.createSchedule(scheduleParameters, locale);
             try {
                 WorkoutDao workoutDao = DaoFactory.getInstance().getWorkoutDao();

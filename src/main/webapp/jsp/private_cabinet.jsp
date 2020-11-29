@@ -177,6 +177,10 @@
                                                    previousValue=
                                                            "<fmt:formatDate value="${birthday}" pattern="dd.MM.yyyy"/>"
                                                    required="" data-provide="datepicker"
+                                                   pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
+                                                   oninvalid="this.setCustomValidity('<fmt:message
+                                                           key="registration.warnMessage"/>')"
+                                                   onchange="this.setCustomValidity('')"
                                                    value="<fmt:formatDate value="${birthday}" pattern="dd.MM.yyyy"/>"
                                                    placeholder="<fmt:message key="registration.birthday"/>">
                                         </c:when>
@@ -185,6 +189,10 @@
                                                    previousValue=
                                                            "<fmt:formatDate value="${birthday}" pattern="MM/dd/yyyy"/>"
                                                    required="" data-provide="datepicker"
+                                                   pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
+                                                   oninvalid="this.setCustomValidity('<fmt:message
+                                                           key="registration.warnMessage"/>')"
+                                                   onchange="this.setCustomValidity('')"
                                                    value="<fmt:formatDate value="${birthday}" pattern="MM/dd/yyyy"/>"
                                                    placeholder="<fmt:message key="registration.birthday"/>">
                                         </c:otherwise>

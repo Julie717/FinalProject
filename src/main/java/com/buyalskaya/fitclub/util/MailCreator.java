@@ -27,6 +27,7 @@ public class MailCreator {
     private final static String UNDERLINE = "_";
     private static final String CONFIRM_LINK = "http://localhost:8080/controller?" +
             "commandName=confirm_registration&login=";
+    private static final String CONFIRM_LINK_LANGUAGE = "&language=";
 
     private static final String MAIL_CANCEL_WORKOUT_SUBJECT = "mail.cancelWorkout.subject";
     private static final String WORKOUT = "mail.cancelWorkout.workout";
@@ -76,6 +77,8 @@ public class MailCreator {
         mailText.append(PARAGRAPH);
         mailText.append(CONFIRM_LINK);
         mailText.append(login);
+        mailText.append(CONFIRM_LINK_LANGUAGE);
+        mailText.append(language.toLowerCase());
         mailText.append(PARAGRAPH);
         mailText.append(PARAGRAPH);
         mailText.append(resourceBundle.getString(END_TEXT));

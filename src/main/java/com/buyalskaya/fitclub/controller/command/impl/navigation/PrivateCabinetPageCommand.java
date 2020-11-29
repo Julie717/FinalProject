@@ -28,7 +28,7 @@ public class PrivateCabinetPageCommand implements Command {
             switch (userRole) {
                 case ADMINISTRATOR -> AddRequestAttribute.forAdministratorPage(request, user.getLogin());
                 case INSTRUCTOR -> AddRequestAttribute.forInstructorPage(request, user.getLogin());
-                default -> AddRequestAttribute.forClientPage(request, user.getIdUser());
+                default -> AddRequestAttribute.forClientPage(request, user.getLogin());
             }
             page = ConfigurationManager.getProperty(PageConfigName.PRIVATE_CABINET);
         } catch (ServiceException ex) {

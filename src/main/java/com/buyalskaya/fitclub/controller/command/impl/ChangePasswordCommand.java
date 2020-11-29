@@ -33,7 +33,7 @@ public class ChangePasswordCommand implements Command {
             UserService userService = ServiceFactory.getInstance().getUserService();
             boolean isUpdate = userService.updatePassword(user, oldPassword, newPassword, repeatedNewPassword);
             request.setAttribute(AttributeName.INCORRECT_PASSWORD, !isUpdate);
-            AddRequestAttribute.forClientPage(request, user.getIdUser());
+            AddRequestAttribute.forClientPage(request, user.getLogin());
             page = ConfigurationManager.getProperty(PageConfigName.PRIVATE_CABINET);
         } catch (ServiceException ex) {
             logger.log(Level.ERROR, ex);

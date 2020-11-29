@@ -139,7 +139,7 @@ public class UserValidatorTest {
         return new Object[][]{
                 {"Надежда закончила Полоцкий государственный университет по специальности «Практическая психология. Английский язык». За ее плечами также курсы по пилатесу и более десяти лет занятий восточными танцами: девушка не только участвовала и побеждала в городских и областных конкурсах, но и преподавала их в одном из новополоцких фитнес-клубов. Также Надежда получила комплексную программу дополнительного образования \"Фитнес-инструктор групповых программ\" (частное предприятие \"Фитнес-профи\"), прошла обучение \"Инструктор по фитнесу\" в ЧУП \"Эффект-лайн\" (пилатес, калланетика, фитнес-йога), участвовала в конвенции \"Сезоны Грантелло\", конвенции по аквааэробике и обучающем семинаре \"Стретчинг в работе инструктора групповых программ\" (Grantello fitness school).", true},
                 {"", true},
-                {"<script src=\"data:&comma;alert(1)// \"><script src=data:&comma;alert(1)// ",false},
+                {"<script src=\"data:&comma;alert(1)// \"><script src=data:&comma;alert(1)// ", false},
                 {null, false},
                 {"Надежда закончила Полоцкий государственный университет по специальности «Практическая психология. Английский язык». За ее плечами также курсы по пилатесу и более десяти лет занятий восточными танцами: девушка не только участвовала и побеждала в городских и областных конкурсах, но и преподавала их в одном из новополоцких фитнес-клубов. Также Надежда получила комплексную программу дополнительного образования \"Фитнес-инструктор групповых программ\" (частное предприятие \"Фитнес-профи\"), прошла обучение \"Инструктор по фитнесу\" в ЧУП \"Эффект-лайн\" (пилатес, калланетика, фитнес-йога), участвовала в конвенции \"Сезоны Грантелло\", конвенции по аквааэробике и обучающем семинаре \"Стретчинг в работе инструктора групповых программ\" (Grantello fitness school). Надежда закончила Полоцкий государственный университет по специальности «Практическая психология. Английский язык». За ее плечами также курсы по пилатесу и более десяти лет занятий восточными танцами: девушка не только участвовала и побеждала в городских и областных конкурсах, но и преподавала их в одном из новополоцких фитнес-клубов. Также Надежда получила комплексную программу дополнительного образования \"Фитнес-инструктор групповых программ\" (частное предприятие \"Фитнес-профи\"), прошла обучение \"Инструктор по фитнесу\" в ЧУП \"Эффект-лайн\" (пилатес, калланетика, фитнес-йога), участвовала в конвенции \"Сезоны Грантелло\", конвенции по аквааэробике и обучающем семинаре \"Стретчинг в работе инструктора групповых программ\" (Grantello fitness school). Надежда закончила Полоцкий государственный университет по специальности «Практическая психология. Английский язык». За ее плечами также курсы по пилатесу и более десяти лет занятий восточными танцами: девушка не только участвовала и побеждала в городских и областных конкурсах, но и преподавала их в одном из новополоцких фитнес-клубов. Также Надежда получила комплексную программу дополнительного образования \"Фитнес-инструктор групповых программ\" (частное предприятие \"Фитнес-профи\"), прошла обучение \"Инструктор по фитнесу\" в ЧУП \"Эффект-лайн\" (пилатес, калланетика, фитнес-йога), участвовала в конвенции \"Сезоны Грантелло\", конвенции по аквааэробике и обучающем семинаре \"Стретчинг в работе инструктора групповых программ\" (Grantello fitness school). Надежда закончила Полоцкий государственный университет по специальности «Практическая психология. Английский язык». За ее плечами также курсы по пилатесу и более десяти лет занятий восточными танцами: девушка не только участвовала и побеждала в городских и областных конкурсах, но и преподавала их в одном из новополоцких фитнес-клубов. Также Надежда получила комплексную программу дополнительного образования \"Фитнес-инструктор групповых программ\" (частное предприятие \"Фитнес-профи\"), прошла обучение \"Инструктор по фитнесу\" в ЧУП \"Эффект-лайн\" (пилатес, калланетика, фитнес-йога), участвовала в конвенции \"Сезоны Грантелло\", конвенции по аквааэробике и обучающем семинаре \"Стретчинг в работе инструктора групповых программ\" (Grantello fitness school). Надежда закончила Полоцкий государственный университет по специальности «Практическая психология. Английский язык». За ее плечами также курсы по пилатесу и более десяти лет занятий восточными танцами: девушка не только участвовала и побеждала в городских и областных конкурсах, но и преподавала их в одном из новополоцких фитнес-клубов. Также Надежда получила комплексную программу дополнительного образования \"Фитнес-инструктор групповых программ\" (частное предприятие \"Фитнес-профи\"), прошла обучение \"Инструктор по фитнесу\" в ЧУП \"Эффект-лайн\" (пилатес, калланетика, фитнес-йога), участвовала в конвенции \"Сезоны Грантелло\", конвенции по аквааэробике и обучающем семинаре \"Стретчинг в работе инструктора групповых программ\" (Grantello fitness school).", false}
         };
@@ -227,7 +227,7 @@ public class UserValidatorTest {
         userParameters.put("userStatus", "1");
         userParameters.put("startWorkingDate", null);
         userParameters.put("endWorkingDate", "");
-        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters);
+        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters, "ru_RU");
         assertEquals(actual, true);
     }
 
@@ -238,7 +238,7 @@ public class UserValidatorTest {
         userParameters.put("userStatus", "1");
         userParameters.put("startWorkingDate", "01.12.2020");
         userParameters.put("endWorkingDate", null);
-        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters);
+        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters, "ru_RU");
         assertEquals(actual, true);
     }
 
@@ -249,7 +249,7 @@ public class UserValidatorTest {
         userParameters.put("userStatus", "2");
         userParameters.put("startWorkingDate", "01/01/2020");
         userParameters.put("endWorkingDate", "");
-        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters);
+        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters, "en_US");
         assertEquals(actual, true);
     }
 
@@ -258,7 +258,7 @@ public class UserValidatorTest {
         Map<String, String> userParameters = new HashMap<>();
         userParameters.put("userStatus", "2");
         userParameters.put("startWorkingDate", "01/01/2020");
-        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters);
+        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters, "en_US");
         assertEquals(actual, false);
     }
 
@@ -267,7 +267,7 @@ public class UserValidatorTest {
         Map<String, String> userParameters = new HashMap<>();
         userParameters.put("userRole", "1");
         userParameters.put("userStatus", "2");
-        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters);
+        boolean actual = UserValidator.isUserParametersForChangeRoleOrStatusValid(userParameters, "en_US");
         assertEquals(actual, false);
     }
 
@@ -284,7 +284,7 @@ public class UserValidatorTest {
     public void isStaffUpdateParametersValidPositiveTest3() {
         Map<String, String> userParameters = new HashMap<>();
         userParameters.put("workExperience", "7");
-        userParameters.put("staffDescription","sdsgsdg");
+        userParameters.put("staffDescription", "sdsgsdg");
         boolean actual = UserValidator.isStaffUpdateParametersValid(userParameters);
         assertEquals(actual, true);
     }
@@ -317,7 +317,7 @@ public class UserValidatorTest {
     public void isUserUpdateParametersValidPositiveTest1() {
         Map<String, String> userParameters = new HashMap<>();
         userParameters.put("login", "lolod_2");
-        boolean actual = UserValidator.isUserUpdateParametersValid(userParameters);
+        boolean actual = UserValidator.isUserUpdateParametersValid(userParameters, "ru_RU");
         assertEquals(actual, true);
     }
 
@@ -335,7 +335,7 @@ public class UserValidatorTest {
     public void isUserUpdateParametersValidNegativeTest1() {
         Map<String, String> userParameters = new HashMap<>();
         userParameters.put("login", null);
-        boolean actual = UserValidator.isUserUpdateParametersValid(userParameters);
+        boolean actual = UserValidator.isUserUpdateParametersValid(userParameters, "ru_RU");
         assertEquals(actual, false);
     }
 
@@ -343,7 +343,7 @@ public class UserValidatorTest {
     public void isUserUpdateParametersNegativeTest2() {
         Map<String, String> userParameters = new HashMap<>();
         userParameters.put("birthday", "1/05/2020");
-        boolean actual = UserValidator.isUserUpdateParametersValid(userParameters);
+        boolean actual = UserValidator.isUserUpdateParametersValid(userParameters, "en_US");
         assertEquals(actual, false);
     }
 
@@ -358,7 +358,7 @@ public class UserValidatorTest {
         userParameters.put("phone", "+375298745627");
         userParameters.put("email", "ivan_14@tut.by");
         userParameters.put("birthday", "12.12.1989");
-        boolean actual = UserValidator.isUserParametersValid(userParameters);
+        boolean actual = UserValidator.isUserParametersValid(userParameters, "ru_RU");
         assertEquals(actual, true);
     }
 
@@ -373,7 +373,7 @@ public class UserValidatorTest {
         userParameters.put("phone", "+375298745627");
         userParameters.put("email", "ivan_14@tut.by");
         userParameters.put("birthday", "12.12.1989");
-        boolean actual = UserValidator.isUserParametersValid(userParameters);
+        boolean actual = UserValidator.isUserParametersValid(userParameters, "ru_RU");
         assertEquals(actual, false);
     }
 }

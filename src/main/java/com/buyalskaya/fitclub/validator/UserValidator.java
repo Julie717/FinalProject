@@ -42,7 +42,7 @@ public class UserValidator {
      * @param userParameters the user parameters
      * @return the boolean
      */
-    public static boolean isUserParametersValid(Map<String, String> userParameters) {
+    public static boolean isUserParametersValid(Map<String, String> userParameters, String locale) {
         boolean isValid = true;
         if (!isLoginValid(userParameters.get(ParameterName.USER_LOGIN))) {
             isValid = false;
@@ -74,7 +74,7 @@ public class UserValidator {
             isValid = false;
             userParameters.remove(ParameterName.USER_EMAIL);
         }
-        if (!CommonValidator.isDateValid(userParameters.get(ParameterName.USER_BIRTHDAY))) {
+        if (!CommonValidator.isDateValid(userParameters.get(ParameterName.USER_BIRTHDAY), locale)) {
             isValid = false;
             userParameters.remove(ParameterName.USER_BIRTHDAY);
         }
@@ -88,7 +88,7 @@ public class UserValidator {
      * @param userParameters the user parameters
      * @return the boolean
      */
-    public static boolean isUserUpdateParametersValid(Map<String, String> userParameters) {
+    public static boolean isUserUpdateParametersValid(Map<String, String> userParameters, String locale) {
         boolean isValid = true;
         if (userParameters.containsKey(ParameterName.USER_LOGIN)) {
             isValid = isLoginValid(userParameters.get(ParameterName.USER_LOGIN));
@@ -106,7 +106,7 @@ public class UserValidator {
             isValid = isEmailValid(userParameters.get(ParameterName.USER_EMAIL)) && isValid;
         }
         if (userParameters.containsKey(ParameterName.USER_BIRTHDAY)) {
-            isValid = CommonValidator.isDateValid(userParameters.get(ParameterName.USER_BIRTHDAY)) && isValid;
+            isValid = CommonValidator.isDateValid(userParameters.get(ParameterName.USER_BIRTHDAY), locale) && isValid;
         }
         return isValid;
     }
@@ -136,17 +136,17 @@ public class UserValidator {
      * @param userParameters the user parameters
      * @return the boolean
      */
-    public static boolean isUserParametersForChangeRoleOrStatusValid(Map<String, String> userParameters) {
+    public static boolean isUserParametersForChangeRoleOrStatusValid(Map<String, String> userParameters, String locale) {
         boolean isValid = UserValidator.isIdStatusValid(userParameters.get(ParameterName.USER_STATUS)) &&
                 UserValidator.isIdRoleValid(userParameters.get(ParameterName.USER_ROLE)) &&
                 UserValidator.isIdStatusValid(userParameters.get(ParameterName.USER_STATUS));
         if (isValid) {
             int idRole = Integer.parseInt(userParameters.get(ParameterName.USER_ROLE));
             if (idRole != UserRole.CLIENT.getUserRoleId()) {
-                isValid = CommonValidator.isDateValid(userParameters.get(ParameterName.STAFF_START_WORKING_DATE));
+                isValid = CommonValidator.isDateValid(userParameters.get(ParameterName.STAFF_START_WORKING_DATE), locale);
                 String endWorkingDate = userParameters.get(ParameterName.STAFF_END_WORKING_DATE);
                 if (endWorkingDate != null && !endWorkingDate.isEmpty()) {
-                    isValid = CommonValidator.isDateValid(endWorkingDate);
+                    isValid = CommonValidator.isDateValid(endWorkingDate, locale);
                 }
             }
         }
@@ -280,15 +280,8 @@ public class UserValidator {
      * @param photo the photo
      * @return the boolean
      */
-    public static boolean isPhotoExtensionValid(InputStream photo) {
-        boolean isValid = false;
-        try {
-            String mimeType = URLConnection.guessContentTypeFromStream(photo);
-            isValid = PHOTO_FORMAT.equals(mimeType);
-        } catch (IOException ex) {
-            logger.log(Level.WARN, "Impossible to find file's extension", ex);
-        }
-        return isValid;
+    public static boolean isPhotoExtensionValid(String extension) {
+        return PHOTO_FORMAT.equals(extension);
     }
 
     /**

@@ -68,6 +68,7 @@
                                                    pattern="yyyy-MM-dd"
                                                    var="startDate"/>
                                     <input class="form-control" id="from-workout-date"
+                                           pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
                                            name="startDate" required="" data-provide="datepicker"
                                            value="" placeholder="<fmt:message key="scheduleEdit.workoutDate"/>">
                                 </div>

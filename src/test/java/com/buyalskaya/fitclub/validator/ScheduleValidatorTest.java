@@ -19,7 +19,7 @@ public class ScheduleValidatorTest {
         scheduleParameters.put("startTime", "18:00");
         scheduleParameters.put("duration", "55");
         scheduleParameters.put("capacity", "15");
-        boolean actual = ScheduleValidator.isScheduleParametersValid(scheduleParameters);
+        boolean actual = ScheduleValidator.isScheduleParametersValid(scheduleParameters, "ru_RU");
         assertEquals(actual, true);
     }
 
@@ -31,7 +31,7 @@ public class ScheduleValidatorTest {
         scheduleParameters.put("idInstructor", "4");
         scheduleParameters.put("startDate", "04.05.2020");
         scheduleParameters.put("capacity", "15");
-        boolean actual = ScheduleValidator.isScheduleParametersValid(scheduleParameters);
+        boolean actual = ScheduleValidator.isScheduleParametersValid(scheduleParameters, "ru_RU");
         assertEquals(actual, false);
     }
 

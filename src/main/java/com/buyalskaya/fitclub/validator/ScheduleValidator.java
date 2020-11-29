@@ -26,11 +26,11 @@ public class ScheduleValidator {
      * @param scheduleParameters the schedule parameters
      * @return the boolean
      */
-    public static boolean isScheduleParametersValid(Map<String, String> scheduleParameters) {
+    public static boolean isScheduleParametersValid(Map<String, String> scheduleParameters, String locale) {
         return CommonValidator.isIdValid(scheduleParameters.get(ParameterName.SCHEDULE_WORKOUT_ID)) &&
                 CommonValidator.isIdValid(scheduleParameters.get(ParameterName.SCHEDULE_HALL_ID)) &&
                 CommonValidator.isIdValid(scheduleParameters.get(ParameterName.SCHEDULE_INSTRUCTOR_ID)) &&
-                CommonValidator.isDateValid(scheduleParameters.get(ParameterName.SCHEDULE_START_DATE)) &&
+                CommonValidator.isDateValid(scheduleParameters.get(ParameterName.SCHEDULE_START_DATE), locale) &&
                 CommonValidator.isTimeValid(scheduleParameters.get(ParameterName.SCHEDULE_START_TIME)) &&
                 CommonValidator.isPositiveInteger(scheduleParameters.get(ParameterName.SCHEDULE_DURATION)) &&
                 CommonValidator.isPositiveInteger(scheduleParameters.get(ParameterName.SCHEDULE_CAPACITY));

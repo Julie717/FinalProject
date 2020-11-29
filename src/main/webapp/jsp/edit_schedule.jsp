@@ -117,12 +117,14 @@
                                     <c:when test="${sessionScope.locale =='ru_RU'}">
                                         <input class="form-control" id="from-workout-date"
                                                name="startDate" required="" data-provide="datepicker"
+                                               pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
                                                value="<fmt:formatDate value="${startDate}"  pattern="dd.MM.yyyy"/>"
                                                placeholder="<fmt:message key="scheduleEdit.workoutDate"/>">
                                     </c:when>
                                     <c:otherwise>
                                         <input class="form-control" id="from-workout-date"
                                                name="startDate" required="" data-provide="datepicker"
+                                               pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
                                                value="<fmt:formatDate value="${startDate}"  pattern="MM/dd/yyyy"/>"
                                                placeholder="<fmt:message key="scheduleEdit.workoutDate"/>">
                                     </c:otherwise>

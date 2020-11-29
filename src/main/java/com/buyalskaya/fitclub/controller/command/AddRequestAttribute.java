@@ -53,13 +53,17 @@ public class AddRequestAttribute {
      * @param idUser  the id user
      * @throws ServiceException the service exception
      */
-    public static void forClientPage(HttpServletRequest request, int idUser) throws ServiceException {
+    public static void forClientPage(HttpServletRequest request, String login) throws ServiceException {
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        User user = userService.findUserByLogin(login).get();
+        HttpSession session = request.getSession();
+        session.setAttribute(AttributeName.SESSION_USER, user);
         ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
-        List<ClientSchedule> clientSchedule = scheduleService.findClientSchedule(idUser);
+        List<ClientSchedule> clientSchedule = scheduleService.findClientSchedule(user.getIdUser());
         request.setAttribute(AttributeName.SCHEDULE, clientSchedule);
         hallsNames(request, clientSchedule);
         MembershipService membershipService = ServiceFactory.getInstance().getMembershipService();
-        List<ClientMembership> memberships = membershipService.findActiveClientMemberships(idUser);
+        List<ClientMembership> memberships = membershipService.findActiveClientMemberships(user.getIdUser());
         request.setAttribute(AttributeName.CLIENT_MEMBERSHIPS, memberships);
     }
 
@@ -116,7 +120,7 @@ public class AddRequestAttribute {
      * HallsNames.
      * Add set of hall's names from schedule to the request
      *
-     * @param request  the request
+     * @param request   the request
      * @param schedules the schedules
      */
 
