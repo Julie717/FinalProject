@@ -93,10 +93,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean confirmRegistration(String login) throws ServiceException {
-        boolean isConfirmed;
+        boolean isConfirmed = false;
         try {
             UserDao userDao = DaoFactory.getInstance().getUserDao();
-            isConfirmed = userDao.confirmRegistration(login);
+            UserStatus currentStatus = userDao.findUserStatusByLogin(login);
+            if (currentStatus == UserStatus.UNCONFIRMED) {
+                isConfirmed = userDao.confirmRegistration(login);
+            }
         } catch (DaoException ex) {
             throw new ServiceException("Error during confirm registration user", ex);
         }

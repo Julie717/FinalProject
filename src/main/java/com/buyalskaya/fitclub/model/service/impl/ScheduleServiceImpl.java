@@ -105,7 +105,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             try {
                 int correctIdSchedule = Integer.parseInt(idSchedule);
                 ScheduleDao scheduleDao = DaoFactory.getInstance().getScheduleDao();
-                if (subscribe.equalsIgnoreCase(TRUE)) {
+                if (subscribe != null && subscribe.equalsIgnoreCase(TRUE)) {
                     isChanged = scheduleDao.unsubscribeClient(idUser, correctIdSchedule);
                 } else {
                     isChanged = scheduleDao.subscribeClient(idUser, correctIdSchedule);

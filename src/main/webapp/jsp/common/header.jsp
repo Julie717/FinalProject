@@ -121,6 +121,8 @@
 <input type="hidden" id="showModal" value="${showModal}"/>
 <input type="hidden" id="incorrectLoginOrPassword" value="${incorrectLoginOrPassword}"/>
 <input type="hidden" id="loginWithoutConfirm" value="${loginWithoutConfirm}"/>
+<input type="hidden" id="blockedUser" value="${blockedUser}"/>
+
 <div role="dialog" tabindex="-1" class="modal fade" id="modalLogin">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -155,6 +157,9 @@
                     </div>
                     <div class="text-error" id="incorrectLoginWithoutConfirm" hidden style="color: darkred">
                         <fmt:message key="registration.resultMessage"/>
+                    </div>
+                    <div class="text-error" id="messageBlockedUser" hidden style="color: darkred">
+                        <fmt:message key="registration.messageBlockedUser"/>
                     </div>
                     <a class="register"
                        href="${pageContext.request.contextPath}controller?commandName=registration_page">

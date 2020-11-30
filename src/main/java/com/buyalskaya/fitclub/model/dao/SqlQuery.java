@@ -154,6 +154,10 @@ public class SqlQuery {
             "SET photo = ? " +
             "WHERE id_user = ?";
 
+    public static final String SELECT_USER_STATUS_BY_LOGIN = "SELECT id_status " +
+            "FROM users " +
+            "WHERE (login = ?)";
+
     public static final String SELECT_ONE_SCHEDULE = "SELECT schedules.id_schedule, start_date, start_time, " +
             "capacity, duration, workouts.id_workout, IFNULL(capacity-occupied_places, capacity) AS free_capacity, " +
             "name_workout, id_workout_level, description, users.id_user, users.surname, users.name, " +

@@ -7,6 +7,7 @@ import com.buyalskaya.fitclub.model.entity.*;
 import com.buyalskaya.fitclub.model.dao.ColumnName;
 import com.buyalskaya.fitclub.model.dao.SqlQuery;
 import com.buyalskaya.fitclub.model.dao.UserDao;
+import com.buyalskaya.fitclub.util.CommonUtil;
 import com.buyalskaya.fitclub.util.DateTimeTransformer;
 
 import java.io.InputStream;
@@ -104,6 +105,28 @@ public class UserDaoImpl implements UserDao {
             ConnectionPool.INSTANCE.releaseConnection(connection);
         }
         return user;
+    }
+
+    @Override
+    public UserStatus findUserStatusByLogin(String login) throws DaoException {
+        PreparedStatement preparedStatement = null;
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        UserStatus userStatus = UserStatus.BLOCKED;
+        try {
+            preparedStatement = connection.prepareStatement(SqlQuery.SELECT_USER_STATUS_BY_LOGIN);
+            preparedStatement.setString(1, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int idStatus = resultSet.getInt(ColumnName.USERS_STATUS);
+                userStatus = CommonUtil.findStatus(idStatus);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("SQL exception (request or table failed)", ex);
+        } finally {
+            closeStatement(preparedStatement);
+            ConnectionPool.INSTANCE.releaseConnection(connection);
+        }
+        return userStatus;
     }
 
     @Override

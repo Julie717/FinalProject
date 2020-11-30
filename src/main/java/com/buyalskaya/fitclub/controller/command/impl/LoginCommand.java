@@ -21,30 +21,34 @@ public class LoginCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String page;
+        String page = ConfigurationManager.getProperty(PageConfigName.HOMEPAGE);
         String login = request.getParameter(ParameterName.USER_LOGIN);
         String password = request.getParameter(ParameterName.USER_PASSWORD);
         try {
             boolean authorization = ServiceFactory.getInstance().getUserService().authorization(login, password);
             if (authorization) {
                 User user = ServiceFactory.getInstance().getUserService().findUserByLogin(login).get();
-                if (user.getStatus() == UserStatus.ACTIVE) {
-                    UserRole userRole = user.getRole();
-                    switch (userRole) {
-                        case ADMINISTRATOR -> AddRequestAttribute.forAdministratorPage(request, login);
-                        case INSTRUCTOR -> AddRequestAttribute.forInstructorPage(request, login);
-                        default -> AddRequestAttribute.forClientPage(request, user.getLogin());
+                switch (user.getStatus()) {
+                    case ACTIVE -> {
+                        switch (user.getRole()) {
+                            case ADMINISTRATOR -> AddRequestAttribute.forAdministratorPage(request, login);
+                            case INSTRUCTOR -> AddRequestAttribute.forInstructorPage(request, login);
+                            default -> AddRequestAttribute.forClientPage(request, user.getLogin());
+                        }
+                        page = ConfigurationManager.getProperty(PageConfigName.PRIVATE_CABINET);
+                        request.setAttribute(AttributeName.SHOW_MODAL, false);
+                        request.setAttribute(AttributeName.LOGIN_WITHOUT_CONFIRM, false);
                     }
-                    page = ConfigurationManager.getProperty(PageConfigName.PRIVATE_CABINET);
-                    request.setAttribute(AttributeName.SHOW_MODAL, false);
-                    request.setAttribute(AttributeName.LOGIN_WITHOUT_CONFIRM, false);
-                } else {
-                    page = ConfigurationManager.getProperty(PageConfigName.HOMEPAGE);
-                    request.setAttribute(AttributeName.SHOW_MODAL, true);
-                    request.setAttribute(AttributeName.LOGIN_WITHOUT_CONFIRM, true);
+                    case BLOCKED -> {
+                        request.setAttribute(AttributeName.SHOW_MODAL, true);
+                        request.setAttribute(AttributeName.BLOCKED_USER, true);
+                    }
+                    case UNCONFIRMED -> {
+                        request.setAttribute(AttributeName.SHOW_MODAL, true);
+                        request.setAttribute(AttributeName.LOGIN_WITHOUT_CONFIRM, true);
+                    }
                 }
             } else {
-                page = ConfigurationManager.getProperty(PageConfigName.HOMEPAGE);
                 request.setAttribute(AttributeName.SHOW_MODAL, true);
                 request.setAttribute(AttributeName.INCORRECT_LOGIN_OR_PASSWORD, true);
             }

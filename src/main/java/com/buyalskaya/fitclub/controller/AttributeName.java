@@ -24,6 +24,7 @@ public class AttributeName {
     public static final String SHOW_MODAL_REGISTRATION = "showRegistrationMessage";
     public static final String SHOW_MODAL_CONFIRM_REGISTRATION = "showConfirmRegistrationMessage";
     public static final String LOGIN_WITHOUT_CONFIRM = "loginWithoutConfirm";
+    public static final String BLOCKED_USER = "blockedUser";
     public static final String INSTRUCTORS = "instructors";
     public static final String SCHEDULES = "schedules";
     public static final String HALLS_DATE = "hallsDate";

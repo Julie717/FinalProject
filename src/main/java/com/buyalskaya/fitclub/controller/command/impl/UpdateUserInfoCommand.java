@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UpdateClientInfoCommand implements Command {
+public class UpdateUserInfoCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     @Override

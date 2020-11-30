@@ -1,10 +1,7 @@
 package com.buyalskaya.fitclub.model.dao;
 
 import com.buyalskaya.fitclub.exception.DaoException;
-import com.buyalskaya.fitclub.model.entity.Client;
-import com.buyalskaya.fitclub.model.entity.Staff;
-import com.buyalskaya.fitclub.model.entity.User;
-import com.buyalskaya.fitclub.model.entity.UserRole;
+import com.buyalskaya.fitclub.model.entity.*;
 
 import java.io.InputStream;
 import java.util.List;
@@ -221,6 +218,16 @@ public interface UserDao extends CommonDao<User> {
      * @throws DaoException the dao exception
      */
     List<Staff> findUserBySurname(String surname) throws DaoException;
+
+    /**
+     * Find user status by login user status.
+     * Is used to find user's status by login.
+     *
+     * @param login the login
+     * @return the user status
+     * @throws DaoException the dao exception
+     */
+    UserStatus findUserStatusByLogin(String login) throws DaoException;
 
     /**
      * Find user or staff by id optional.

@@ -72,10 +72,10 @@ public enum CommandType {
      */
     SUBSCRIBE_IN_SCHEDULE(new SubscribeInSchedule()),
     /**
-     * The Update client info is command that allows clients update their information
+     * The Update user info is command that allows users update their information
      * that they entered during the registration
      */
-    UPDATE_CLIENT_INFO(new UpdateClientInfoCommand()),
+    UPDATE_USER_INFO(new UpdateUserInfoCommand()),
     /**
      * The Private cabinet page is command that allows to go to the private cabinet
      */

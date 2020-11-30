@@ -56,8 +56,8 @@
             <div class="col-12 col-md-6" id="message">
                 <form class="custom-form" method="POST" id="updateUserInfo"
                       action="${pageContext.request.contextPath}/controller">
-                    <input type="hidden" name="commandName" previousValue="update_client_info"
-                           value="update_client_info"/>
+                    <input type="hidden" name="commandName" previousValue="update_user_info"
+                           value="update_user_info"/>
                     <div class="form-group">
                         <label for="from-login">
                             <fmt:message key="header.login"/>
