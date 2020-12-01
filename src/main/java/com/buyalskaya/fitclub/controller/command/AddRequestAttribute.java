@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -36,13 +37,15 @@ public class AddRequestAttribute {
      */
     public static void forInstructorPage(HttpServletRequest request, String login) throws ServiceException {
         UserService userService = ServiceFactory.getInstance().getUserService();
-        Staff staff = userService.findStaffByLogin(login).get();
+        Optional<Staff> staff = userService.findStaffByLogin(login);
         HttpSession session = request.getSession();
-        session.setAttribute(AttributeName.SESSION_USER, staff);
-        ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
-        List<ClientSchedule> instructorSchedule = scheduleService.findInstructorSchedule(staff.getIdUser());
-        request.setAttribute(AttributeName.SCHEDULE, instructorSchedule);
-        hallsNames(request, instructorSchedule);
+        if (staff.isPresent()) {
+            session.setAttribute(AttributeName.SESSION_USER, staff.get());
+            ScheduleService scheduleService = ServiceFactory.getInstance().getScheduleService();
+            List<ClientSchedule> instructorSchedule = scheduleService.findInstructorSchedule(staff.get().getIdUser());
+            request.setAttribute(AttributeName.SCHEDULE, instructorSchedule);
+            hallsNames(request, instructorSchedule);
+        }
     }
 
     /**
@@ -77,9 +80,11 @@ public class AddRequestAttribute {
      */
     public static void forAdministratorPage(HttpServletRequest request, String login) throws ServiceException {
         UserService userService = ServiceFactory.getInstance().getUserService();
-        Staff staff = userService.findStaffByLogin(login).get();
+        Optional<Staff> staff = userService.findStaffByLogin(login);
         HttpSession session = request.getSession();
-        session.setAttribute(AttributeName.SESSION_USER, staff);
+        if (staff.isPresent()) {
+            session.setAttribute(AttributeName.SESSION_USER, staff.get());
+        }
     }
 
     /**
