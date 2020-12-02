@@ -12,6 +12,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Schedule page command.
+ * This command allows to go to the page with information about all schedule
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class SchedulePageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

@@ -19,6 +19,13 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Change user role command.
+ * This command allows administrators to change user's role
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class ChangeUserRoleCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -31,9 +38,9 @@ public class ChangeUserRoleCommand implements Command {
         String page;
         try {
             Map<String, String> userParameters = receiveUserParametersFromRequest(request);
-            UserService userService=ServiceFactory.getInstance().getUserService();
+            UserService userService = ServiceFactory.getInstance().getUserService();
             userService.updateUserRoleOrStatus(userParameters, locale);
-            AddRequestAttribute.forAllUsersPage(request, surnameSearch,numberPage);
+            AddRequestAttribute.forAllUsersPage(request, surnameSearch, numberPage);
             page = ConfigurationManager.getProperty(PageConfigName.ALL_USERS);
         } catch (ServiceException ex) {
             logger.log(Level.ERROR, ex);

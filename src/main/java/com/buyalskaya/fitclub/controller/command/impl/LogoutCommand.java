@@ -8,6 +8,13 @@ import com.buyalskaya.fitclub.util.PageConfigName;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Logout command.
+ * This command allows to logout from the site
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class LogoutCommand implements Command {
 
     @Override

@@ -18,6 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+/**
+ * The type Add schedule command.
+ * This command allows administrators to add a workout into schedule
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class AddScheduleCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

@@ -16,6 +16,13 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The type Middle workout page command.
+ * This command allows to go to the page with workouts of middle level
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class MiddleWorkoutPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

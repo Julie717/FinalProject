@@ -7,6 +7,12 @@ import com.buyalskaya.fitclub.util.PageConfigName;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Default command.
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class DefaultCommand implements Command {
 
     @Override

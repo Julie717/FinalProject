@@ -19,6 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+/**
+ * The type Edit schedule command.
+ * This command allows administrators to edit schedule parameters
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class EditScheduleCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

@@ -17,6 +17,13 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Delete workout from schedule command.
+ * This command allows administrators to cancel a workout
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class DeleteWorkoutFromScheduleCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

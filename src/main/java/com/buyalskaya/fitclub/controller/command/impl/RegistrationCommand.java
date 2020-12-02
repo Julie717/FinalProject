@@ -18,6 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+/**
+ * The type Registration command.
+ * This command allows to register in the site
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -44,7 +51,7 @@ public class RegistrationCommand implements Command {
                 page = ConfigurationManager.getProperty(PageConfigName.REGISTRATION);
             }
         } catch (ServiceException ex) {
-            logger.log(Level.ERROR,ex);
+            logger.log(Level.ERROR, ex);
             page = ConfigurationManager.getProperty(PageConfigName.ERROR_500);
         }
         return new Router(page);

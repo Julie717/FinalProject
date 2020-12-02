@@ -16,6 +16,13 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Confirm registration command.
+ * This command allows to confirm registration
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class ConfirmRegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static String ENGLISH = "en";

@@ -22,6 +22,13 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Update user info command.
+ * This command allows users to update their private information
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class UpdateUserInfoCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

@@ -16,6 +16,13 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The type High workout page command.
+ * This command allows to go to the page with workouts of high level
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class HighWorkoutPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -23,7 +30,7 @@ public class HighWorkoutPageCommand implements Command {
     public Router execute(HttpServletRequest request) {
         String page;
         try {
-            WorkoutService workoutService=ServiceFactory.getInstance().getWorkoutService();
+            WorkoutService workoutService = ServiceFactory.getInstance().getWorkoutService();
             List<Workout> workouts = workoutService.findByLevel(Workout.Level.HIGH);
             request.setAttribute(AttributeName.WORKOUTS_HIGH, workouts);
             page = ConfigurationManager.getProperty(PageConfigName.HIGH_WORKOUT_PAGE);

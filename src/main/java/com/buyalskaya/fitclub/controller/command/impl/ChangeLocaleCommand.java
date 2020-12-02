@@ -8,6 +8,13 @@ import com.buyalskaya.fitclub.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Change locale command.
+ * This command allows to switch language
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class ChangeLocaleCommand implements Command {
 
     @Override

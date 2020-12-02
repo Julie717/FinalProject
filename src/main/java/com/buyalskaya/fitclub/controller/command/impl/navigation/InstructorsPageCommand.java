@@ -16,6 +16,13 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The type Instructors page command.
+ * This command allows to go to the page with information about all instructors
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class InstructorsPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

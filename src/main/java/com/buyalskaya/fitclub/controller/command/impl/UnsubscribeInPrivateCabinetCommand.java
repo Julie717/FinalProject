@@ -17,6 +17,13 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Unsubscribe in private cabinet command.
+ * This command allows clients to unsubscribe from workouts on which they are subscribed
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class UnsubscribeInPrivateCabinetCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -30,9 +37,9 @@ public class UnsubscribeInPrivateCabinetCommand implements Command {
         try {
             ServiceFactory.getInstance().getScheduleService().subscribeClient(user.getIdUser(),
                     idSchedule, subscribe);
-            AddRequestAttribute.forClientPage(request,user.getLogin());
+            AddRequestAttribute.forClientPage(request, user.getLogin());
         } catch (ServiceException ex) {
-            logger.log(Level.ERROR,ex);
+            logger.log(Level.ERROR, ex);
             page = ConfigurationManager.getProperty(PageConfigName.ERROR_500);
         }
         return new Router(page);

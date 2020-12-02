@@ -19,6 +19,13 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Sale membership command.
+ * This command allows administrators to sale of memberships to the clients
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class SaleMembershipCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

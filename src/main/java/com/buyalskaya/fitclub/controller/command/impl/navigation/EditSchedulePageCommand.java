@@ -22,6 +22,13 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Edit schedule page command.
+ * This command allows administrators to edit workout's parameters in the schedule
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class EditSchedulePageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

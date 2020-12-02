@@ -13,6 +13,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Home page command.
+ * This command allows to go to the home page
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class HomePageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -26,7 +33,7 @@ public class HomePageCommand implements Command {
             }
             page = ConfigurationManager.getProperty(PageConfigName.HOMEPAGE);
         } catch (ServiceException ex) {
-            logger.log(Level.ERROR,ex);
+            logger.log(Level.ERROR, ex);
             page = ConfigurationManager.getProperty(PageConfigName.ERROR_500);
         }
         request.getRequestDispatcher(page);

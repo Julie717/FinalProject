@@ -12,6 +12,14 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Add schedule page command.
+ * This command allows administrators to go to the page on which they can
+ * add a workout into a schedule
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class AddSchedulePageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

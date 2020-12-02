@@ -15,6 +15,14 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Copy schedule command.
+ * This command is used to copy all workouts in schedule (stored in database) from the last week,
+ * to the next week
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class CopyScheduleCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

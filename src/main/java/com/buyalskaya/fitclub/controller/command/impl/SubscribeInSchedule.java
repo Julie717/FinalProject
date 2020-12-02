@@ -19,6 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The type Subscribe in schedule.
+ * This command allows clients to subscribe to workouts on schedule page
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class SubscribeInSchedule implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -45,7 +52,7 @@ public class SubscribeInSchedule implements Command {
             }
             request.setAttribute(AttributeName.SCHEDULE_NUMBER_WEEK, numberWeek);
         } catch (ServiceException ex) {
-            logger.log(Level.ERROR,ex);
+            logger.log(Level.ERROR, ex);
             page = ConfigurationManager.getProperty(PageConfigName.ERROR_500);
         }
         return new Router(page);

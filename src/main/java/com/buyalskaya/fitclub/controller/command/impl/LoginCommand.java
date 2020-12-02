@@ -16,6 +16,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Login command.
+ * This command allows to pass the authorisation
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

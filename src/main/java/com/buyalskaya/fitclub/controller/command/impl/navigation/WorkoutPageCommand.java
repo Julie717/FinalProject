@@ -12,6 +12,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Workout page command.
+ * This command allows to go to the page with all workouts
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class WorkoutPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -19,10 +26,10 @@ public class WorkoutPageCommand implements Command {
     public Router execute(HttpServletRequest request) {
         String page;
         try {
-           AddRequestAttribute.forWorkout(request);
+            AddRequestAttribute.forWorkout(request);
             page = ConfigurationManager.getProperty(PageConfigName.WORKOUT_PAGE);
         } catch (ServiceException ex) {
-            logger.log(Level.ERROR,ex);
+            logger.log(Level.ERROR, ex);
             page = ConfigurationManager.getProperty(PageConfigName.ERROR_500);
         }
         return new Router(page);

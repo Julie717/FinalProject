@@ -15,6 +15,13 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Check presence page command.
+ * This command allows administrators to go to page for checking client's presence
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class CheckPresencePageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -23,11 +30,11 @@ public class CheckPresencePageCommand implements Command {
         String idClient = request.getParameter(ParameterName.CLIENT_ID);
         String idClientMembership = request.getParameter(ParameterName.CLIENT_MEMBERSHIP_ID);
         HttpSession session = request.getSession();
-        session.setAttribute(AttributeName.CLIENT_ID,idClient);
+        session.setAttribute(AttributeName.CLIENT_ID, idClient);
         session.setAttribute(AttributeName.CLIENT_MEMBERSHIP_ID, idClientMembership);
         String page;
         try {
-            AddRequestAttribute.forCheckPresence(request,idClient);
+            AddRequestAttribute.forCheckPresence(request, idClient);
             page = ConfigurationManager.getProperty(PageConfigName.CHECK_PRESENCE);
         } catch (ServiceException ex) {
             logger.log(Level.ERROR, ex);

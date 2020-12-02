@@ -21,6 +21,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * The type Add photo command.
+ * This command allows to add a photo in the private cabinet
+ */
 public class AddPhotoCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

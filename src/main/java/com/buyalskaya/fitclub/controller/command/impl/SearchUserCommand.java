@@ -13,6 +13,14 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Search user command.
+ * This command allows administrators to search user by surname
+ * on the page with all users
+ *
+ * @author Buyalskaya Yuliya
+ * @version 1.0
+ */
 public class SearchUserCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
