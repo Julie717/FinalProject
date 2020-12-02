@@ -38,7 +38,7 @@ public class SaleMembershipCommand implements Command {
             request.setAttribute(AttributeName.CLIENT_MEMBERSHIPS, memberships);
             Optional<String> clientName = ServiceFactory.getInstance().getUserService().findClientName(idClient);
             if (clientName.isPresent()) {
-                request.setAttribute(AttributeName.CLIENT_NAME, clientName);
+                request.setAttribute(AttributeName.CLIENT_NAME, clientName.get());
             }
             page = ConfigurationManager.getProperty(PageConfigName.CHECK_PRESENCE);
         } catch (ServiceException ex) {

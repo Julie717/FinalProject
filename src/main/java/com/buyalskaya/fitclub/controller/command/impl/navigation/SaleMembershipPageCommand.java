@@ -34,7 +34,7 @@ public class SaleMembershipPageCommand implements Command {
             UserService userService = ServiceFactory.getInstance().getUserService();
             Optional<String> clientName = userService.findClientName(idClient);
             if (clientName.isPresent()) {
-                request.setAttribute(AttributeName.CLIENT_NAME, clientName);
+                request.setAttribute(AttributeName.CLIENT_NAME, clientName.get());
             }
             page = ConfigurationManager.getProperty(PageConfigName.SALE_MEMBERSHIP);
         } catch (ServiceException ex) {
