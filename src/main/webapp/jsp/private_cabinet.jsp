@@ -157,7 +157,8 @@
                             </div>
                         </div>
                         <div class="col">
-                            <input type="hidden" id="localeCalendar" value="${sessionScope.locale}">
+                            <input type="hidden" id="localeCalendar" value="${sessionScope.locale}"
+                                   previousValue="${sessionScope.locale}">
                             <div class="form-group">
                                 <label for="birthday">
                                     <fmt:message key="registration.birthday"/>
@@ -281,7 +282,7 @@
                         <fmt:message key="account.buttonCancel"/>
                     </button>
                     <hr class="d-flex d-md-none">
-                    <input type="hidden" id="editInfo" value="${editInfo}">
+                    <input type="hidden" id="editInfo" value="${editInfo}" previousValue="${editInfo}">
                 </form>
             </div>
         </div>
@@ -428,10 +429,13 @@
                                                     <form method="post"
                                                           action="${pageContext.request.contextPath}/controller">
                                                         <input type="hidden" name="commandName"
+                                                               previousValue="unsubscribe_in_private_cabinet"
                                                                value="unsubscribe_in_private_cabinet"/>
                                                         <input type="hidden" name="idSchedule"
+                                                               previousValue="${schedule.idSchedule}"
                                                                value="${schedule.idSchedule}"/>
-                                                        <input type="hidden" name="subscribe" value="true"/>
+                                                        <input type="hidden" name="subscribe"
+                                                               previousValue="true" value="true"/>
                                                         <ctg:schedule-box nameWorkout="${schedule.workout.name}"
                                                                           nameInstructor="${schedule.nameInstructor}"
                                                                           surnameInstructor="${schedule.surnameInstructor}"

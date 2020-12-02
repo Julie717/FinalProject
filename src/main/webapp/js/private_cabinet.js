@@ -54,9 +54,13 @@ $('#photo:file').change(function (e) {
 });
 
 $("#cancel").click(function () {
-    $('input').each(function () {
-        $(this).val($(this).attr('previousValue'));
-    });
+    $('from-login').val($('from-login').attr('previousValue'));
+    $('from-surname').val($('from-surname').attr('previousValue'));
+    $('from-name').val($('from-name').attr('previousValue'));
+    $('from-email').val($('from-email').attr('previousValue'));
+    $('phone').val($('phone').attr('previousValue'));
+    $('birthday').val($('birthday').attr('previousValue'));
+    $('workExperience').val($('workExperience').attr('previousValue'));
     $('textarea#staffDescription').val($("textarea#previousDescription").val());
     disableFields();
 });
