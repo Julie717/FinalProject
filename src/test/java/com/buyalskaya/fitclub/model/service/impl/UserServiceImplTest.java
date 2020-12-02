@@ -7,6 +7,7 @@ import com.buyalskaya.fitclub.model.dao.UserDao;
 import com.buyalskaya.fitclub.model.dao.impl.UserDaoImpl;
 import com.buyalskaya.fitclub.model.entity.Staff;
 import com.buyalskaya.fitclub.model.entity.User;
+import com.buyalskaya.fitclub.model.entity.UserStatus;
 import com.buyalskaya.fitclub.model.service.ServiceFactory;
 import com.buyalskaya.fitclub.model.service.UserService;
 import org.mockito.Mockito;
@@ -52,7 +53,7 @@ public class UserServiceImplTest {
         String login = "malyshko_k";
         String password = "qwerTy123";
         try {
-            String correctPassword = "$2a$10$2cpQF7Q.U5aovP5QNTjN/uaQefhI6TEXgXGJarm2xL2b.OIOLhZ/K";
+            Optional<String> correctPassword = Optional.of("$2a$10$2cpQF7Q.U5aovP5QNTjN/uaQefhI6TEXgXGJarm2xL2b.OIOLhZ/K");
             Mockito.when(userDao.findPasswordByLogin(Mockito.anyString())).thenReturn(correctPassword);
             boolean actual = userService.authorization(login, password);
             assertTrue(actual);
@@ -179,6 +180,7 @@ public class UserServiceImplTest {
         UserService userService = ServiceFactory.getInstance().getUserService();
         String login = "malyshko_k";
         try {
+            Mockito.when(userDao.findUserStatusByLogin(Mockito.anyString())).thenReturn(UserStatus.UNCONFIRMED);
             Mockito.when(userDao.confirmRegistration(Mockito.anyString())).thenReturn(true);
             boolean actual = userService.confirmRegistration(login);
             assertTrue(actual);
@@ -192,6 +194,7 @@ public class UserServiceImplTest {
         UserService userService = ServiceFactory.getInstance().getUserService();
         String login = "malyshko_k";
         try {
+            Mockito.when(userDao.findUserStatusByLogin(Mockito.anyString())).thenReturn(UserStatus.BLOCKED);
             Mockito.when(userDao.confirmRegistration(Mockito.anyString())).thenReturn(false);
             boolean actual = userService.confirmRegistration(login);
             assertFalse(actual);

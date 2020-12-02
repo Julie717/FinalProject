@@ -17,16 +17,16 @@ import java.util.*;
 public class UserDaoImpl implements UserDao {
 
     @Override
-    public String findPasswordByLogin(String login) throws DaoException {
+    public Optional<String> findPasswordByLogin(String login) throws DaoException {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionPool.INSTANCE.getConnection();
-        String password = null;
+        Optional<String> password = Optional.empty();
         try {
             preparedStatement = connection.prepareStatement(SqlQuery.SELECT_PASSWORD_BY_LOGIN);
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                password = resultSet.getString(ColumnName.USERS_PASSWORD);
+                password = Optional.of(resultSet.getString(ColumnName.USERS_PASSWORD));
             }
         } catch (SQLException ex) {
             throw new DaoException("SQL exception (request or table failed)", ex);
@@ -368,16 +368,16 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public String findClientName(int idClient) throws DaoException {
+    public Optional<String> findClientName(int idClient) throws DaoException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement preparedStatement = null;
-        String clientName = null;
+        Optional<String> clientName = Optional.empty();
         try {
             preparedStatement = connection.prepareStatement(SqlQuery.SELECT_CLIENT_NAME);
             preparedStatement.setInt(1, idClient);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                clientName = resultSet.getString(ColumnName.CLIENT_NAME);
+                clientName = Optional.of(resultSet.getString(ColumnName.CLIENT_NAME));
             }
         } catch (SQLException ex) {
             throw new DaoException("SQL exception (request or table failed)", ex);

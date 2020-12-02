@@ -11,6 +11,7 @@ import com.buyalskaya.fitclub.util.DateTimeTransformer;
 import com.buyalskaya.fitclub.validator.CommonValidator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MembershipServiceImpl implements MembershipService {
@@ -28,7 +29,7 @@ public class MembershipServiceImpl implements MembershipService {
 
     @Override
     public List<ClientMembership> findActiveClientMemberships(String idClient) throws ServiceException {
-        List<ClientMembership> memberships = null;
+        List<ClientMembership> memberships = new ArrayList<>();
         if (CommonValidator.isIdValid(idClient)) {
             int idClientInt = Integer.parseInt(idClient);
             try {

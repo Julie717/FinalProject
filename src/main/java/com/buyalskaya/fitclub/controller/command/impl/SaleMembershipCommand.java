@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 public class SaleMembershipCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
@@ -31,12 +32,14 @@ public class SaleMembershipCommand implements Command {
         String page;
         try {
             ServiceFactory.getInstance().getMembershipService().addClientMembership(idMembership, openDate, idClient, locale);
-            AddRequestAttribute.forCheckPresence(request,idClient);
+            AddRequestAttribute.forCheckPresence(request, idClient);
             List<ClientMembership> memberships = ServiceFactory.getInstance().getMembershipService()
                     .findActiveClientMemberships(idClient);
             request.setAttribute(AttributeName.CLIENT_MEMBERSHIPS, memberships);
-            String clientName = ServiceFactory.getInstance().getUserService().findClientName(idClient);
-            request.setAttribute(AttributeName.CLIENT_NAME, clientName);
+            Optional<String> clientName = ServiceFactory.getInstance().getUserService().findClientName(idClient);
+            if (clientName.isPresent()) {
+                request.setAttribute(AttributeName.CLIENT_NAME, clientName);
+            }
             page = ConfigurationManager.getProperty(PageConfigName.CHECK_PRESENCE);
         } catch (ServiceException ex) {
             logger.log(Level.ERROR, ex);

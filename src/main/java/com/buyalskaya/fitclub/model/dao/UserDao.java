@@ -15,15 +15,16 @@ import java.util.Optional;
  * @version 1.0
  */
 public interface UserDao extends CommonDao<User> {
+
     /**
-     * Find password by login string.
+     * Find password by login optional.
      * Returns password, but if user isn't found returns null
      *
      * @param login the login
-     * @return the string
+     * @return the optional
      * @throws DaoException the dao exception
      */
-    String findPasswordByLogin(String login) throws DaoException;
+    Optional<String> findPasswordByLogin(String login) throws DaoException;
 
     /**
      * Find user by login optional.
@@ -154,10 +155,10 @@ public interface UserDao extends CommonDao<User> {
      * Is used to find client's name. If client isn't found returns null
      *
      * @param idClient the id client
-     * @return the string
+     * @return the optional
      * @throws DaoException the dao exception
      */
-    String findClientName(int idClient) throws DaoException;
+    Optional<String> findClientName(int idClient) throws DaoException;
 
     /**
      * Is instructor exist boolean.

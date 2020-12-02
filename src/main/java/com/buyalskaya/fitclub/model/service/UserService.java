@@ -156,7 +156,7 @@ public interface UserService {
      * @return the string
      * @throws ServiceException the service exception
      */
-    String findClientName(String idClient) throws ServiceException;
+    Optional<String> findClientName(String idClient) throws ServiceException;
 
     /**
      * Find user roles map.

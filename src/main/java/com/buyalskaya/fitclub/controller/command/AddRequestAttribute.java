@@ -117,8 +117,10 @@ public class AddRequestAttribute {
         List<ClientMembership> memberships = membershipService.findActiveClientMemberships(idClient);
         request.setAttribute(AttributeName.CLIENT_MEMBERSHIPS, memberships);
         UserService userService = ServiceFactory.getInstance().getUserService();
-        String clientName = userService.findClientName(idClient);
-        request.setAttribute(AttributeName.CLIENT_NAME, clientName);
+        Optional<String> clientName = userService.findClientName(idClient);
+        if (clientName.isPresent()) {
+            request.setAttribute(AttributeName.CLIENT_NAME, clientName);
+        }
     }
 
     /**

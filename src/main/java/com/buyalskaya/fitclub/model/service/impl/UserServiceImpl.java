@@ -26,9 +26,11 @@ public class UserServiceImpl implements UserService {
         if (UserValidator.isLoginValid(login) && UserValidator.isPasswordValid(password)) {
             try {
                 UserDao userDao = DaoFactory.getInstance().getUserDao();
-                String correctPassword = userDao.findPasswordByLogin(login);
-                if (correctPassword != null && Encryptor.isEqualPasswords(password, correctPassword)) {
-                    isCorrectAuthorization = true;
+                Optional<String> correctPassword = userDao.findPasswordByLogin(login);
+                if (correctPassword.isPresent()) {
+                    if (Encryptor.isEqualPasswords(password, correctPassword.get())) {
+                        isCorrectAuthorization = true;
+                    }
                 }
             } catch (DaoException ex) {
                 throw new ServiceException("Error during authorization user", ex);
@@ -168,10 +170,12 @@ public class UserServiceImpl implements UserService {
             if (newPassword.equals(repeatedNewPassword)) {
                 try {
                     UserDao userDao = DaoFactory.getInstance().getUserDao();
-                    String currentPassword = userDao.findPasswordByLogin(user.getLogin());
-                    if (Encryptor.isEqualPasswords(oldPassword, currentPassword)) {
-                        String encryptPassword = Encryptor.encryptPassword(newPassword);
-                        isUpdate = userDao.updatePassword(user.getIdUser(), encryptPassword);
+                    Optional<String> currentPassword = userDao.findPasswordByLogin(user.getLogin());
+                    if (currentPassword.isPresent()) {
+                        if (Encryptor.isEqualPasswords(oldPassword, currentPassword.get())) {
+                            String encryptPassword = Encryptor.encryptPassword(newPassword);
+                            isUpdate = userDao.updatePassword(user.getIdUser(), encryptPassword);
+                        }
                     }
                 } catch (DaoException ex) {
                     throw new ServiceException("Error during change password", ex);
@@ -297,8 +301,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String findClientName(String idClient) throws ServiceException {
-        String clientName = null;
+    public Optional<String> findClientName(String idClient) throws ServiceException {
+        Optional<String> clientName = Optional.empty();
         if (CommonValidator.isIdValid(idClient)) {
             int idClientInt = Integer.parseInt(idClient);
             try {
